@@ -15,5 +15,7 @@ namespace BeerCup.DataAccess
         }
 
         public DbSet<Battle> Battles { get; set; }
+
+        public DbSet<Beer> Beers { get; set; }
     }
 }
