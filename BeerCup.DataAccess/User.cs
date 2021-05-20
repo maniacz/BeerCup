@@ -15,6 +15,6 @@ namespace BeerCup.DataAccess
         [MaxLength(50)]
         public string Password { get; set; }
 
-        public List<Battle> BattlesAttended { get; set; }
+        public List<Beer> VotedBeers { get; set; }
     }
 }
