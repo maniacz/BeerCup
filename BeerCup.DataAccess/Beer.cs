@@ -10,6 +10,10 @@ namespace BeerCup.DataAccess
 
         public Battle Battle { get; set; }
 
+        public int BreweryId { get; set; }
+
+        public Brewery Brewery { get; set; }
+
         public int NumberInBattle { get; set; }
 
         public List<User> VotingUsers { get; set; }
