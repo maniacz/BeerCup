@@ -1,4 +1,5 @@
-﻿using BeerCup.Services;
+﻿using BeerCup.Bootstrap;
+using BeerCup.Services;
 using BeerCup.Views;
 using System;
 using Xamarin.Forms;
@@ -13,8 +14,15 @@ namespace BeerCup
         {
             InitializeComponent();
 
+            InitializeApp();
+
             DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
+        }
+
+        private void InitializeApp()
+        {
+            AppContainer.RegisterDependencies();
         }
 
         protected override void OnStart()
