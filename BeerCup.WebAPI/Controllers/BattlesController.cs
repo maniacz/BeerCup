@@ -1,5 +1,7 @@
-﻿using BeerCup.DataAccess;
+﻿using BeerCup.ApplicationServices.API.Domain;
+using BeerCup.DataAccess;
 using BeerCup.DataAccess.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,19 +14,33 @@ namespace BeerCup.WebAPI.Controllers
     [Route("[controller]")]
     public class BattlesController : ControllerBase
     {
-        private readonly IRepository<Battle> battleRepository;
+        private readonly IMediator mediator;
 
-        public BattlesController(IRepository<Battle> battleRepository)
+        public BattlesController(IMediator mediator)
         {
-            this.battleRepository = battleRepository;
+            this.mediator = mediator;
         }
 
         [HttpGet]
         [Route("")]
-        public IEnumerable<Battle> GetAllBattles() => this.battleRepository.GetAll();
+        public async Task<IActionResult> GetAllBattles([FromQuery] GetBattlesRequest request)
+        {
+            var response = await this.mediator.Send(request);
+            return Ok(response);
+        }
 
-        [HttpGet]
-        [Route("battleId")]
-        public Battle GetBattleById(int battleId) => this.battleRepository.GetById(battleId);
+
+
+        //public IEnumerable<Battle> GetAllBattles() => this.battleRepository.GetAll();
+
+        //[HttpGet]
+        //[Route("battleId")]
+        //public async Task<IActionResult> GetBattleById(int id)
+        //{
+        //    var response = await this.mediator.Send(id);
+        //    return Ok(response);
+        //}
+
+        //public Battle GetBattleById(int battleId) => this.battleRepository.GetById(battleId);
     }
 }

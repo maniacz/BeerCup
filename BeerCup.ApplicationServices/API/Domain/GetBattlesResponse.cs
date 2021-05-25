@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BeerCup.ApplicationServices.API.Domain
 {
-    public class GetBattleResponse : ResponseBase<List<Battle>>
+    public class GetBattlesResponse : ResponseBase<List<Battle>>
     {
     }
 }
