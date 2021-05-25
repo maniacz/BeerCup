@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BeerCup.DataAccess
 {
     public interface IRepository<T> where T : EntityBase
     {
-        public IEnumerable<T> GetAll();
-        public T GetById(int id);
-        public void Insert(T entity);
-        public void Update(T entity);
-        public void Delete(int id);
+        public Task<List<T>> GetAll();
+        public Task<T> GetById(int id);
+        public Task Insert(T entity);
+        public Task Update(T entity);
+        public Task Delete(int id);
     }
 }
