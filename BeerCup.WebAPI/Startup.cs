@@ -1,4 +1,5 @@
 using BeerCup.ApplicationServices.API.Domain;
+using BeerCup.ApplicationServices.Mappings;
 using BeerCup.DataAccess;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +31,8 @@ namespace BeerCup.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(BattlesProfile).Assembly);
+
             services.AddMediatR(typeof(ResponseBase<>));
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
