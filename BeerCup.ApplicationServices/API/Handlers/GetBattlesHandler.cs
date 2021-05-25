@@ -23,9 +23,9 @@ namespace BeerCup.ApplicationServices.API.Handlers
             this.mapper = mapper;
         }
 
-        public Task<GetBattlesResponse> Handle(GetBattlesRequest request, CancellationToken cancellationToken)
+        public async Task<GetBattlesResponse> Handle(GetBattlesRequest request, CancellationToken cancellationToken)
         {
-            var battles = this.repository.GetAll();
+            var battles = await this.repository.GetAll();
             var mappedBattle = this.mapper.Map<List<Domain.Models.Battle>>(battles);
 
 
@@ -41,7 +41,8 @@ namespace BeerCup.ApplicationServices.API.Handlers
                 Data = mappedBattle
             };
 
-            return Task.FromResult(response);
+            //return Task.FromResult(response);
+            return response;
         }
     }
 }

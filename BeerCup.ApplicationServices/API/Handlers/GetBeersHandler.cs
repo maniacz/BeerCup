@@ -20,9 +20,9 @@ namespace BeerCup.ApplicationServices.API.Handlers
             this.repository = repository;
         }
 
-        public Task<GetBeersResponse> Handle(GetBeersRequest request, CancellationToken cancellationToken)
+        public async Task<GetBeersResponse> Handle(GetBeersRequest request, CancellationToken cancellationToken)
         {
-            var beers = this.repository.GetAll();
+            var beers = await this.repository.GetAll();
             var domainBeers = beers.Select(b => new Domain.Models.Beer()
             {
                 BeerId = b.Id,
@@ -34,7 +34,7 @@ namespace BeerCup.ApplicationServices.API.Handlers
                 Data = domainBeers.ToList()
             };
 
-            return Task.FromResult(response);
+            return response;
         }
     }
 }
