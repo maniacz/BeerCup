@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace BeerCup.WebAPI.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class BeersController : ControllerBase
     {
         private readonly IMediator mediator;
