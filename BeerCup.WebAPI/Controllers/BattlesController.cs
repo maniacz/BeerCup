@@ -10,11 +10,11 @@ namespace BeerCup.WebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class BattleController : ControllerBase
+    public class BattlesController : ControllerBase
     {
         private readonly IRepository<Battle> battleRepository;
 
-        public BattleController(IRepository<Battle> battleRepository)
+        public BattlesController(IRepository<Battle> battleRepository)
         {
             this.battleRepository = battleRepository;
         }
