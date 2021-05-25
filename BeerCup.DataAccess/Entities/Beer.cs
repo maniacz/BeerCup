@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BeerCup.DataAccess
+namespace BeerCup.DataAccess.Entities
 {
     public class Beer : EntityBase
     {

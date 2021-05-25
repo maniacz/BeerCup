@@ -1,4 +1,5 @@
 ﻿using BeerCup.DataAccess;
+using BeerCup.DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

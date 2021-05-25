@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeerCup.DataAccess", "BeerC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeerCup.EFCoreMigrationsDeploy", "BeerCup.EFCoreMigrationsDeploy\BeerCup.EFCoreMigrationsDeploy.csproj", "{7DF5D566-FF78-42F7-9EAC-EE6C7F3320CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerCup.ApplicationServices", "BeerCup.ApplicationServices\BeerCup.ApplicationServices.csproj", "{5E62B5B0-B26C-44F2-98FD-83402B4289D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeerCup.ApplicationServices", "BeerCup.ApplicationServices\BeerCup.ApplicationServices.csproj", "{5E62B5B0-B26C-44F2-98FD-83402B4289D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerCup.WebAPI", "BeerCup.WebAPI\BeerCup.WebAPI.csproj", "{6BD639B6-28CF-45B6-9A92-70D92A3FFFA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeerCup.WebAPI", "BeerCup.WebAPI\BeerCup.WebAPI.csproj", "{6BD639B6-28CF-45B6-9A92-70D92A3FFFA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -117,6 +117,18 @@ Global
 		{5E62B5B0-B26C-44F2-98FD-83402B4289D7}.Release|iPhone.Build.0 = Release|Any CPU
 		{5E62B5B0-B26C-44F2-98FD-83402B4289D7}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{5E62B5B0-B26C-44F2-98FD-83402B4289D7}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{6BD639B6-28CF-45B6-9A92-70D92A3FFFA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BD639B6-28CF-45B6-9A92-70D92A3FFFA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BD639B6-28CF-45B6-9A92-70D92A3FFFA6}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{6BD639B6-28CF-45B6-9A92-70D92A3FFFA6}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{6BD639B6-28CF-45B6-9A92-70D92A3FFFA6}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{6BD639B6-28CF-45B6-9A92-70D92A3FFFA6}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{6BD639B6-28CF-45B6-9A92-70D92A3FFFA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BD639B6-28CF-45B6-9A92-70D92A3FFFA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BD639B6-28CF-45B6-9A92-70D92A3FFFA6}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{6BD639B6-28CF-45B6-9A92-70D92A3FFFA6}.Release|iPhone.Build.0 = Release|Any CPU
+		{6BD639B6-28CF-45B6-9A92-70D92A3FFFA6}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{6BD639B6-28CF-45B6-9A92-70D92A3FFFA6}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

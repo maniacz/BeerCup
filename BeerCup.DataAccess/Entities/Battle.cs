@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace BeerCup.DataAccess
+namespace BeerCup.DataAccess.Entities
 {
-    public class Brewery : EntityBase
+    public class Battle : EntityBase
     {
         [Required]
         [MaxLength(50)]
-        public string Name { get; set; }
+        public string Style { get; set; }
 
         public List<Beer> Beers { get; set; }
     }
