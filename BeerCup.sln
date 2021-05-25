@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeerCup.EFCoreMigrationsDep
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerCup.ApplicationServices", "BeerCup.ApplicationServices\BeerCup.ApplicationServices.csproj", "{5E62B5B0-B26C-44F2-98FD-83402B4289D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerCup.WebAPI", "BeerCup.WebAPI\BeerCup.WebAPI.csproj", "{6BD639B6-28CF-45B6-9A92-70D92A3FFFA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
