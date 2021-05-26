@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BeerCup.ApplicationServices.API.Domain;
 using BeerCup.DataAccess;
+using BeerCup.DataAccess.CQRS.Queries;
 using BeerCup.DataAccess.Entities;
 using MediatR;
 using System;
@@ -14,34 +15,26 @@ namespace BeerCup.ApplicationServices.API.Handlers
 {
     public class GetBattlesHandler : IRequestHandler<GetBattlesRequest, GetBattlesResponse>
     {
-        private readonly IRepository<Battle> repository;
         private readonly IMapper mapper;
+        private readonly IQueryExecutor queryExecutor;
 
-        public GetBattlesHandler(IRepository<DataAccess.Entities.Battle> repository, IMapper mapper)
+        public GetBattlesHandler(IMapper mapper, IQueryExecutor queryExecutor)
         {
-            this.repository = repository;
             this.mapper = mapper;
+            this.queryExecutor = queryExecutor;
         }
 
         public async Task<GetBattlesResponse> Handle(GetBattlesRequest request, CancellationToken cancellationToken)
         {
-            var battles = await this.repository.GetAll();
+            var query = new GetBattlesQuery();
+            var battles = await this.queryExecutor.Execute(query);
             var mappedBattle = this.mapper.Map<List<Domain.Models.Battle>>(battles);
-
-
-            //var domainBattles = battles.Select(b => new Domain.Models.Battle()
-            //{
-            //    Id = b.Id,
-            //    Style = b.Style
-            //});
 
             var response = new GetBattlesResponse()
             {
-                //Data = domainBattles.ToList()
                 Data = mappedBattle
             };
 
-            //return Task.FromResult(response);
             return response;
         }
     }
