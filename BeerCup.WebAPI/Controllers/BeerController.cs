@@ -26,5 +26,18 @@ namespace BeerCup.WebAPI.Controllers
             var response = await this.mediator.Send(request);
             return Ok(response);
         }
+
+        [HttpPost]
+        [Route("beerId")]
+        public async Task<IActionResult> RemoveBeer([FromRoute] int beerId)
+        {
+            var request = new RemoveBeerRequest()
+            {
+                BeerId = beerId
+            };
+
+            var response = await this.mediator.Send(request);
+            return Ok(response);
+        }
     }
 }
