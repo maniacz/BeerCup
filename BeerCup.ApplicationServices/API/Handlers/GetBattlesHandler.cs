@@ -26,7 +26,11 @@ namespace BeerCup.ApplicationServices.API.Handlers
 
         public async Task<GetBattlesResponse> Handle(GetBattlesRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetBattlesQuery();
+            var query = new GetBattlesQuery()
+            {
+                Style = request.Style
+            };
+
             var battles = await this.queryExecutor.Execute(query);
             var mappedBattle = this.mapper.Map<List<Domain.Models.Battle>>(battles);
 

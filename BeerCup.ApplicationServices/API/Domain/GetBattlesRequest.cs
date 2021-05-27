@@ -9,5 +9,6 @@ namespace BeerCup.ApplicationServices.API.Domain
 {
     public class GetBattlesRequest : IRequest<GetBattlesResponse>
     {
+        public string Style { get; set; }
     }
 }
