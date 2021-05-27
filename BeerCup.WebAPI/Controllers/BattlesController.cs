@@ -29,7 +29,18 @@ namespace BeerCup.WebAPI.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("{battleId}")]
+        public async Task<IActionResult> GetBattleById([FromRoute] int battleId)
+        {
+            var request = new GetBattleByIdRequest()
+            {
+                BattleId = battleId
+            };
 
+            var response = await this.mediator.Send(request);
+            return Ok(response);
+        }
 
         //public IEnumerable<Battle> GetAllBattles() => this.battleRepository.GetAll();
 

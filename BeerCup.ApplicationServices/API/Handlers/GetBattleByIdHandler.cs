@@ -2,7 +2,6 @@
 using BeerCup.ApplicationServices.API.Domain;
 using BeerCup.DataAccess;
 using BeerCup.DataAccess.CQRS.Queries;
-using BeerCup.DataAccess.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -13,30 +12,30 @@ using System.Threading.Tasks;
 
 namespace BeerCup.ApplicationServices.API.Handlers
 {
-    public class GetBattlesHandler : IRequestHandler<GetBattlesRequest, GetBattlesResponse>
+    public class GetBattleByIdHandler : IRequestHandler<GetBattleByIdRequest, GetBattleByIdResponse>
     {
         private readonly IMapper mapper;
         private readonly IQueryExecutor queryExecutor;
 
-        public GetBattlesHandler(IMapper mapper, IQueryExecutor queryExecutor)
+        public GetBattleByIdHandler(IMapper mapper, IQueryExecutor queryExecutor)
         {
             this.mapper = mapper;
             this.queryExecutor = queryExecutor;
         }
 
-        public async Task<GetBattlesResponse> Handle(GetBattlesRequest request, CancellationToken cancellationToken)
+        public async Task<GetBattleByIdResponse> Handle(GetBattleByIdRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetBattlesQuery()
+            var query = new GetBattleQuery()
             {
-                Style = request.Style
+                Id = request.BattleId
             };
 
-            var battles = await this.queryExecutor.Execute(query);
-            var mappedBattles = this.mapper.Map<List<Domain.Models.Battle>>(battles);
+            var battle = await this.queryExecutor.Execute(query);
+            var mappedBattle = this.mapper.Map<Domain.Models.Battle>(battle);
 
-            var response = new GetBattlesResponse()
+            var response = new GetBattleByIdResponse()
             {
-                Data = mappedBattles
+                Data = mappedBattle
             };
 
             return response;
