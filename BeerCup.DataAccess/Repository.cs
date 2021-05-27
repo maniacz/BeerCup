@@ -53,7 +53,7 @@ namespace BeerCup.DataAccess
         public Task Delete(int id)
         {
             T entity = entities.SingleOrDefault(s => s.Id == id);
-            entities.Add(entity);
+            entities.Remove(entity);
             return _context.SaveChangesAsync();
         }
     }
