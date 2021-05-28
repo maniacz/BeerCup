@@ -48,11 +48,19 @@ namespace BeerCup.WebAPI.Controllers
             return Ok(response);
         }
 
+        [HttpPut]
+        [Route("")]
+        public async Task<IActionResult> AlterBeer([FromBody] AlterBeerRequest  request)
+        {
+            var response = await this.mediator.Send(request);
+            return Ok(response);
+        }
+
         [HttpDelete]
         [Route("{beerId}")]
         public async Task<IActionResult> RemoveBeer([FromRoute] int beerId)
         {
-            //todo: Zastąpić przez GetBeerById i wywalić klasy od Remove?
+            //todo: Zmodyfikować tak, żeby zwracało 404 jak nie znajdzie piwa o takim id
             var request = new RemoveBeerRequest()
             {
                 BeerId = beerId

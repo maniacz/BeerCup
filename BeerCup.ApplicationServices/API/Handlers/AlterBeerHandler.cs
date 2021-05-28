@@ -13,28 +13,27 @@ using System.Threading.Tasks;
 
 namespace BeerCup.ApplicationServices.API.Handlers
 {
-    public class AddBeerHandler : IRequestHandler<AddBeerRequest, AddBeerResponse>
+    public class AlterBeerHandler : IRequestHandler<AlterBeerRequest, AlterBeerResponse>
     {
         private readonly ICommandExecutor commandExecutor;
         private readonly IMapper mapper;
 
-        public AddBeerHandler(ICommandExecutor commandExecutor, IMapper mapper)
+        public AlterBeerHandler(ICommandExecutor commandExecutor, IMapper mapper)
         {
             this.commandExecutor = commandExecutor;
             this.mapper = mapper;
         }
-
-        public async Task<AddBeerResponse> Handle(AddBeerRequest request, CancellationToken cancellationToken)
+        public async Task<AlterBeerResponse> Handle(AlterBeerRequest request, CancellationToken cancellationToken)
         {
             var beer = this.mapper.Map<DataAccess.Entities.Beer>(request);
-            var command = new AddBeerCommand()
+            var command = new AlterBeerCommand()
             {
                 Parameter = beer
             };
 
             var beerFromDb = await this.commandExecutor.Execute(command);
 
-            return new AddBeerResponse()
+            return new AlterBeerResponse()
             {
                 Data = this.mapper.Map<Beer>(beerFromDb)
             };
