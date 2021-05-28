@@ -26,5 +26,40 @@ namespace BeerCup.WebAPI.Controllers
             var response = await this.mediator.Send(request);
             return Ok(response);
         }
+
+        [HttpGet]
+        [Route("{beerId}")]
+        public async Task<IActionResult> GetBeerById([FromRoute] int beerId)
+        {
+            var request = new GetBeerByIdRequest()
+            {
+                BeerId = beerId
+            };
+
+            var response = await this.mediator.Send(request);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("")]
+        public async Task<IActionResult> AddBeer([FromBody] AddBeerRequest request)
+        {
+            var response = await this.mediator.Send(request);
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        [Route("{beerId}")]
+        public async Task<IActionResult> RemoveBeer([FromRoute] int beerId)
+        {
+            //todo: Zastąpić przez GetBeerById i wywalić klasy od Remove?
+            var request = new RemoveBeerRequest()
+            {
+                BeerId = beerId
+            };
+
+            var response = await this.mediator.Send(request);
+            return Ok(response);
+        }
     }
 }
