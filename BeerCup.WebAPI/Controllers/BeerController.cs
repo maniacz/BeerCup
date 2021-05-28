@@ -28,7 +28,7 @@ namespace BeerCup.WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("beerId")]
+        [Route("{beerId}")]
         public async Task<IActionResult> RemoveBeer([FromRoute] int beerId)
         {
             var request = new RemoveBeerRequest()
