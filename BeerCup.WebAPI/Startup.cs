@@ -36,6 +36,11 @@ namespace BeerCup.WebAPI
             services.AddMvcCore()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddBeerRequestValidator>());
 
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
             services.AddTransient<ICommandExecutor, CommandExecutor>();
             services.AddTransient<IQueryExecutor, QueryExecutor>();
 

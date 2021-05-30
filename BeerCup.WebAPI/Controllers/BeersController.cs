@@ -44,6 +44,11 @@ namespace BeerCup.WebAPI.Controllers
         [Route("")]
         public async Task<IActionResult> AddBeer([FromBody] AddBeerRequest request)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest("BAD_REQUEST_1234");
+            }
+
             var response = await this.mediator.Send(request);
             return Ok(response);
         }
