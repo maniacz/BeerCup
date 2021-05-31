@@ -12,21 +12,21 @@ namespace BeerCup.WebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class BattlesController : ControllerBase
+    public class BattlesController : ApiControllerBase
     {
-        private readonly IMediator mediator;
 
-        public BattlesController(IMediator mediator)
+        public BattlesController(IMediator mediator) : base(mediator)
         {
-            this.mediator = mediator;
         }
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetAllBattles([FromQuery] GetBattlesRequest request)
+        public Task<IActionResult> GetAllBattles([FromQuery] GetBattlesRequest request)
         {
-            var response = await this.mediator.Send(request);
-            return Ok(response);
+            return this.HandleRequest<GetBattlesRequest, GetBattlesResponse>(request);
+            
+            //var response = await this.mediator.Send(request);
+            //return Ok(response);
         }
 
         [HttpGet]

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BeerCup.ApplicationServices.API.Domain
 {
-    public class ResponseBase<T> : ErrorResponseBase
+    public class ErrorResponseBase
     {
-        public T Data { get; set; }
+        public ErrorModel Error { get; set; }
     }
 }
