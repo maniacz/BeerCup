@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BeerCup.ApplicationServices.API.Domain;
+using BeerCup.ApplicationServices.API.ErrorHandling;
 using BeerCup.DataAccess;
 using BeerCup.DataAccess.CQRS.Queries;
 using BeerCup.DataAccess.Entities;
@@ -32,8 +33,15 @@ namespace BeerCup.ApplicationServices.API.Handlers
             };
 
             var battles = await this.queryExecutor.Execute(query);
-            var mappedBattles = this.mapper.Map<List<Domain.Models.Battle>>(battles);
+            if (battles == null)
+            {
+                return new GetBattlesResponse()
+                {
+                    Error = new ErrorModel(ErrorType.NotFound)
+                };
+            }
 
+            var mappedBattles = this.mapper.Map<List<Domain.Models.Battle>>(battles);
             var response = new GetBattlesResponse()
             {
                 Data = mappedBattles

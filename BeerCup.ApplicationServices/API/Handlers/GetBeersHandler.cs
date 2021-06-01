@@ -1,4 +1,5 @@
 ﻿using BeerCup.ApplicationServices.API.Domain;
+using BeerCup.ApplicationServices.API.ErrorHandling;
 using BeerCup.DataAccess;
 using BeerCup.DataAccess.Entities;
 using MediatR;
@@ -23,6 +24,14 @@ namespace BeerCup.ApplicationServices.API.Handlers
         public async Task<GetBeersResponse> Handle(GetBeersRequest request, CancellationToken cancellationToken)
         {
             var beers = await this.repository.GetAll();
+            if (beers == null)
+            {
+                return new GetBeersResponse()
+                {
+                    Error = new ErrorModel(ErrorType.NotFound)
+                };
+            }
+
             var domainBeers = beers.Select(b => new Domain.Models.Beer()
             {
                 BeerId = b.Id,
