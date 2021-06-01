@@ -10,60 +10,53 @@ namespace BeerCup.WebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class BeersController : ControllerBase
+    public class BeersController : ApiControllerBase
     {
-        private readonly IMediator mediator;
-
-        public BeersController(IMediator mediator)
+        public BeersController(IMediator mediator) : base(mediator)
         {
-            this.mediator = mediator;
         }
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetAllBeers([FromQuery] GetBeersRequest request)
+        public Task<IActionResult> GetAllBeers([FromQuery] GetBeersRequest request)
         {
-            var response = await this.mediator.Send(request);
-            return Ok(response);
+            return this.HandleRequest<GetBeersRequest, GetBeersResponse>(request);
         }
 
         [HttpGet]
         [Route("{beerId}")]
-        public async Task<IActionResult> GetBeerById([FromRoute] int beerId)
+        public Task<IActionResult> GetBeerById([FromRoute] int beerId)
         {
             var request = new GetBeerByIdRequest()
             {
                 BeerId = beerId
             };
 
-            var response = await this.mediator.Send(request);
-            return Ok(response);
+            return this.HandleRequest<GetBeerByIdRequest, GetBeerByIdResponse>(request);
         }
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> AddBeer([FromBody] AddBeerRequest request)
+        public Task<IActionResult> AddBeer([FromBody] AddBeerRequest request)
         {
             if (!this.ModelState.IsValid)
             {
-                return this.BadRequest("BAD_REQUEST_1234");
+                //return this.BadRequest("BAD_REQUEST_1234");
             }
 
-            var response = await this.mediator.Send(request);
-            return Ok(response);
+            return this.HandleRequest<AddBeerRequest, AddBeerResponse>(request);
         }
 
         [HttpPut]
         [Route("")]
-        public async Task<IActionResult> AlterBeer([FromBody] AlterBeerRequest  request)
+        public Task<IActionResult> AlterBeer([FromBody] AlterBeerRequest  request)
         {
-            var response = await this.mediator.Send(request);
-            return Ok(response);
+            return this.HandleRequest<AlterBeerRequest, AlterBeerResponse>(request);
         }
 
         [HttpDelete]
         [Route("{beerId}")]
-        public async Task<IActionResult> RemoveBeer([FromRoute] int beerId)
+        public Task<IActionResult> RemoveBeer([FromRoute] int beerId)
         {
             //todo: Zmodyfikować tak, żeby zwracało 404 jak nie znajdzie piwa o takim id
             var request = new RemoveBeerRequest()
@@ -71,8 +64,7 @@ namespace BeerCup.WebAPI.Controllers
                 BeerId = beerId
             };
 
-            var response = await this.mediator.Send(request);
-            return Ok(response);
+            return this.HandleRequest<RemoveBeerRequest, RemoveBeerResponse>(request);
         }
     }
 }
