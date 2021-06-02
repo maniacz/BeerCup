@@ -3,6 +3,7 @@ using BeerCup.DataAccess;
 using BeerCup.DataAccess.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,9 @@ namespace BeerCup.WebAPI.Controllers
     [Route("[controller]")]
     public class BattlesController : ApiControllerBase
     {
-        public BattlesController(IMediator mediator) : base(mediator)
+        public BattlesController(IMediator mediator, ILogger<BattlesController> logger) : base(mediator)
         {
+            logger.LogInformation("We are in BattleController");
         }
 
         [HttpGet]
