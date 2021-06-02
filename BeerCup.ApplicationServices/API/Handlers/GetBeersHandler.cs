@@ -1,6 +1,8 @@
-﻿using BeerCup.ApplicationServices.API.Domain;
+﻿using AutoMapper;
+using BeerCup.ApplicationServices.API.Domain;
 using BeerCup.ApplicationServices.API.ErrorHandling;
 using BeerCup.DataAccess;
+using BeerCup.DataAccess.CQRS.Queries;
 using BeerCup.DataAccess.Entities;
 using MediatR;
 using System;
@@ -14,16 +16,23 @@ namespace BeerCup.ApplicationServices.API.Handlers
 {
     public class GetBeersHandler : IRequestHandler<GetBeersRequest, GetBeersResponse>
     {
-        private readonly IRepository<DataAccess.Entities.Beer> repository;
+        private readonly IQueryExecutor queryExecutor;
+        private readonly IMapper mapper;
 
-        public GetBeersHandler(IRepository<DataAccess.Entities.Beer> repository)
+        public GetBeersHandler(IQueryExecutor queryExecutor, IMapper mapper)
         {
-            this.repository = repository;
+            this.queryExecutor = queryExecutor;
+            this.mapper = mapper;
         }
 
         public async Task<GetBeersResponse> Handle(GetBeersRequest request, CancellationToken cancellationToken)
         {
-            var beers = await this.repository.GetAll();
+            var query = new GetBeersQuery()
+            {
+                BattleId = request.BattleId
+            };
+
+            var beers = await this.queryExecutor.Execute(query);
             if (beers == null)
             {
                 return new GetBeersResponse()
