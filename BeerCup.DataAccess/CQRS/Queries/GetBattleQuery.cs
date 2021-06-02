@@ -14,7 +14,9 @@ namespace BeerCup.DataAccess.CQRS.Queries
 
         public override async Task<Battle> Execute(BeerCupStorageContext context)
         {
-            var battle = await context.Battles.FirstOrDefaultAsync(b => b.Id == this.Id);
+            var battle = await context.Battles.
+                                Include(b => b.Beers).
+                                FirstOrDefaultAsync(b => b.Id == this.Id);
             return battle;
         }
     }

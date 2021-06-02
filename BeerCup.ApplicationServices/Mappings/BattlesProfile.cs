@@ -14,7 +14,8 @@ namespace BeerCup.ApplicationServices.Mappings
         {
             this.CreateMap<DataAccess.Entities.Battle, Battle>()
                 .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
-                .ForMember(x => x.Style, y => y.MapFrom(z => z.Style));
+                .ForMember(x => x.Style, y => y.MapFrom(z => z.Style))
+                .ForMember(x => x.Beers, y => y.MapFrom(z => z.Beers != null ? z.Beers : new List<DataAccess.Entities.Beer>()));
 
             this.CreateMap<Battle, DataAccess.Entities.Battle>()
                 .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
