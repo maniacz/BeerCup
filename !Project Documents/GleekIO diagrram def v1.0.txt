@@ -1,0 +1,15 @@
+User {1}-has-{1..n} Battles_Attendance_History
+User {0..n}-attends-{0..n} Battle
+Battle {1}-competes-{1..n} Beer
+Battle {1}-has-{1} Battle_Results
+Beer {1}-is made by-{1} Brewery
+Brewery {1}-starts in-{1..n} Battle
+User {0..n}-votes-{1..n} Beer
+Admin {1}-starts/cancel/postpone-{1..n} Battle
+Admin {1}-manages-{1} Cup_Schedule
+User {1}-reviewes-{1} Cup_Schedule
+Cup_Schedule {1}-contains-{1..n} Battle
+Battles_Attendance_History{1}-records-{1..n} Battle
+Admin {1}-announces-{1} Battle_Results
+Admin {1}-enters-{1} First_Round_Distribution
+Brewery {1}-is assigned in-{1} First_Round_Distribution
