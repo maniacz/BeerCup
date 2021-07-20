@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BeerCup.ApplicationServices.Components.OpenWeather;
 
 namespace BeerCup.WebAPI
 {
@@ -43,6 +44,7 @@ namespace BeerCup.WebAPI
 
             services.AddTransient<ICommandExecutor, CommandExecutor>();
             services.AddTransient<IQueryExecutor, QueryExecutor>();
+            services.AddTransient<IWeatherConnector, WeatherConnector>();
 
             services.AddAutoMapper(typeof(BattlesProfile).Assembly);
 
