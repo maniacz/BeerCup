@@ -16,5 +16,7 @@ namespace BeerCup.DataAccess.Entities
         public string Password { get; set; }
 
         public List<Beer> VotedBeers { get; set; }
+
+        //todo: dodać role np. admin, właściciel browaru, głosujący itp.
     }
 }

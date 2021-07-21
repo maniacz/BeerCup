@@ -47,6 +47,7 @@ namespace BeerCup.ApplicationServices.API.Handlers
                 };
             }
 
+            //todo: jest już automaper więc poniższe mapowanie można chyba wywalić
             var domainBeers = beers.Select(b => new Domain.Models.Beer()
             {
                 BeerId = b.Id,

@@ -19,6 +19,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BeerCup.ApplicationServices.Components.OpenWeather;
+using Microsoft.AspNetCore.Authentication;
+using BeerCup.WebAPI.Authentication;
 
 namespace BeerCup.WebAPI
 {
@@ -34,6 +36,9 @@ namespace BeerCup.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
             services.AddMvcCore()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddBeerRequestValidator>());
 
@@ -75,7 +80,7 @@ namespace BeerCup.WebAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
