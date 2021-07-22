@@ -24,5 +24,13 @@ namespace BeerCup.WebAPI.Controllers
         {
             return this.HandleRequest<GetUserRequest, GetUserResponse>(request);
         }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("")]
+        public Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
+        {
+            return this.HandleRequest<CreateUserRequest, CreateUserResponse>(request);
+        }
     }
 }

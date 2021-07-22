@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BeerCup.ApplicationServices.API.Domain;
 using BeerCup.ApplicationServices.API.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,12 @@ namespace BeerCup.ApplicationServices.Mappings
         public UserProfile()
         {
             this.CreateMap<DataAccess.Entities.User, User>()
-                .ForMember(x => x.Username, y => y.MapFrom(z => z.Username));
+                .ForMember(x => x.Username, y => y.MapFrom(z => z.Username))
+                .ForMember(x => x.Password, y => y.MapFrom(z => z.Password));
 
-            this.CreateMap<User, DataAccess.Entities.User>()
-                .ForMember(x => x.Username, y => y.MapFrom(z => z.Username));
+            this.CreateMap<CreateUserRequest, DataAccess.Entities.User>()
+                .ForMember(x => x.Username, y => y.MapFrom(z => z.Username))
+                .ForMember(x => x.Password, y => y.MapFrom(z => z.Password));
         }
     }
 }
