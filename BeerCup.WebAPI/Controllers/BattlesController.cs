@@ -2,6 +2,7 @@
 using BeerCup.DataAccess;
 using BeerCup.DataAccess.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,6 +21,7 @@ namespace BeerCup.WebAPI.Controllers
             logger.LogInformation("We are in BattleController");
         }
 
+        [Authorize]
         [HttpGet]
         [Route("")]
         public Task<IActionResult> GetAllBattles([FromQuery] GetBattlesRequest request)

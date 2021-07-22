@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BeerCup.ApplicationServices.API.Domain
 {
-    public class GetUserRequest : IRequest<GetUserResponse>
+    public class GetUserRequest : RequestBase, IRequest<GetUserResponse>
     {
         public string Username { get; set; }
 

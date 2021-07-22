@@ -27,6 +27,14 @@ namespace BeerCup.ApplicationServices.API.Handlers
 
         public async Task<GetBattlesResponse> Handle(GetBattlesRequest request, CancellationToken cancellationToken)
         {
+            if (request.RequestUsername == "uq")
+            {
+                return new GetBattlesResponse()
+                {
+                    Error = new ErrorModel(ErrorType.Unauthorized)
+                };
+            }
+
             var query = new GetBattlesQuery()
             {
                 Style = request.Style

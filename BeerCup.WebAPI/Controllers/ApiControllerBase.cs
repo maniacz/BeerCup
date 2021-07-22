@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BeerCup.WebAPI.Controllers
@@ -29,6 +30,15 @@ namespace BeerCup.WebAPI.Controllers
                     this.ModelState
                         .Where(x => x.Value.Errors.Any())
                         .Select(x => new { property = x.Key, errors = x.Value.Errors }));
+            }
+
+            var userName = this.User.FindFirst(ClaimTypes.Name).Value;
+            if (userName != null)
+            {
+                if (request is RequestBase)
+                {
+                    (request as RequestBase).RequestUsername = userName.ToString();
+                }
             }
 
             var response = await this.mediator.Send(request);
