@@ -32,13 +32,10 @@ namespace BeerCup.WebAPI.Controllers
                         .Select(x => new { property = x.Key, errors = x.Value.Errors }));
             }
 
-            var userName = this.User.FindFirst(ClaimTypes.Name).Value;
-            if (userName != null)
+            var userName = this.User.FindFirst(ClaimTypes.Name)?.Value;
+            if (userName != null && request is RequestBase)
             {
-                if (request is RequestBase)
-                {
-                    (request as RequestBase).RequestUsername = userName.ToString();
-                }
+                (request as RequestBase).RequestUsername = userName.ToString();
             }
 
             var response = await this.mediator.Send(request);
