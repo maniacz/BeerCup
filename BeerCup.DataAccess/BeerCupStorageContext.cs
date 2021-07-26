@@ -12,7 +12,12 @@ namespace BeerCup.DataAccess
     {
         public BeerCupStorageContext(DbContextOptions<BeerCupStorageContext> options) : base(options)
         {
+        }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>().Property(p => p.Role).HasDefaultValue(UserRole.Voter);
         }
 
         public DbSet<User> Users { get; set; }
