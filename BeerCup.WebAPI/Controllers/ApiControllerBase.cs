@@ -32,7 +32,7 @@ namespace BeerCup.WebAPI.Controllers
                         .Select(x => new { property = x.Key, errors = x.Value.Errors }));
             }
 
-            var userName = this.User.FindFirst(ClaimTypes.Name)?.Value;
+            var userName = GetUserFromClaims();
             if (userName != null && request is RequestBase)
             {
                 (request as RequestBase).RequestUsername = userName.ToString();
@@ -45,6 +45,12 @@ namespace BeerCup.WebAPI.Controllers
             }
 
             return Ok(response);
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public string GetUserFromClaims()
+        {
+            return this.User.FindFirstValue(ClaimTypes.Name);
         }
 
         private IActionResult ErrorResponse(ErrorModel errorModel)
