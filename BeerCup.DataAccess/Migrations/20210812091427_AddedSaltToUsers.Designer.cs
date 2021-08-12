@@ -3,14 +3,16 @@ using BeerCup.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BeerCup.DataAccess.Migrations
 {
     [DbContext(typeof(BeerCupStorageContext))]
-    partial class BeerCupStorageContextModelSnapshot : ModelSnapshot
+    [Migration("20210812091427_AddedSaltToUsers")]
+    partial class AddedSaltToUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,8 +98,8 @@ namespace BeerCup.DataAccess.Migrations
 
                     b.Property<string>("Salt")
                         .IsRequired()
-                        .HasMaxLength(24)
-                        .HasColumnType("nvarchar(24)");
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<string>("Username")
                         .IsRequired()

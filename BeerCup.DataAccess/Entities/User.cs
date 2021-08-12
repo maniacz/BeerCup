@@ -16,6 +16,10 @@ namespace BeerCup.DataAccess.Entities
         [MaxLength(50)]
         public string Password { get; set; }
 
+        [Required]
+        [MaxLength(24)]
+        public string Salt { get; set; }
+
         public List<Beer> VotedBeers { get; set; }
 
         [Required]

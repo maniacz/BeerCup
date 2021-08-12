@@ -18,8 +18,8 @@ namespace BeerCup.ApplicationServices.Mappings
                 .ForMember(x => x.Password, y => y.MapFrom(z => z.Password));
 
             this.CreateMap<CreateUserRequest, DataAccess.Entities.User>()
-                .ForMember(x => x.Username, y => y.MapFrom(z => z.Username))
-                .ForMember(x => x.Password, y => y.MapFrom(z => z.Password));
+                .ForMember(x => x.Username, y => y.MapFrom(z => z.Username));
+                //.ForMember(x => x.Password, y => y.MapFrom(z => z.Password));
         }
     }
 }

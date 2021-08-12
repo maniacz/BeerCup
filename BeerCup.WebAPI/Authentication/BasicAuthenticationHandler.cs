@@ -1,4 +1,5 @@
-﻿using BeerCup.DataAccess;
+﻿using BeerCup.ApplicationServices.Encryption;
+using BeerCup.DataAccess;
 using BeerCup.DataAccess.CQRS.Queries;
 using BeerCup.DataAccess.Entities;
 using Microsoft.AspNetCore.Authentication;
@@ -58,10 +59,13 @@ namespace BeerCup.WebAPI.Authentication
                 };
                 user = await this.queryExecutor.Execute(query);
 
-                // TODO: HASH!
-                if (user == null || user.Password != password)
+                if (user == null)
                 {
                     return AuthenticateResult.Fail("Invalid Authorization Header");
+                }
+                if (!Encryption.IsValidPassword(user.Password, user.Salt, password))
+                {
+                    return AuthenticateResult.Fail("Invalid Password");
                 }
             }
             catch
