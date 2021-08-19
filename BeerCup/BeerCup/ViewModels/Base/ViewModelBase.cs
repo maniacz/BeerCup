@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BeerCup.ViewModels.Base
 {
@@ -13,6 +14,11 @@ namespace BeerCup.ViewModels.Base
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public virtual Task InitializeAsync(object data)
+        {
+            return Task.FromResult(false);
         }
     }
 }
