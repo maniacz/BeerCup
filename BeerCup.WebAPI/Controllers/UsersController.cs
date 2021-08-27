@@ -37,20 +37,44 @@ namespace BeerCup.WebAPI.Controllers
 
         [HttpGet]
         [Route("me")]
-        public Task<IActionResult> GetMe([FromQuery] GetUserRequest request)
+        public Task<IActionResult> GetMe()
         {
-            request.Username = this.GetUserFromClaims();
-            return this.HandleRequest<GetUserRequest, GetUserResponse>(request);
+            //var user = this.GetUserFromClaims();
+            //if (user != null)
+            //{
+            //    return Task.FromResult(Ok() as IActionResult);
+            //}
+            //else
+            //{
+            //    return Task.FromResult(Unauthorized() as IActionResult);
+            //}
+            return Task.FromResult(Ok() as IActionResult);
+        }
+
+        [HttpGet]
+        [Route("authenticate")]
+        public Task<IActionResult> AuthenticateUser()
+        {
+            var basicAuthenticationCredentials = GetMyCredentialsFromBasicAuthentication();
+            var request = new AuthenticationRequest()
+            {
+                Username = basicAuthenticationCredentials["username"],
+                Password = basicAuthenticationCredentials["password"]
+            };
+            return this.HandleRequest<AuthenticationRequest, AuthenticationResponse>(request);
         }
 
         //todo: Czy to nie powinno być przeniesione do innej klasy/folderu?
-        private string GetMyUsernameFromBasicAuthentication()
+        private Dictionary<string, string> GetMyCredentialsFromBasicAuthentication()
         {
+            var credentials = new Dictionary<string, string>();
             var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
             var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
-            var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
-            var username = credentials[0];
-            return username;
+            var credentialsArray = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
+            credentials.Add("username", credentialsArray[0]);
+            credentials.Add("password", credentialsArray[1]);
+
+            return credentials;
         }
     }
 }

@@ -27,6 +27,7 @@ namespace BeerCup.ApplicationServices.API.Handlers
 
         public async Task<GetBattlesResponse> Handle(GetBattlesRequest request, CancellationToken cancellationToken)
         {
+            //todo: do wywalenia
             if (request.RequestUsername == "uq")
             {
                 return new GetBattlesResponse()

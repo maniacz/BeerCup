@@ -21,17 +21,20 @@ namespace BeerCup.Repository
                 HttpClient httpClient = CreateHttpClient(authToken);
                 string jsonResult = string.Empty;
 
-                var responseMessage = await Policy
+                var responseMessage = Policy
                     .Handle<WebException>(ex =>
                     {
                         Debug.WriteLine($"{ex.GetType().Name} : {ex.Message}");
                         return true;
                     })
                     .WaitAndRetryAsync(
-                        3,
+                        1,
                         retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
                     )
-                    .ExecuteAsync(async () => await httpClient.GetAsync(uri));
+                    .ExecuteAsync(() => httpClient.GetAsync(uri))
+                    .GetAwaiter().GetResult();
+
+                //var responseMessage = await httpClient.GetAsync(uri);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -122,7 +125,7 @@ namespace BeerCup.Repository
                         return true;
                     })
                     .WaitAndRetryAsync(
-                        3,
+                        1,
                         retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
                     )
                     .ExecuteAsync(async () => await httpClient.PostAsync(uri, content));
@@ -158,7 +161,7 @@ namespace BeerCup.Repository
 
             if (!string.IsNullOrEmpty(authToken))
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authToken);
             }
 
             return httpClient;

@@ -1,4 +1,5 @@
 ﻿using BeerCup.Bootstrap;
+using BeerCup.Contracts.Services.Data;
 using BeerCup.Contracts.Services.General;
 using BeerCup.Services;
 using BeerCup.Views;
@@ -19,9 +20,17 @@ namespace BeerCup
 
             InitializeNavigation();
 
+            InitializeDebug();
+
             //todo: wyjebać
             //DependencyService.Register<MockDataStore>();
             //MainPage = new AppShell();
+        }
+
+        private async void InitializeDebug()
+        {
+            var authenticationService = AppContainer.Resolve<IAuthenticationService>();
+            var response = await authenticationService.Authenticate("uq", "pass");
         }
 
         private void InitializeNavigation()
