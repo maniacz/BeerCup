@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace BeerCup.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainView : MasterDetailPage
+    public partial class MenuView : ContentPage
     {
-        public MainView()
+        public MenuView()
         {
             InitializeComponent();
         }

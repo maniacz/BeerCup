@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BeerCup.Models
+namespace BeerCup.Mobile.Models
 {
     public class AuthenticationResponse
     {
         public bool IsAuthenticated { get; set; }
 
-        public User User { get; set; }
+        public User Data { get; set; }
     }
 }

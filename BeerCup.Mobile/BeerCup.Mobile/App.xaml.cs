@@ -1,6 +1,6 @@
-﻿using BeerCup.Bootstrap;
-using BeerCup.Contracts.Services.Data;
-using BeerCup.Contracts.Services.General;
+﻿using BeerCup.Mobile.Contracts.Services.Data;
+using BeerCup.Mobile.Bootstrap;
+using BeerCup.Mobile.Contracts.Services.General;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -17,9 +17,9 @@ namespace BeerCup.Mobile
 
             InitializeNavigation();
 
-            InitializeDebug();
+            //InitializeDebug();
 
-            MainPage = new MainPage();
+            //MainPage = new MainPage();
         }
 
         private async void InitializeDebug()

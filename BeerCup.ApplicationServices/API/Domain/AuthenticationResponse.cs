@@ -9,6 +9,6 @@ namespace BeerCup.ApplicationServices.API.Domain
 {
     public class AuthenticationResponse : ResponseBase<User>
     {
-        public bool IsUserAuthenticated { get; set; }
+        public bool IsAuthenticated { get; set; }
     }
 }

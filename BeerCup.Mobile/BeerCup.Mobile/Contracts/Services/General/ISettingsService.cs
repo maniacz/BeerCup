@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BeerCup.Contracts.Services.General
+namespace BeerCup.Mobile.Contracts.Services.General
 {
     public interface ISettingsService
     {

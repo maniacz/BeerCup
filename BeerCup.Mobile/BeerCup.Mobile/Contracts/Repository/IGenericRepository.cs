@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BeerCup.Contracts.Repository
+namespace BeerCup.Mobile.Contracts.Repository
 {
     public interface IGenericRepository
     {

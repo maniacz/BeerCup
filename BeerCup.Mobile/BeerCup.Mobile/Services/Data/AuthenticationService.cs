@@ -1,13 +1,13 @@
-﻿using BeerCup.Constants;
-using BeerCup.Contracts.Repository;
-using BeerCup.Contracts.Services.Data;
-using BeerCup.Models;
+﻿using BeerCup.Mobile.Contracts.Repository;
+using BeerCup.Mobile.Contracts.Services.Data;
+using BeerCup.Mobile.Constants;
+using BeerCup.Mobile.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BeerCup.Services.Data
+namespace BeerCup.Mobile.Services.Data
 {
     public class AuthenticationService : IAuthenticationService
     {

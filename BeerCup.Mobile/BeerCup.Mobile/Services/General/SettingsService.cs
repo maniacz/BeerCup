@@ -1,11 +1,11 @@
-﻿using BeerCup.Contracts.Services.General;
+﻿using BeerCup.Mobile.Contracts.Services.General;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BeerCup.Services.General
+namespace BeerCup.Mobile.Services.General
 {
     public class SettingsService : ISettingsService
     {

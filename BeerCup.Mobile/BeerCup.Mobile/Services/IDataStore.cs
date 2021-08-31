@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BeerCup.Services
+namespace BeerCup.Mobile.Services
 {
     public interface IDataStore<T>
     {

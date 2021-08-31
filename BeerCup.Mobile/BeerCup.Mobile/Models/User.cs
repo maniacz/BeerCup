@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BeerCup.Models
+namespace BeerCup.Mobile.Models
 {
     public class User
     {
@@ -11,7 +11,6 @@ namespace BeerCup.Models
 
         public string Password { get; set; }
 
-        //todo: Tu może trza osobno se enuma w projekcie zrobić (low coupling)
         public UserRole Role { get; set; }
     }
 }

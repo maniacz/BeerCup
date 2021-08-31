@@ -1,17 +1,17 @@
 ﻿using Autofac;
-using BeerCup.Contracts.Repository;
-using BeerCup.Contracts.Services.Data;
-using BeerCup.Contracts.Services.General;
+using BeerCup.Mobile.Contracts.Repository;
+using BeerCup.Mobile.Contracts.Services.Data;
+using BeerCup.Mobile.Contracts.Services.General;
+using BeerCup.Mobile.Services.Data;
+using BeerCup.Mobile.Services.General;
 //using BeerCup.DataAccess;
-using BeerCup.Repository;
-using BeerCup.Services.Data;
-using BeerCup.Services.General;
-using BeerCup.ViewModels;
+using BeerCup.Mobile.Repository;
+using BeerCup.Mobile.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BeerCup.Bootstrap
+namespace BeerCup.Mobile.Bootstrap
 {
     public class AppContainer
     {
@@ -23,6 +23,7 @@ namespace BeerCup.Bootstrap
 
             //ViewModels
             builder.RegisterType<MainViewModel>();
+            builder.RegisterType<LoginViewModel>();
 
             //services - data
             //builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)); //todo: Czy to jest potrzebne?

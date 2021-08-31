@@ -1,15 +1,15 @@
-﻿using BeerCup.Bootstrap;
-using BeerCup.Contracts.Services.General;
-using BeerCup.ViewModels;
-using BeerCup.ViewModels.Base;
-using BeerCup.Views;
+﻿using BeerCup.Mobile.ViewModels;
+using BeerCup.Mobile.ViewModels.Base;
+using BeerCup.Mobile.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using BeerCup.Mobile.Contracts.Services.General;
+using BeerCup.Mobile.Bootstrap;
 
-namespace BeerCup.Services.General
+namespace BeerCup.Mobile.Services.General
 {
     public class NavigationService : INavigationService
     {
@@ -26,12 +26,13 @@ namespace BeerCup.Services.General
         private void CreatePageViewModelMappings()
         {
             _mappings.Add(typeof(MainViewModel), typeof(MainView));
+            _mappings.Add(typeof(LoginViewModel), typeof(LoginView));
         }
 
         public async Task InitializeAsync()
         {
             //todo: authentication
-            await NavigateToAsync<MainViewModel>();
+            await NavigateToAsync<LoginViewModel>();
         }
 
         private Task NavigateToAsync<TViewModel>() where TViewModel : ViewModelBase

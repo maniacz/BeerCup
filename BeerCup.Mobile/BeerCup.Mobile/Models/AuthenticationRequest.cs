@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BeerCup.Models
+namespace BeerCup.Mobile.Models
 {
     public class AuthenticationRequest
     {

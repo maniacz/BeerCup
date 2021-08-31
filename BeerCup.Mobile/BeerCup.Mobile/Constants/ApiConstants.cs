@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BeerCup.Constants
+namespace BeerCup.Mobile.Constants
 {
     public static class ApiConstants
     {

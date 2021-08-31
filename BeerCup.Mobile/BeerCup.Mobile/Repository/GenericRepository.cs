@@ -1,4 +1,4 @@
-﻿using BeerCup.Contracts.Repository;
+﻿using BeerCup.Mobile.Contracts.Repository;
 using Newtonsoft.Json;
 using Polly;
 using System;
@@ -10,7 +10,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BeerCup.Repository
+namespace BeerCup.Mobile.Repository
 {
     public class GenericRepository : IGenericRepository
     {

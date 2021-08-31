@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BeerCup.Models
+namespace BeerCup.Mobile.Models
 {
     public class Item
     {

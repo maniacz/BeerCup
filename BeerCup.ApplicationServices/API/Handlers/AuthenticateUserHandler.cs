@@ -50,13 +50,13 @@ namespace BeerCup.ApplicationServices.API.Handlers
             {
                 return new AuthenticationResponse()
                 {
-                    IsUserAuthenticated = false
+                    IsAuthenticated = false
                 };
             }
 
             return new AuthenticationResponse()
             {
-                IsUserAuthenticated = true,
+                IsAuthenticated = true,
                 Data = _mapper.Map<User>(userFromDb)
             };
         }
