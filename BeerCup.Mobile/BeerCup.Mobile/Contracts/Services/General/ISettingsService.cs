@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BeerCup.Mobile.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,5 +12,6 @@ namespace BeerCup.Mobile.Contracts.Services.General
 
         string UserNameSetting { get; set; }
         string UserIdSetting { get; set; }
+        UserRole UserRoleSetting { get; set; }
     }
 }

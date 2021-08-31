@@ -8,19 +8,22 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using BeerCup.Mobile.Contracts.Services.General;
 using BeerCup.Mobile.Bootstrap;
+using BeerCup.Mobile.Contracts.Services.Data;
 
 namespace BeerCup.Mobile.Services.General
 {
     public class NavigationService : INavigationService
     {
         Dictionary<Type, Type> _mappings;
+        private readonly IAuthenticationService _authenticationService;
 
         private Application CurrentApplication => Application.Current;
 
-        public NavigationService()
+        public NavigationService(IAuthenticationService authenticationService)
         {
             _mappings = new Dictionary<Type, Type>();
             CreatePageViewModelMappings();
+            _authenticationService = authenticationService;
         }
 
         private void CreatePageViewModelMappings()
@@ -31,11 +34,11 @@ namespace BeerCup.Mobile.Services.General
 
         public async Task InitializeAsync()
         {
-            //todo: authentication
+            //_authenticationService.IsUserAuthenticated
             await NavigateToAsync<LoginViewModel>();
         }
 
-        private Task NavigateToAsync<TViewModel>() where TViewModel : ViewModelBase
+        public Task NavigateToAsync<TViewModel>() where TViewModel : ViewModelBase
         {
             return InternalNavigateToAsync(typeof(TViewModel), null);
         }

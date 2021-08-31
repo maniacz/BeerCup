@@ -12,14 +12,17 @@ namespace BeerCup.Mobile.ViewModels
     public class LoginViewModel : ViewModelBase
     {
         private readonly IAuthenticationService _authenticationService;
+        private readonly ISettingsService _settingsService;
+
 
         private string _username;
         private string _password;
 
-        public LoginViewModel(IAuthenticationService authenticationService, INavigationService navigationService)
+        public LoginViewModel(IAuthenticationService authenticationService, INavigationService navigationService, ISettingsService settingsService)
             : base(navigationService)
         {
             _authenticationService = authenticationService;
+            _settingsService = settingsService;
         }
 
         public ICommand LoginCommand => new Command(OnLogin);
@@ -46,13 +49,19 @@ namespace BeerCup.Mobile.ViewModels
 
         private async void OnLogin()
         {
-            bool test = false;
-            //todo: connectionService
-            //var authenticationResponse = await _authenticationService.Authenticate(Username, Password);
-            //if (authenticationResponse.IsAuthenticated)
-            //{
-            //    await _navigationService.NavigateToAsync<MainViewModel>();
-            //}
+        //todo: connectionService
+        var authenticationResponse = await _authenticationService.Authenticate(Username, Password);
+            if (authenticationResponse.IsAuthenticated)
+            {
+                _settingsService.UserNameSetting = authenticationResponse.Data.Username;
+                _settingsService.UserRoleSetting = authenticationResponse.Data.Role;
+
+                await _navigationService.NavigateToAsync<MainViewModel>();
+            }
+            else
+            {
+                //todo: dodać dialogService, który zwróci jakiś pop up z info z niewłaściwym logowaniem
+            }
 
         }
     }

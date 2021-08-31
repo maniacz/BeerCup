@@ -1,4 +1,5 @@
 ﻿using BeerCup.Mobile.Contracts.Services.General;
+using BeerCup.Mobile.Enums;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using System;
@@ -38,6 +39,22 @@ namespace BeerCup.Mobile.Services.General
         {
             get => GetItem(UserId);
             set => AddItem(UserId, value);
+        }
+
+        public UserRole UserRoleSetting
+        {
+            //get => _settings.GetValueOrDefault(nameof(UserRoleSetting), (int) UserRole.Voter);
+            //set => _settings.AddOrUpdateValue(nameof(UserRoleSetting), (int)value);
+
+            get
+            {
+                var role =_settings.GetValueOrDefault(nameof(UserRoleSetting), (int) UserRole.Voter);
+                return (UserRole)role;
+            }
+            set
+            {
+                _settings.AddOrUpdateValue(nameof(UserRoleSetting), (int)value);
+            }
         }
     }
 }

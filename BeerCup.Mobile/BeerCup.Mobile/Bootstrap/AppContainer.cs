@@ -31,6 +31,7 @@ namespace BeerCup.Mobile.Bootstrap
 
             //services - general
             builder.RegisterType(typeof(NavigationService)).As(typeof(INavigationService));
+            builder.RegisterType(typeof(SettingsService)).As(typeof(ISettingsService));
 
             //General
             builder.RegisterType(typeof(GenericRepository)).As(typeof(IGenericRepository));

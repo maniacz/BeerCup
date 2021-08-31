@@ -34,8 +34,14 @@ namespace BeerCup.Mobile.Services.Data
             //};
 
             var authToken = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}"));
-
-            return await _genericRepository.GetAsync<AuthenticationResponse>(uri.ToString(), authToken);
+            try
+            {
+                return await _genericRepository.GetAsync<AuthenticationResponse>(uri.ToString(), authToken);
+            }
+            catch (Exception)
+            {
+                return new AuthenticationResponse { IsAuthenticated = false };
+            }
         }
 
         public Task<AuthenticationResponse> Register(string username, string password, string email)
