@@ -12,6 +12,6 @@ namespace BeerCup.Mobile.Contracts.Services.Data
 
         Task<AuthenticationResponse> Authenticate(string username, string password);
 
-        bool IsUserAuthenticated { get; set; }
+        bool IsUserAuthenticated();
     }
 }

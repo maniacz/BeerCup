@@ -9,6 +9,8 @@
         <views:MenuView BindingContext="{Binding MenuViewModel}" />
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
-        <ContentPage></ContentPage>
+        <ContentPage>
+            <Label Text="Main View" />
+        </ContentPage>
     </MasterDetailPage.Detail>
 </MasterDetailPage>

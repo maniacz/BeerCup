@@ -11,7 +11,7 @@ namespace BeerCup.Mobile.Contracts.Services.General
         string GetItem(string key);
 
         string UserNameSetting { get; set; }
-        string UserIdSetting { get; set; }
+        //string UserIdSetting { get; set; }
         UserRole UserRoleSetting { get; set; }
     }
 }

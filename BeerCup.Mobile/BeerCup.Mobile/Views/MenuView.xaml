@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BeerCup.Mobile.Views.MenuView"
              xmlns:behaviors="clr-namespace:BeerCup.Mobile.Behaviours"
-             xmlns:templates="clr-namespace:BeerCup.Mobile.Templates">
+             xmlns:templates="clr-namespace:BeerCup.Mobile.Templates"
+             Title=" YYY">
     <Grid RowSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
@@ -13,12 +14,12 @@
             Grid.Row="0">
             <Image Source="carousel1.jpg" Aspect="AspectFill"></Image>
             <Grid BackgroundColor="#444444" Opacity="0.8"/>
-            <Label Text="{Binding WelcomeText}" Style="{StaticResource MenuLabelStyle}"/>
+            <Label Text="{Binding WelcomeText}" /> <!--Style="{StaticResource MenuLabelStyle}"/>-->
         </Grid>
         <Grid Grid.Row="1">
             <ListView ItemsSource="{Binding MenuItems}"  CachingStrategy="RecycleElement"
                 SeparatorVisibility="None" HasUnevenRows="True" >
-                <!--<ListView.Behaviors>
+                <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior EventName="ItemTapped" Command="{Binding MenuItemTappedCommand}"></behaviors:EventToCommandBehavior>
                 </ListView.Behaviors>
                 <ListView.ItemTemplate>
@@ -27,7 +28,7 @@
                             <templates:MenuItemTemplate />
                         </ViewCell>
                     </DataTemplate>
-                </ListView.ItemTemplate>-->
+                </ListView.ItemTemplate>
             </ListView>
         </Grid>
     </Grid>

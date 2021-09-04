@@ -29,13 +29,27 @@ namespace BeerCup.Mobile.Services.General
         private void CreatePageViewModelMappings()
         {
             _mappings.Add(typeof(MainViewModel), typeof(MainView));
+            _mappings.Add(typeof(MenuViewModel), typeof(MenuView));
             _mappings.Add(typeof(LoginViewModel), typeof(LoginView));
+            _mappings.Add(typeof(HomeViewModel), typeof(HomeView));
+            _mappings.Add(typeof(BattleViewModel), typeof(BattleView));
         }
 
         public async Task InitializeAsync()
         {
-            //_authenticationService.IsUserAuthenticated
-            await NavigateToAsync<LoginViewModel>();
+            if (_authenticationService.IsUserAuthenticated())
+            {
+                await NavigateToAsync<MainViewModel>();
+            }
+            else
+            {
+                await NavigateToAsync<LoginViewModel>();
+            }
+        }
+
+        public Task NavigateToAsync(Type viewModelType)
+        {
+            return InternalNavigateToAsync(viewModelType, null);
         }
 
         public Task NavigateToAsync<TViewModel>() where TViewModel : ViewModelBase
@@ -47,7 +61,44 @@ namespace BeerCup.Mobile.Services.General
         {
             Page page = CreateAndBindPage(viewModelType);
 
-            CurrentApplication.MainPage = page;
+            if (page is MainView || page is LoginView)
+            {
+                CurrentApplication.MainPage = page;
+            }
+            else if (CurrentApplication.MainPage is MainView)
+            {
+                var mainPage = CurrentApplication.MainPage as MainView;
+
+                if (mainPage.Detail is BeerCupNavigationPage navigationPage)
+                {
+                    var currentPage = navigationPage.CurrentPage;
+
+                    if (currentPage.GetType() != page.GetType())
+                    {
+                        await navigationPage.PushAsync(page);
+                    }
+                }
+                else
+                {
+                    navigationPage = new BeerCupNavigationPage(page);
+                    mainPage.Detail = navigationPage;
+                }
+
+                mainPage.IsPresented = false;
+            }
+            else
+            {
+                var navigationPage = CurrentApplication.MainPage as BeerCupNavigationPage;
+
+                if (navigationPage != null)
+                {
+                    await navigationPage.PushAsync(page);
+                }
+                else
+                {
+                    CurrentApplication.MainPage = new BeerCupNavigationPage(page);
+                }
+            }
 
             await (page.BindingContext as ViewModelBase).InitializeAsync(parameter);
         }
@@ -71,5 +122,12 @@ namespace BeerCup.Mobile.Services.General
 
             return _mappings[viewModelType];
         }
+
+        public async Task ClearBackStack()
+        {
+            await CurrentApplication.MainPage.Navigation.PopToRootAsync();
+        }
+
+        //todo: zaimplementuj NavigateBackAsync() i PopToRootAsync() jeśli będzie potrzebne
     }
 }

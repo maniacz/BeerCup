@@ -4,11 +4,9 @@ using System.Text;
 
 namespace BeerCup.Mobile.Enums
 {
-    public enum UserRole
+    public enum MenuItemType
     {
-        None,
-        Admin,
-        BreweryOwner,
-        Voter
+        Battle,
+        Logout
     }
 }

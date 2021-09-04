@@ -23,7 +23,10 @@ namespace BeerCup.Mobile.Bootstrap
 
             //ViewModels
             builder.RegisterType<MainViewModel>();
+            builder.RegisterType<MenuViewModel>();
             builder.RegisterType<LoginViewModel>();
+            builder.RegisterType<HomeViewModel>();
+            builder.RegisterType<BattleViewModel>();
 
             //services - data
             //builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)); //todo: Czy to jest potrzebne?
@@ -31,7 +34,7 @@ namespace BeerCup.Mobile.Bootstrap
 
             //services - general
             builder.RegisterType(typeof(NavigationService)).As(typeof(INavigationService));
-            builder.RegisterType(typeof(SettingsService)).As(typeof(ISettingsService));
+            builder.RegisterType(typeof(SettingsService)).As(typeof(ISettingsService)).SingleInstance();
 
             //General
             builder.RegisterType(typeof(GenericRepository)).As(typeof(IGenericRepository));
