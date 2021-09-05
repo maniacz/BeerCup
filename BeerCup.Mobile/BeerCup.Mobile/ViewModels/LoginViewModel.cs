@@ -49,12 +49,25 @@ namespace BeerCup.Mobile.ViewModels
 
         private async void OnLogin()
         {
-        //todo: connectionService
-        var authenticationResponse = await _authenticationService.Authenticate(Username, Password);
+            //todo: DEBUG - wywalić
+            Username = "uq";
+            Password = "pass";
+
+            //todo: connectionService
+            var authenticationResponse = await _authenticationService.Authenticate(Username, Password);
             if (authenticationResponse.IsAuthenticated)
             {
                 _settingsService.UserNameSetting = authenticationResponse.Data.Username;
                 _settingsService.UserRoleSetting = authenticationResponse.Data.Role;
+
+                if (authenticationResponse.Data.Role == Enums.UserRole.Voter)
+                {
+                    await _navigationService.NavigateToAsync<MainViewModel>(authenticationResponse.Data.Role);
+                }
+
+
+
+
 
                 await _navigationService.NavigateToAsync<MainViewModel>();
             }

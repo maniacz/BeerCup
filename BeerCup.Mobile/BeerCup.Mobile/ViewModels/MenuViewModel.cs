@@ -13,15 +13,94 @@ namespace BeerCup.Mobile.ViewModels
 {
     public class MenuViewModel : ViewModelBase
     {
-        private ObservableCollection<MainMenuItem> _menuItems;
+        private ObservableCollection<MainMenuItem> _userMenuItems;
         private readonly ISettingsService _settingsService;
+        private Dictionary<MenuItemType, MainMenuItem> _menuItems;
 
         public MenuViewModel(INavigationService navigationService, ISettingsService settingsService)
             : base(navigationService)
         {
             _settingsService = settingsService;
-            _menuItems = new ObservableCollection<MainMenuItem>();
-            LoadMenuItems();
+            _userMenuItems = new ObservableCollection<MainMenuItem>();
+            _menuItems = PopulateMenuItems();
+
+            switch (_settingsService.UserRoleSetting)
+            {
+                case UserRole.None:
+                    break;
+                case UserRole.Admin:
+                    LoadAdminMenuItems();
+                    break;
+                case UserRole.BreweryOwner:
+                    LoadBreweryStatsMenuItems();
+                    break;
+                case UserRole.Voter:
+                    LoadVoterMenuItems();
+                    break;
+                default:
+                    break;
+            }
+            //LoadMenuItems();
+        }
+
+        private Dictionary<MenuItemType, MainMenuItem> PopulateMenuItems()
+        {
+            var menuItems = new Dictionary<MenuItemType, MainMenuItem>();
+
+            menuItems.Add(MenuItemType.Battle, new MainMenuItem
+            {
+                MenuText = "Bitwa",
+                ViewModelToLoad = typeof(BattleViewModel),
+                MenuItemType = MenuItemType.Battle
+            });
+            menuItems.Add(MenuItemType.Logout, new MainMenuItem
+            {
+                MenuText = "Wyloguj",
+                ViewModelToLoad = typeof(LoginViewModel),
+                MenuItemType = MenuItemType.Logout
+            });
+            menuItems.Add(MenuItemType.VoterHistory, new MainMenuItem
+            {
+                MenuText = "Bitwy na których byłem",
+                ViewModelToLoad = typeof(VoterHistoryViewModel),
+                MenuItemType = MenuItemType.VoterHistory
+            });
+            menuItems.Add(MenuItemType.AdminPanel, new MainMenuItem
+            {
+                MenuText = "Panel Admina",
+                ViewModelToLoad = typeof(VoterHistoryViewModel),
+                MenuItemType = MenuItemType.AdminPanel
+            });
+            menuItems.Add(MenuItemType.BreweryStats, new MainMenuItem
+            {
+                MenuText = "Statystyki mojego browaru",
+                ViewModelToLoad = typeof(VoterHistoryViewModel),
+                MenuItemType = MenuItemType.BreweryStats
+            });
+
+            return menuItems;
+        }
+
+        private void LoadAdminMenuItems()
+        {
+            _userMenuItems.Add(_menuItems[MenuItemType.AdminPanel]);
+            _userMenuItems.Add(_menuItems[MenuItemType.Battle]);
+            _userMenuItems.Add(_menuItems[MenuItemType.VoterHistory]);
+            _userMenuItems.Add(_menuItems[MenuItemType.Logout]);
+        }
+
+        private void LoadVoterMenuItems()
+        {
+            _userMenuItems.Add(_menuItems[MenuItemType.Battle]);
+            _userMenuItems.Add(_menuItems[MenuItemType.VoterHistory]);
+            _userMenuItems.Add(_menuItems[MenuItemType.Logout]);
+        }
+        private void LoadBreweryStatsMenuItems()
+        {
+            _userMenuItems.Add(_menuItems[MenuItemType.BreweryStats]);
+            _userMenuItems.Add(_menuItems[MenuItemType.Battle]);
+            _userMenuItems.Add(_menuItems[MenuItemType.VoterHistory]);
+            _userMenuItems.Add(_menuItems[MenuItemType.Logout]);
         }
 
         public string WelcomeText => "Hello " + _settingsService.UserNameSetting;
@@ -30,10 +109,10 @@ namespace BeerCup.Mobile.ViewModels
 
         public ObservableCollection<MainMenuItem> MenuItems
         {
-            get => _menuItems;
+            get => _userMenuItems;
             set
             {
-                _menuItems = value;
+                _userMenuItems = value;
                 OnPropertyChanged();
             }
         }
@@ -66,7 +145,7 @@ namespace BeerCup.Mobile.ViewModels
             {
                 MenuText = "Wyloguj",
                 ViewModelToLoad = typeof(LoginViewModel),
-                MenuItemType = MenuItemType.Battle
+                MenuItemType = MenuItemType.Logout
             });
         }
     }

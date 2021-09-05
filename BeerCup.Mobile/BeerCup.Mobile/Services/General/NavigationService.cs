@@ -33,6 +33,7 @@ namespace BeerCup.Mobile.Services.General
             _mappings.Add(typeof(LoginViewModel), typeof(LoginView));
             _mappings.Add(typeof(HomeViewModel), typeof(HomeView));
             _mappings.Add(typeof(BattleViewModel), typeof(BattleView));
+            _mappings.Add(typeof(BreweryStatsViewModel), typeof(BreweryStatsView));
         }
 
         public async Task InitializeAsync()
@@ -57,11 +58,27 @@ namespace BeerCup.Mobile.Services.General
             return InternalNavigateToAsync(typeof(TViewModel), null);
         }
 
+        public Task NavigateToAsync<TViewModel>(object parameter) where TViewModel : ViewModelBase
+        {
+            return InternalNavigateToAsync(typeof(TViewModel), parameter);
+        }
+
         private async Task InternalNavigateToAsync(Type viewModelType, object parameter)
         {
             Page page = CreateAndBindPage(viewModelType);
 
-            if (page is MainView || page is LoginView)
+            if (page is MainView)
+            {
+                if (parameter != null)
+                {
+                    bool temp = false;
+                }
+                else
+                {
+                    CurrentApplication.MainPage = page;
+                }
+            }
+            else if (page is LoginView)
             {
                 CurrentApplication.MainPage = page;
             }

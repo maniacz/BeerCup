@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using BeerCup.Mobile.Contracts.Services.General;
+using BeerCup.Mobile.Enums;
 
 namespace BeerCup.Mobile.Services.Data
 {
@@ -54,5 +55,8 @@ namespace BeerCup.Mobile.Services.Data
         {
             return !string.IsNullOrEmpty(_settingsService.UserNameSetting);
         }
+
+        public UserRole UserRole => _settingsService.UserRoleSetting;
+
     }
 }

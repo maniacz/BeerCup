@@ -32,7 +32,7 @@ namespace BeerCup.Mobile.ViewModels
             await Task.WhenAll
             (
                 _menuViewModel.InitializeAsync(data),
-                _navigationService.NavigateToAsync<HomeViewModel>()
+                _navigationService.NavigateToAsync<HomeViewModel>(data)
             );
 
         }

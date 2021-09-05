@@ -1,4 +1,5 @@
-﻿using BeerCup.Mobile.Models;
+﻿using BeerCup.Mobile.Enums;
+using BeerCup.Mobile.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,5 +14,7 @@ namespace BeerCup.Mobile.Contracts.Services.Data
         Task<AuthenticationResponse> Authenticate(string username, string password);
 
         bool IsUserAuthenticated();
+
+        UserRole UserRole { get; }
     }
 }

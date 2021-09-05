@@ -12,6 +12,8 @@ namespace BeerCup.Mobile.Contracts.Services.General
 
         Task NavigateToAsync<TViewModel>() where TViewModel : ViewModelBase;
 
+        Task NavigateToAsync<TViewModel>(object parameter) where TViewModel : ViewModelBase;
+
         Task NavigateToAsync(Type viewModelType);
 
         Task ClearBackStack();

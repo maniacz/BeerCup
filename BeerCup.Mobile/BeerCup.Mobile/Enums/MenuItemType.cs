@@ -7,6 +7,9 @@ namespace BeerCup.Mobile.Enums
     public enum MenuItemType
     {
         Battle,
+        VoterHistory,
+        AdminPanel,
+        BreweryStats,
         Logout
     }
 }
