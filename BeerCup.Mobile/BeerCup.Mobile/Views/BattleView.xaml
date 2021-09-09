@@ -1,12 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BeerCup.Mobile.Views.BattleView">
+             x:Class="BeerCup.Mobile.Views.BattleView"
+             xmlns:lv="clr-namespace:Xamarin.Forms.MultiSelectListView;assembly=Xamarin.Forms.MultiSelectListView">
     <ContentPage.Content>
         <StackLayout>
             <Label Text="BATTLE VIEW!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <ListView x:Name="StartingBeers" VerticalOptions="FillAndExpand" ItemsSource="{Binding Beers}" lv:MultiSelect.Enable="True">
+                <ListView.Behaviors>
+                    <lv:SelectedItemBehavior Command="{Binding BeerTappedCommand}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <lv:SelectableCell x:Name="SelectableCell">
+                            
+                            <lv:SelectableCell.CheckView>
+                                <Label Text="OK" />
+                            </lv:SelectableCell.CheckView>
+                            
+                            <lv:SelectableCell.DataView>
+                                <StackLayout Orientation="Vertical" Padding="20,0,20,0">
+                                    <Label Text="{Binding AssignedNumberInBattle}" />
+                                </StackLayout>
+                            </lv:SelectableCell.DataView>
+                            
+                        </lv:SelectableCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <Button Text="Głosuj" Command="{Binding VoteCommand}" />
+                </ListView.Footer>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

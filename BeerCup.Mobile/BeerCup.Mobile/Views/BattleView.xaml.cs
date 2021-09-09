@@ -1,4 +1,8 @@
-﻿using System;
+﻿using BeerCup.Mobile.Bootstrap;
+using BeerCup.Mobile.Contracts.Services.Data;
+using BeerCup.Mobile.Contracts.Services.General;
+using BeerCup.Mobile.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +19,10 @@ namespace BeerCup.Mobile.Views
         public BattleView()
         {
             InitializeComponent();
+            //todo: wywalić poniższe
+            var navigationService = AppContainer.Resolve<INavigationService>();
+            var votingDataService = AppContainer.Resolve<IVotingDataService>();
+            BindingContext = new BattleViewModel(votingDataService, navigationService);
         }
     }
 }

@@ -4,6 +4,7 @@ using BeerCup.Mobile.Contracts.Services.General;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using BeerCup.Mobile.Views;
 
 namespace BeerCup.Mobile
 {
@@ -20,6 +21,7 @@ namespace BeerCup.Mobile
             //InitializeDebug();
 
             //MainPage = new MainPage();
+            MainPage = new BattleView();
         }
 
         private async void InitializeDebug()

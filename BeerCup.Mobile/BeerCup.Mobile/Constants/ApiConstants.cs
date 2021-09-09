@@ -9,5 +9,6 @@ namespace BeerCup.Mobile.Constants
         public const string BaseApiUrl = "http://10.0.2.2/";
         public const string AuthenticateEndpoint = "BeerCup.WebAPI/Users/authenticate";
         public const string BeersEndpoint = "BeerCup.WebAPI/Beers";
+        public const string BattlesEndpoing = "BeerCup.WebAPI/Battles";
     }
 }
