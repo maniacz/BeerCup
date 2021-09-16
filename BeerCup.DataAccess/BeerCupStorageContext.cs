@@ -1,4 +1,5 @@
 ﻿using BeerCup.DataAccess.Entities;
+using BeerCup.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,5 +28,7 @@ namespace BeerCup.DataAccess
         public DbSet<Beer> Beers { get; set; }
 
         public DbSet<Brewery> Breweries { get; set; }
+
+        public DbSet<Vote> Votes { get; set; }
     }
 }

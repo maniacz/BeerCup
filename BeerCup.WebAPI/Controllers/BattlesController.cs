@@ -40,5 +40,11 @@ namespace BeerCup.WebAPI.Controllers
 
             return this.HandleRequest<GetBattleByIdRequest, GetBattleByIdResponse>(request);
         }
+
+        [HttpPost]
+        public Task<IActionResult> SendVotes([FromBody] SendVoteRequest request)
+        {
+            return this.HandleRequest<SendVoteRequest, SendVotesResponse>(request);
+        }
     }
 }

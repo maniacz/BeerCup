@@ -39,11 +39,6 @@ namespace BeerCup.WebAPI.Controllers
         [Route("")]
         public Task<IActionResult> AddBeer([FromBody] AddBeerRequest request)
         {
-            if (!this.ModelState.IsValid)
-            {
-                //return this.BadRequest("BAD_REQUEST_1234");
-            }
-
             return this.HandleRequest<AddBeerRequest, AddBeerResponse>(request);
         }
 
