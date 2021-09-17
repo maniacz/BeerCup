@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BeerCup.DataAccess.Entities.Base;
+using BeerCup.DataAccess.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -20,9 +22,9 @@ namespace BeerCup.DataAccess.Entities
         [MaxLength(24)]
         public string Salt { get; set; }
 
-        public List<Beer> VotedBeers { get; set; }
-
         [Required]
         public UserRole Role { get; set; }
+
+        public ICollection<Vote> Votes { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BeerCup.DataAccess.Entities;
+using BeerCup.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace BeerCup.DataAccess
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>().Property(p => p.Role).HasDefaultValue(UserRole.Voter);
+            modelBuilder.Entity<Vote>().HasIndex(v => new { v.UserId, v.BeerId }).IsUnique();
         }
 
         public DbSet<User> Users { get; set; }
@@ -27,5 +29,7 @@ namespace BeerCup.DataAccess
         public DbSet<Beer> Beers { get; set; }
 
         public DbSet<Brewery> Breweries { get; set; }
+
+        public DbSet<Vote> Votes { get; set; }
     }
 }

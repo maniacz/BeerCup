@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BeerCup.DataAccess.Entities
+namespace BeerCup.DataAccess.Enums
 {
     public enum UserRole
     {

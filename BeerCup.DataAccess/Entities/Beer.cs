@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BeerCup.DataAccess.Entities.Base;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,6 +17,6 @@ namespace BeerCup.DataAccess.Entities
 
         public int NumberInBattle { get; set; }
 
-        public List<User> VotingUsers { get; set; }
+        public ICollection<Vote> Votes { get; set; }
     }
 }
