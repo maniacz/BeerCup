@@ -19,6 +19,7 @@ namespace BeerCup.DataAccess
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>().Property(p => p.Role).HasDefaultValue(UserRole.Voter);
+            modelBuilder.Entity<Vote>().HasIndex(v => new { v.UserId, v.BeerId }).IsUnique();
         }
 
         public DbSet<User> Users { get; set; }
