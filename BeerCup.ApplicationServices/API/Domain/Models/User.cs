@@ -1,4 +1,5 @@
 ﻿using BeerCup.DataAccess.Entities;
+using BeerCup.DataAccess.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
