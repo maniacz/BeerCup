@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BeerCup.Mobile.Views.LoginView">
+    <StackLayout>
+        <Label Text="{Binding NonExistentProperty}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+        <Label Text="User:" />
+        <Entry x:Name="user" Text="{Binding Username, Mode=TwoWay}"/>
+        <Label Text="Password:" />
+        <Entry x:Name="password" IsPassword="True" Text="{Binding Password}"/>
+        <Button Text="Login" Command="{Binding LoginCommand}" />
+    </StackLayout>
+</ContentPage>
