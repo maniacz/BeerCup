@@ -6,6 +6,7 @@ namespace BeerCup.DataAccess.Enums
 {
     public enum UserRole
     {
+        None,
         Admin,
         BreweryOwner,
         Voter
