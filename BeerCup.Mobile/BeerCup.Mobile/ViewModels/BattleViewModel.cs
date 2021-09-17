@@ -26,7 +26,7 @@ namespace BeerCup.Mobile.ViewModels
             if (Beers.SelectedItems.Count() == 2)
             {
                 _votingDataService.SendVotes(Beers.SelectedItems);
-                _navigationService.NavigateToAsync<HomeViewModel>();
+                //_navigationService.NavigateToAsync<HomeViewModel>();
             }
         }
 

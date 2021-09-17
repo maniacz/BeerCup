@@ -8,6 +8,6 @@ namespace BeerCup.Mobile.Contracts.Services.Data
 {
     public interface IVotingDataService
     {
-        Task<IEnumerable<Beer>> SendVotes(IEnumerable<Beer> votes);
+        Task<IEnumerable<Vote>> SendVotes(IEnumerable<Beer> votes);
     }
 }

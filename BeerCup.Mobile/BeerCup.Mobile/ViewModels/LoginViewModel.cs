@@ -59,6 +59,7 @@ namespace BeerCup.Mobile.ViewModels
             {
                 _settingsService.UserNameSetting = authenticationResponse.Data.Username;
                 _settingsService.UserRoleSetting = authenticationResponse.Data.Role;
+                _settingsService.UserIdSetting = authenticationResponse.Data.UserId;
 
                 if (authenticationResponse.Data.Role == Enums.UserRole.Voter)
                 {

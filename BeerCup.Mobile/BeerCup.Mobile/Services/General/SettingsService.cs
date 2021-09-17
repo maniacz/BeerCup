@@ -12,7 +12,7 @@ namespace BeerCup.Mobile.Services.General
     {
         private readonly ISettings _settings;
         private const string UserName = "UserName";
-        //private const string UserId = "UserId";
+        private const string UserId = "UserId";
 
         public SettingsService()
         {
@@ -24,9 +24,20 @@ namespace BeerCup.Mobile.Services.General
             _settings.AddOrUpdateValue(key, value);
         }
 
+        public void AddItem(string key, int value)
+        {
+            _settings.AddOrUpdateValue(key, value.ToString());
+        }
+
         public string GetItem(string key)
         {
             return _settings.GetValueOrDefault(key, string.Empty);
+        }
+
+        public int GetIntItem(string key)
+        {
+            string storedSetting = _settings.GetValueOrDefault(key, string.Empty);
+            return Int32.Parse(storedSetting);
         }
 
         public string UserNameSetting
@@ -35,11 +46,11 @@ namespace BeerCup.Mobile.Services.General
             set => AddItem(UserName, value);
         }
 
-        //public string UserIdSetting
-        //{
-        //    get => GetItem(UserId);
-        //    set => AddItem(UserId, value);
-        //}
+        public int UserIdSetting
+        {
+            get => GetIntItem(UserId);
+            set => AddItem(UserId, value);
+        }
 
         public UserRole UserRoleSetting
         {

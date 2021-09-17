@@ -19,8 +19,8 @@ namespace BeerCup.Mobile
             InitializeNavigation();
 
             //InitializeDebug();
-
             //MainPage = new MainPage();
+
             MainPage = new BattleView();
         }
 
