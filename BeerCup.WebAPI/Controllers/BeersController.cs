@@ -35,6 +35,13 @@ namespace BeerCup.WebAPI.Controllers
             return this.HandleRequest<GetBeerByIdRequest, GetBeerByIdResponse>(request);
         }
 
+        [HttpGet]
+        [Route("frombattle")]
+        public Task<IActionResult> GetBeerByBattleAndAssignedNumber([FromQuery] GetBeerInBattleRequest request)
+        {
+            return this.HandleRequest<GetBeerInBattleRequest, GetBeerInBattleResponse>(request);
+        }
+
         [HttpPost]
         [Route("")]
         public Task<IActionResult> AddBeer([FromBody] AddBeerRequest request)
