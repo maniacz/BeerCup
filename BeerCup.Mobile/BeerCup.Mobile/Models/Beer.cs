@@ -6,6 +6,8 @@ namespace BeerCup.Mobile.Models
 {
     public class Beer
     {
+        public int BeerId { get; set; }
+
         public int AssignedNumberInBattle { get; set; }
 
         public Brewery BrewedBy { get; set; }

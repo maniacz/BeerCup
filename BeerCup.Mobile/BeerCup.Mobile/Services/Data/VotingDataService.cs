@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace BeerCup.Mobile.Services.Data
 {
@@ -25,20 +26,37 @@ namespace BeerCup.Mobile.Services.Data
         {
             UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
             {
-                Path = ApiConstants.BattlesEndpoing
+                Path = ApiConstants.BattlesEndpoint
             };
 
             var userId = _settingsService.UserIdSetting;
 
             List<Vote> userVotes = new List<Vote>();
-            foreach (var beer in chosenBeers)
+            foreach (var selectedBeer in chosenBeers)
             {
-                var vote = new Vote { VoterId = userId, VotedBeer = beer };
+                var beerFromDb = await GetBeer(selectedBeer);
+                var vote = new Vote { VoterId = userId, BeerId = beerFromDb.BeerId };
                 userVotes.Add(vote);
                 await _genericRepository.PostAsync<Vote>(uri.ToString() , vote);
             }
 
             return userVotes;
+        }
+
+        private async Task<Beer> GetBeer(Beer beer)
+        {
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.BeerFromBattleEndpoint
+            };
+
+            var query = HttpUtility.ParseQueryString(uri.Query);
+            query["BattleId"] = "1";
+            query["AssignedNumberInBattle"] = beer.AssignedNumberInBattle.ToString();
+            uri.Query = query.ToString();
+
+            var beerFromDb = await _genericRepository.GetAsync<Beer>(uri.ToString());
+            return beerFromDb;
         }
     }
 }

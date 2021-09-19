@@ -34,7 +34,7 @@ namespace BeerCup.Mobile.Repository
                     .ExecuteAsync(() => httpClient.GetAsync(uri))
                     .GetAwaiter().GetResult();
 
-                //var responseMessage = await httpClient.GetAsync(uri);
+                //var temp = await httpClient.
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
