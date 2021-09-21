@@ -1,8 +1,10 @@
-﻿using BeerCup.Mobile.Constants;
+﻿using AutoMapper;
+using BeerCup.Mobile.Constants;
 using BeerCup.Mobile.Contracts.Repository;
 using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Contracts.Services.General;
 using BeerCup.Mobile.Models;
+using BeerCup.Mobile.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,11 +17,13 @@ namespace BeerCup.Mobile.Services.Data
     {
         private readonly IGenericRepository _genericRepository;
         private readonly ISettingsService _settingsService;
+        private readonly IMapper _mapper;
 
-        public VotingDataService(IGenericRepository genericRepository, ISettingsService settingsService)
+        public VotingDataService(IGenericRepository genericRepository, ISettingsService settingsService, IMapper mapper)
         {
             _genericRepository = genericRepository;
             _settingsService = settingsService;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<Vote>> SendVotes(IEnumerable<Beer> chosenBeers)
@@ -37,7 +41,7 @@ namespace BeerCup.Mobile.Services.Data
                 var beerFromDb = await GetBeer(selectedBeer);
                 var vote = new Vote { VoterId = userId, BeerId = beerFromDb.BeerId };
                 userVotes.Add(vote);
-                await _genericRepository.PostAsync<Vote>(uri.ToString() , vote);
+                await _genericRepository.PostAsync<Vote, VoteResponseDTO>(uri.ToString() , vote);
             }
 
             return userVotes;
@@ -55,8 +59,9 @@ namespace BeerCup.Mobile.Services.Data
             query["AssignedNumberInBattle"] = beer.AssignedNumberInBattle.ToString();
             uri.Query = query.ToString();
 
-            var beerFromDb = await _genericRepository.GetAsync<Beer>(uri.ToString());
-            return beerFromDb;
+            var beerFromDb = await _genericRepository.GetAsync<BeerFromBattleResponseDTO>(uri.ToString());
+            var modelBeer =_mapper.Map<Beer>(beerFromDb);
+            return modelBeer;
         }
     }
 }
