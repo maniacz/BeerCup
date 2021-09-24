@@ -33,6 +33,8 @@ namespace BeerCup.ApplicationServices.API.Handlers
                 Parameter = vote
             };
 
+            //get brewery by beerId
+
             var voteFromDb = await _commandExecutor.Execute(command);
 
             return new SendVotesResponse
