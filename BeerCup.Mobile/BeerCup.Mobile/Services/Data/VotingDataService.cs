@@ -25,7 +25,7 @@ namespace BeerCup.Mobile.Services.Data
         {
             UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
             {
-                Path = ApiConstants.BattlesEndpoing
+                Path = ApiConstants.BattlesEndpoint
             };
 
             var userId = _settingsService.UserIdSetting;
