@@ -22,5 +22,12 @@ namespace BeerCup.WebAPI.Controllers
         {
             return this.HandleRequest<AddBreweryRequest, AddBreweryResponse>(request);
         }
+
+        [HttpGet]
+        [Route("")]
+        public Task<IActionResult> GetBreweryByBeerId([FromQuery] GetBreweryByBeerIdRequest request)
+        {
+            return this.HandleRequest<GetBreweryByBeerIdRequest, GetBreweryByBeerIdResponse>(request);
+        }
     }
 }
