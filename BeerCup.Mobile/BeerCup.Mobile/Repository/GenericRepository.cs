@@ -154,6 +154,12 @@ namespace BeerCup.Mobile.Repository
             }
         }
 
+        public async Task DeleteAsync(string uri, string authToken = "")
+        {
+            HttpClient httpClient = CreateHttpClient(authToken);
+            await httpClient.DeleteAsync(uri);
+        }
+
         private HttpClient CreateHttpClient(string authToken)
         {
             HttpClient httpClient = new HttpClient();
