@@ -1,6 +1,7 @@
 ﻿using BeerCup.DataAccess.Entities;
 using BeerCup.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,15 @@ namespace BeerCup.DataAccess
     {
         public BeerCupStorageContext(DbContextOptions<BeerCupStorageContext> options) : base(options)
         {
+        }
+
+        public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(builder => { builder.AddDebug(); });
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLoggerFactory(loggerFactory)
+                .EnableSensitiveDataLogging()
+                .UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=BeerCupStorage;Persist Security Info=True;User ID=sa;Password=sysadmin1.");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
