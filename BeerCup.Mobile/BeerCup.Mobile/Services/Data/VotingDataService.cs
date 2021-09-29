@@ -75,9 +75,13 @@ namespace BeerCup.Mobile.Services.Data
 
         private async Task RemoveRemainingBattleUserVotes()
         {
+            var userId = _settingsService.UserIdSetting.ToString();
+            //todo: zrób ustawianie battleId w _settingsService
+            string battleId = "1";
+
             UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
             {
-                Path = ApiConstants.UserBattleVotesEndpoint
+                Path = ApiConstants.UserBattleVotesEndpoint.Replace("{battleId}", battleId).Replace("{userId}", userId)
             };
 
             await _genericRepository.DeleteAsync(uri.ToString());
