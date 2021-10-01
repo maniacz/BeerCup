@@ -60,6 +60,8 @@ namespace BeerCup.Mobile.ViewModels
                 _settingsService.UserNameSetting = authenticationResponse.Data.Username;
                 _settingsService.UserRoleSetting = authenticationResponse.Data.Role;
                 _settingsService.UserIdSetting = authenticationResponse.Data.UserId;
+                //todo: finalnie musi się jakoś id bitwy ustawiać
+                _settingsService.BattleIdSetting = 1;
 
                 if (authenticationResponse.Data.Role == Enums.UserRole.Voter)
                 {

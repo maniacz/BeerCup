@@ -7,12 +7,9 @@ using System.Threading.Tasks;
 
 namespace BeerCup.ApplicationServices.API.Domain
 {
-    public class SendVoteRequest : IRequest<SendVotesResponse>
+    public class GetUserVotesRequest : IRequest<GetUserVotesResponse>
     {
-        public int VoterId { get; set; }
-
-        public int BeerId { get; set; }
-
+        public int UserId { get; set; }
         public int BattleId { get; set; }
     }
 }

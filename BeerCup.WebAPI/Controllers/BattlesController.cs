@@ -66,5 +66,18 @@ namespace BeerCup.WebAPI.Controllers
 
             return this.HandleRequest<RemoveUserVotesRequest, RemoveUserVotesResponse>(request);
         }
+
+        [HttpGet]
+        [Route("{battleId:int}/{userId:int}")]
+        public Task<IActionResult> GetUserVotesInCurrentBattle(int battleId, int userId)
+        {
+            var request = new GetUserVotesRequest
+            {
+                UserId = userId,
+                BattleId = battleId
+            };
+
+            return this.HandleRequest<GetUserVotesRequest, GetUserVotesResponse>(request);
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace BeerCup.Mobile.Models
     {
         public int VoterId { get; set; }
         public int BeerId { get; set; }
+        public int BattleId { get; set; }
     }
 }

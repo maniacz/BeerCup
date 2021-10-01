@@ -30,17 +30,13 @@ namespace BeerCup.Mobile.Services.Data
         public async Task<IEnumerable<VoteResponseDTO>> SendVotes(IEnumerable<Beer> chosenBeers)
         {
             var userId = _settingsService.UserIdSetting;
-
-            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
-            {
-                Path = ApiConstants.UserBattleVotesEndpoint
-            };
+            UriBuilder uri = SetUriForCurrentBattleUserVotes();
 
             //user has already voted in current battle
-            var userVotesInCurrentBattle = await _genericRepository.GetAsync<List<Vote>>(uri.ToString());
-            if (userVotesInCurrentBattle.Count > 0)
+            var userVotesInCurrentBattle = await _genericRepository.GetAsync<VotesListResponseDTO>(uri.ToString());
+            if (userVotesInCurrentBattle.Data.Count > 0)
             {
-                if (userVotesInCurrentBattle.Count != 2)
+                if (userVotesInCurrentBattle.Data.Count != 2)
                 {
                     await RemoveRemainingBattleUserVotes();
                     throw new ServiceVotingException();
@@ -57,7 +53,8 @@ namespace BeerCup.Mobile.Services.Data
                 foreach (var selectedBeer in chosenBeers)
                 {
                     var beerFromDb = await GetBeer(selectedBeer);
-                    var vote = new Vote { VoterId = userId, BeerId = beerFromDb.BeerId };
+                    var vote = new Vote { VoterId = userId, BeerId = beerFromDb.BeerId, BattleId = beerFromDb.Battle.BattleId };
+                    //todo: poniżej może zadziałać indeks na tabeli na unikalność głosów, trza by to obsłużyć
                     var savedVote = await _genericRepository.PostAsync<Vote, VoteResponseDTO>(uri.ToString() , vote);
                     userVotes.Add(savedVote);
                 }
@@ -75,6 +72,13 @@ namespace BeerCup.Mobile.Services.Data
 
         private async Task RemoveRemainingBattleUserVotes()
         {
+            UriBuilder uri = SetUriForCurrentBattleUserVotes();
+
+            await _genericRepository.DeleteAsync(uri.ToString());
+        }
+
+        private UriBuilder SetUriForCurrentBattleUserVotes()
+        {
             var userId = _settingsService.UserIdSetting.ToString();
             //todo: zrób ustawianie battleId w _settingsService
             string battleId = "1";
@@ -83,8 +87,7 @@ namespace BeerCup.Mobile.Services.Data
             {
                 Path = ApiConstants.UserBattleVotesEndpoint.Replace("{battleId}", battleId).Replace("{userId}", userId)
             };
-
-            await _genericRepository.DeleteAsync(uri.ToString());
+            return uri;
         }
 
         private async Task<Beer> GetBeer(Beer beer)

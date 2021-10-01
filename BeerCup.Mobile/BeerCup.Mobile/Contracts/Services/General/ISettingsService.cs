@@ -13,5 +13,6 @@ namespace BeerCup.Mobile.Contracts.Services.General
         string UserNameSetting { get; set; }
         int UserIdSetting { get; set; }
         UserRole UserRoleSetting { get; set; }
+        int BattleIdSetting { get; set; }
     }
 }

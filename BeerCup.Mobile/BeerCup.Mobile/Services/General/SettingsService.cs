@@ -13,6 +13,7 @@ namespace BeerCup.Mobile.Services.General
         private readonly ISettings _settings;
         private const string UserName = "UserName";
         private const string UserId = "UserId";
+        private const string BattleId = "BattleId";
 
         public SettingsService()
         {
@@ -66,6 +67,12 @@ namespace BeerCup.Mobile.Services.General
             {
                 _settings.AddOrUpdateValue(nameof(UserRoleSetting), (int)value);
             }
+        }
+
+        public int BattleIdSetting 
+        { 
+            get => GetIntItem(BattleId); 
+            set => AddItem(BattleId, value);
         }
     }
 }
