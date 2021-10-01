@@ -46,5 +46,25 @@ namespace BeerCup.WebAPI.Controllers
         {
             return this.HandleRequest<SendVoteRequest, SendVotesResponse>(request);
         }
+
+        //[HttpDelete]
+        //[Route("UserVotes")]
+        //public Task<IActionResult> DeleteUserVotesInCurrentBattle([FromBody] RemoveUserVotesRequest request)
+        //{
+        //    return this.HandleRequest<RemoveUserVotesRequest, RemoveUserVotesResponse>(request);
+        //}
+
+        [HttpDelete]
+        [Route("{battleId:int}/{userId:int}")]
+        public Task<IActionResult> DeleteUserVotesInCurrentBattle(int battleId, int userId)
+        {
+            var request = new RemoveUserVotesRequest
+            {
+                BattleId = battleId,
+                UserId = userId
+            };
+
+            return this.HandleRequest<RemoveUserVotesRequest, RemoveUserVotesResponse>(request);
+        }
     }
 }
