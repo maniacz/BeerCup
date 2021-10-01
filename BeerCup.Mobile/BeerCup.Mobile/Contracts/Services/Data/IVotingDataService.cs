@@ -1,4 +1,5 @@
 ﻿using BeerCup.Mobile.Models;
+using BeerCup.Mobile.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,6 @@ namespace BeerCup.Mobile.Contracts.Services.Data
 {
     public interface IVotingDataService
     {
-        Task<IEnumerable<Vote>> SendVotes(IEnumerable<Beer> votes);
+        Task<IEnumerable<VoteResponseDTO>> SendVotes(IEnumerable<Beer> votes);
     }
 }

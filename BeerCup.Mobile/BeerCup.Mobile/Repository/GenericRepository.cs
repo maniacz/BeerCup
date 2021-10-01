@@ -34,7 +34,7 @@ namespace BeerCup.Mobile.Repository
                     .ExecuteAsync(() => httpClient.GetAsync(uri))
                     .GetAwaiter().GetResult();
 
-                //var responseMessage = await httpClient.GetAsync(uri);
+                //var temp = await httpClient.
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -152,6 +152,12 @@ namespace BeerCup.Mobile.Repository
                 Debug.WriteLine($"{e.GetType().Name} : {e.Message}");
                 throw;
             }
+        }
+
+        public async Task DeleteAsync(string uri, string authToken = "")
+        {
+            HttpClient httpClient = CreateHttpClient(authToken);
+            await httpClient.DeleteAsync(uri);
         }
 
         private HttpClient CreateHttpClient(string authToken)

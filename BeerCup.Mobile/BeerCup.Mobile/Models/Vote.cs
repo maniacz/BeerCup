@@ -7,6 +7,6 @@ namespace BeerCup.Mobile.Models
     public class Vote
     {
         public int VoterId { get; set; }
-        public Beer VotedBeer { get; set; }
+        public int BeerId { get; set; }
     }
 }
