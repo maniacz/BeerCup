@@ -20,6 +20,10 @@ namespace BeerCup.ApplicationServices.Mappings
             this.CreateMap<SendVoteRequest, DataAccess.Entities.Vote>()
                 .ForMember(x => x.BeerId, y => y.MapFrom(z => z.BeerId))
                 .ForMember(x => x.UserId, y => y.MapFrom(z => z.VoterId));
+
+            this.CreateMap<Vote, DataAccess.Entities.Vote>()
+                .ForMember(x => x.BeerId, y => y.MapFrom(z => z.BeerId))
+                .ForMember(x => x.UserId, y => y.MapFrom(z => z.VoterId));
         }
     }
 }

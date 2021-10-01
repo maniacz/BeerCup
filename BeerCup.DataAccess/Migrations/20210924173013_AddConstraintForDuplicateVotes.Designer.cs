@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeerCup.DataAccess.Migrations
 {
     [DbContext(typeof(BeerCupStorageContext))]
-    [Migration("20210917111019_AddConstraintForDuplicateVotes")]
+    [Migration("20210924173013_AddConstraintForDuplicateVotes")]
     partial class AddConstraintForDuplicateVotes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,7 +94,7 @@ namespace BeerCup.DataAccess.Migrations
                     b.Property<int>("Role")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(2);
+                        .HasDefaultValue(3);
 
                     b.Property<string>("Salt")
                         .IsRequired()
@@ -121,6 +121,9 @@ namespace BeerCup.DataAccess.Migrations
                     b.Property<int>("BeerId")
                         .HasColumnType("int");
 
+                    b.Property<int>("BreweryId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -128,7 +131,7 @@ namespace BeerCup.DataAccess.Migrations
 
                     b.HasIndex("BeerId");
 
-                    b.HasIndex("UserId", "BeerId")
+                    b.HasIndex("UserId", "BeerId", "BreweryId")
                         .IsUnique();
 
                     b.ToTable("Votes");
