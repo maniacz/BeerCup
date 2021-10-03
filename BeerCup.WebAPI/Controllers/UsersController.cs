@@ -29,7 +29,7 @@ namespace BeerCup.WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("")]
+        [Route("register")]
         public Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
         {
             return this.HandleRequest<CreateUserRequest, CreateUserResponse>(request);

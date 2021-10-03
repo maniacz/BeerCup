@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BeerCup.Mobile.Views.LoginView">
+             x:Class="BeerCup.Mobile.Views.RegisterView">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="400"></RowDefinition>
+            <RowDefinition Height="500"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -19,24 +19,23 @@
                    BackgroundColor="Beige" HasShadow="True"
                    CornerRadius="10" Margin="0, 25, 0, 25">
                 <StackLayout Margin="0, 30">
-                    <Label Text="Zaloguj się"></Label>
-
+                    <Label Text="Zarejestruj się"></Label>
+                    
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="Nie masz konta?"></Label>
-                        <Label Text="Zarejestruj się">
+                        <Label Text="Masz już konto?"></Label>
+                        <Label Text="Zaloguj się">
                             <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding RegisterCommand}" NumberOfTapsRequired="1" />
+                                <TapGestureRecognizer Command="{Binding LoginCommand}" NumberOfTapsRequired="1" />
                             </Label.GestureRecognizers>
                         </Label>
                     </StackLayout>
-
-                    <Label Text="{Binding NonExistentProperty}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
-                    <Label Text="User:" />
-                    <Entry x:Name="user" Text="{Binding Username, Mode=TwoWay}"/>
-                    <Label Text="Password:" />
-                    <Entry x:Name="password" IsPassword="True" Text="{Binding Password}"/>
-                    <Button Text="Login" Command="{Binding LoginCommand}" />
-                </StackLayout>
+                    
+                    <Entry x:Name="Username" Text="{Binding Username}" Placeholder="Nazwa użytkownika" />
+                    <Entry x:Name="Password" Text="{Binding Password}" Placeholder="Hasło" IsPassword="True" />
+                    <Entry x:Name="Email" Text="{Binding Email}" Placeholder="e-mail" />
+                    <Entry x:Name="AccessCode" Text="{Binding AccessCode, Mode=OneWayToSource}" Placeholder="Kod dostępu" />
+                    <Button Text="Zarejestruj" Command="{Binding RegisterCommand}" />
+                </StackLayout>    
             </Frame>
         </AbsoluteLayout>
     </Grid>

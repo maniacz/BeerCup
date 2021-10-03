@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
+using System;
 
 namespace BeerCup.Mobile.ViewModels
 {
@@ -26,6 +27,9 @@ namespace BeerCup.Mobile.ViewModels
         }
 
         public ICommand LoginCommand => new Command(OnLogin);
+        public ICommand RegisterCommand => new Command(OnRegister);
+
+
 
         public string Username
         {
@@ -57,15 +61,15 @@ namespace BeerCup.Mobile.ViewModels
             var authenticationResponse = await _authenticationService.Authenticate(Username, Password);
             if (authenticationResponse.IsAuthenticated)
             {
-                _settingsService.UserNameSetting = authenticationResponse.Data.Username;
-                _settingsService.UserRoleSetting = authenticationResponse.Data.Role;
-                _settingsService.UserIdSetting = authenticationResponse.Data.UserId;
+                _settingsService.UserNameSetting = authenticationResponse.User.Username;
+                _settingsService.UserRoleSetting = authenticationResponse.User.Role;
+                _settingsService.UserIdSetting = authenticationResponse.User.UserId;
                 //todo: finalnie musi się jakoś id bitwy ustawiać
                 _settingsService.BattleIdSetting = 1;
 
-                if (authenticationResponse.Data.Role == Enums.UserRole.Voter)
+                if (authenticationResponse.User.Role == Enums.UserRole.Voter)
                 {
-                    await _navigationService.NavigateToAsync<MainViewModel>(authenticationResponse.Data.Role);
+                    await _navigationService.NavigateToAsync<MainViewModel>(authenticationResponse.User.Role);
                 }
 
 
@@ -78,7 +82,11 @@ namespace BeerCup.Mobile.ViewModels
             {
                 //todo: dodać dialogService, który zwróci jakiś pop up z info z niewłaściwym logowaniem
             }
+        }
 
+        private void OnRegister()
+        {
+            _navigationService.NavigateToAsync<RegisterViewModel>();
         }
     }
 }

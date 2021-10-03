@@ -121,7 +121,7 @@ namespace BeerCup.Mobile.Repository
                 var responseMessage = await Policy
                     .Handle<WebException>(ex =>
                     {
-                        Debug.WriteLine($"{ex.GetType().Name} : {ex.Message}");
+                        Debug.WriteLine($"############################## {ex.GetType().Name} : {ex.Message}");
                         return true;
                     })
                     .WaitAndRetryAsync(

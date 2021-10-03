@@ -18,16 +18,17 @@ namespace BeerCup.Mobile
 
             InitializeNavigation();
 
-            //InitializeDebug();
+            InitializeDebug();
             //MainPage = new MainPage();
 
-            MainPage = new BattleView();
+            //MainPage = new BattleView();
         }
 
         private async void InitializeDebug()
         {
             var authenticationService = AppContainer.Resolve<IAuthenticationService>();
-            var response = await authenticationService.Authenticate("uq", "pass");
+            //var response = await authenticationService.Authenticate("uq", "pass");
+            var response = await authenticationService.Register("kamo", "pass", "kamo@gmail.com", "A002");
         }
 
         private void InitializeNavigation()

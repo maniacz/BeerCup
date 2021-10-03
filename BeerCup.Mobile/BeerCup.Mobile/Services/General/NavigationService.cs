@@ -34,6 +34,7 @@ namespace BeerCup.Mobile.Services.General
             _mappings.Add(typeof(HomeViewModel), typeof(HomeView));
             _mappings.Add(typeof(BattleViewModel), typeof(BattleView));
             _mappings.Add(typeof(BreweryStatsViewModel), typeof(BreweryStatsView));
+            _mappings.Add(typeof(RegisterViewModel), typeof(RegisterView));
         }
 
         public async Task InitializeAsync()
@@ -67,7 +68,7 @@ namespace BeerCup.Mobile.Services.General
         {
             Page page = CreateAndBindPage(viewModelType);
 
-            if (page is MainView)
+            if (page is MainView || page is RegisterView)
             {
                 if (parameter != null)
                 {

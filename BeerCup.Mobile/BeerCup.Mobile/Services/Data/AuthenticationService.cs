@@ -46,9 +46,29 @@ namespace BeerCup.Mobile.Services.Data
             }
         }
 
-        public Task<AuthenticationResponse> Register(string username, string password, string email)
+        public async Task<AuthenticationResponse> Register(string username, string password, string email, string accessCode)
         {
-            throw new NotImplementedException();
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.RegisterEndpoint
+            };
+
+            AuthenticationRequest authenticationRequest = new AuthenticationRequest
+            {
+                Username = username,
+                Password = password,
+                Email = email,
+                AccessCode = accessCode
+            };
+
+            try
+            {
+                return await _genericRepository.PostAsync<AuthenticationRequest, AuthenticationResponse>(uri.ToString(), authenticationRequest);
+            }
+            catch (Exception)
+            {
+                return new AuthenticationResponse { IsAuthenticated = false };
+            }
         }
 
         public bool IsUserAuthenticated()
