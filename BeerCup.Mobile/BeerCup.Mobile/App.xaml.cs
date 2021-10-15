@@ -28,7 +28,7 @@ namespace BeerCup.Mobile
         {
             var authenticationService = AppContainer.Resolve<IAuthenticationService>();
             //var response = await authenticationService.Authenticate("uq", "pass");
-            var response = await authenticationService.Register("kamo", "pass", "kamo@gmail.com", "A002");
+            //var response = await authenticationService.Register("kamo", "pass", "kamo@gmail.com", "A002");
         }
 
         private void InitializeNavigation()

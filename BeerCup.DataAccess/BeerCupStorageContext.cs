@@ -29,7 +29,10 @@ namespace BeerCup.DataAccess
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>().Property(p => p.Role).HasDefaultValue(UserRole.Voter);
+            //modelBuilder.Entity<User>().HasIndex(u => u.AccessCode).IsUnique();
+            //modelBuilder.Entity<User>().HasOne(u => u.AccessCode).WithOne(c => c.User).HasForeignKey<AccessCode>(c => c.Id);
             modelBuilder.Entity<Vote>().HasIndex(v => new { v.UserId, v.BeerId, v.BreweryId }).IsUnique();
+            modelBuilder.Entity<AccessCode>().HasData(_defaultAccessCodes);
         }
 
         public DbSet<User> Users { get; set; }
@@ -41,5 +44,17 @@ namespace BeerCup.DataAccess
         public DbSet<Brewery> Breweries { get; set; }
 
         public DbSet<Vote> Votes { get; set; }
+
+        public DbSet<AccessCode> AccessCodes { get; set; }
+
+        private AccessCode[] _defaultAccessCodes = new AccessCode[]
+        {
+            new AccessCode { AccessCodeId = 1, Code = "A001" },
+            new AccessCode { AccessCodeId = 2, Code = "A002" },
+            new AccessCode { AccessCodeId = 3, Code = "A003" },
+            new AccessCode { AccessCodeId = 4, Code = "A004" },
+            new AccessCode { AccessCodeId = 5, Code = "V001" },
+            new AccessCode { AccessCodeId = 6, Code = "V002" },
+        };
     }
 }

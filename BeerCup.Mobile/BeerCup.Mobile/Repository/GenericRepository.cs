@@ -1,4 +1,5 @@
 ﻿using BeerCup.Mobile.Contracts.Repository;
+using BeerCup.Mobile.Exceptions;
 using Newtonsoft.Json;
 using Polly;
 using System;
@@ -142,6 +143,11 @@ namespace BeerCup.Mobile.Repository
                 {
                     throw new UnauthorizedAccessException();
                     //todo: Bethany ma tu swój wyjątek
+                }
+
+                if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
+                {
+                    throw new ServiceUnavailableException();
                 }
 
                 //todo: Bethany ma tu swój wyjątek, można tu dorzucić więcej info

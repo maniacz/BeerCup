@@ -26,5 +26,9 @@ namespace BeerCup.DataAccess.Entities
         public UserRole Role { get; set; }
 
         public ICollection<Vote> Votes { get; set; }
+
+        public int AccessCodeId { get; set; }
+
+        public AccessCode AccessCode { get; set; }
     }
 }

@@ -25,5 +25,7 @@ namespace BeerCup.ApplicationServices.API.ErrorHandling
         public const string RequestTooLarge = "REQUEST_TOO_LARGE";
 
         public const string TooManyRequests = "TOO_MANY_REQUESTS";
+
+        public const string NotValidAccessCode = "NOT_VALID_ACCESS_CODE";
     }
 }

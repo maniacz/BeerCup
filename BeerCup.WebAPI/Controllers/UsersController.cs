@@ -32,6 +32,7 @@ namespace BeerCup.WebAPI.Controllers
         [Route("register")]
         public Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
         {
+            request.Username = request.Username.ToLower();
             return this.HandleRequest<CreateUserRequest, CreateUserResponse>(request);
         }
 

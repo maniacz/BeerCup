@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BeerCup.ApplicationServices.API.Domain;
 using BeerCup.ApplicationServices.API.Domain.Models;
+using BeerCup.ApplicationServices.API.Domain.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,13 @@ namespace BeerCup.ApplicationServices.Mappings
 
             this.CreateMap<CreateUserRequest, DataAccess.Entities.User>()
                 .ForMember(x => x.Username, y => y.MapFrom(z => z.Username));
-                //.ForMember(x => x.Password, y => y.MapFrom(z => z.Password));
+            //.ForMember(x => x.Password, y => y.MapFrom(z => z.Password));
+
+            this.CreateMap<CreateUserRequest, UserDTO>()
+                .ForMember(x => x.Username, y => y.MapFrom(z => z.Username))
+                .ForMember(x => x.Password, y => y.MapFrom(z => z.Password));
+
+            this.CreateMap<UserDTO, DataAccess.Entities.User>();
         }
     }
 }

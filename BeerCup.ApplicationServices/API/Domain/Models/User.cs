@@ -16,6 +16,8 @@ namespace BeerCup.ApplicationServices.API.Domain.Models
 
         public string Password { get; set; }
 
+        public string AccessCode { get; set; }
+
         public UserRole Role { get; set; }
     }
 }
