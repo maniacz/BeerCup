@@ -29,7 +29,7 @@ namespace BeerCup.DataAccess
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>().Property(p => p.Role).HasDefaultValue(UserRole.Voter);
-            //modelBuilder.Entity<User>().HasIndex(u => u.AccessCode).IsUnique();
+            modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();
             //modelBuilder.Entity<User>().HasOne(u => u.AccessCode).WithOne(c => c.User).HasForeignKey<AccessCode>(c => c.Id);
             modelBuilder.Entity<Vote>().HasIndex(v => new { v.UserId, v.BeerId, v.BreweryId }).IsUnique();
             modelBuilder.Entity<AccessCode>().HasData(_defaultAccessCodes);
