@@ -27,6 +27,7 @@ namespace BeerCup.Mobile.ViewModels
             switch (_settingsService.UserRoleSetting)
             {
                 case UserRole.None:
+                    //LoadDefaultMenuItems();
                     break;
                 case UserRole.Admin:
                     LoadAdminMenuItems();
@@ -79,6 +80,11 @@ namespace BeerCup.Mobile.ViewModels
             });
 
             return menuItems;
+        }
+
+        private void LoadDefaultMenuItems()
+        {
+            _userMenuItems.Add(_menuItems[MenuItemType.Logout]);
         }
 
         private void LoadAdminMenuItems()

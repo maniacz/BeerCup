@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BeerCup.ApplicationServices.API.Domain;
 using BeerCup.ApplicationServices.API.Domain.Models;
+using BeerCup.ApplicationServices.API.Domain.Models.DTO;
 using BeerCup.DataAccess;
 using BeerCup.DataAccess.CQRS.Queries;
 using MediatR;
@@ -57,7 +58,7 @@ namespace BeerCup.ApplicationServices.API.Handlers
             return new AuthenticationResponse()
             {
                 IsAuthenticated = true,
-                Data = _mapper.Map<User>(userFromDb)
+                Data = _mapper.Map<UserDTO>(userFromDb)
             };
         }
     }

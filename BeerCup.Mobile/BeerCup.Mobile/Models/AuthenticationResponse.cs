@@ -8,6 +8,8 @@ namespace BeerCup.Mobile.Models
     {
         public bool IsAuthenticated { get; set; }
 
-        public User User { get; set; }
+        public User Data { get; set; }
+
+        public string Error { get; set; }
     }
 }

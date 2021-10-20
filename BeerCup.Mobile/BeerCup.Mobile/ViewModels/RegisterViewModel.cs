@@ -1,5 +1,6 @@
 ﻿using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Contracts.Services.General;
+using BeerCup.Mobile.Errors;
 using BeerCup.Mobile.ViewModels.Base;
 using System;
 using System.Collections.Generic;
@@ -79,14 +80,31 @@ namespace BeerCup.Mobile.ViewModels
             Username = "Kamo";
             Password = "KamoPass";
             Email = "kamo@wp.pl";
-            AccessCode = "A004";
+            AccessCode = "A002";
 
             var registrationResponse = await _authenticationService.Register(Username, Password, Email, AccessCode);
             if (registrationResponse.IsAuthenticated)
             {
                 //todo: await _dialogService.ShowDialog("Registration successful", "Message", "OK");
-                _settingsService.UserNameSetting = registrationResponse.User.Username;
-                _settingsService.UserIdSetting = registrationResponse.User.UserId;
+                _settingsService.UserNameSetting = registrationResponse.Data.Username;
+                _settingsService.UserRoleSetting = registrationResponse.Data.Role;
+                _settingsService.UserIdSetting = registrationResponse.Data.UserId;
+
+                await _navigationService.NavigateToAsync<MainViewModel>(registrationResponse.Data.Role);
+            }
+            else
+            {
+                switch (registrationResponse.Error)
+                {
+                    case ErrorType.NotValidAccessCode:
+                        //todo: _dialogService.ShowDialog("Rejestracja nieudana", "Nieprawidłowy kod dostępu", "OK");
+                        break;
+                    case ErrorType.UserAlreadyExists:
+                        //todo: _dialogService.ShowDialog("Rejestracja nieudana", "Taki użytkownik już istnieje", "OK");
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         private void OnLogin()

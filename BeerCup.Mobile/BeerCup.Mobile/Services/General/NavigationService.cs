@@ -68,18 +68,7 @@ namespace BeerCup.Mobile.Services.General
         {
             Page page = CreateAndBindPage(viewModelType);
 
-            if (page is MainView || page is RegisterView)
-            {
-                if (parameter != null)
-                {
-                    bool temp = false;
-                }
-                else
-                {
-                    CurrentApplication.MainPage = page;
-                }
-            }
-            else if (page is LoginView)
+            if (page is MainView || page is RegisterView || page is LoginView)
             {
                 CurrentApplication.MainPage = page;
             }

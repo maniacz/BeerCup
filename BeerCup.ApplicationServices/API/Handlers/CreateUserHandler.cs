@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BeerCup.ApplicationServices.API.Domain;
 using BeerCup.ApplicationServices.API.Domain.Models;
+using BeerCup.ApplicationServices.API.Domain.Models.DAO;
 using BeerCup.ApplicationServices.API.Domain.Models.DTO;
 using BeerCup.ApplicationServices.API.ErrorHandling;
 using BeerCup.DataAccess;
@@ -8,6 +9,8 @@ using BeerCup.DataAccess.CQRS.Commands;
 using BeerCup.DataAccess.CQRS.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -48,10 +51,10 @@ namespace BeerCup.ApplicationServices.API.Handlers
             var salt = Encryption.Encryption.GenerateSalt();
             var hashedPassword = Encryption.Encryption.HashPassword(request.Password, salt);
 
-            var userDTO = mapper.Map<UserDTO>(request);
-            userDTO.AccessCodeId = accessCodeId;
+            var userDAO = mapper.Map<UserDAO>(request);
+            userDAO.AccessCodeId = accessCodeId;
 
-            var user = mapper.Map<DataAccess.Entities.User>(userDTO);
+            var user = mapper.Map<DataAccess.Entities.User>(userDAO);
             user.Salt = Convert.ToBase64String(salt);
             user.Password = hashedPassword;
 
@@ -60,13 +63,37 @@ namespace BeerCup.ApplicationServices.API.Handlers
                 Parameter = user
             };
 
-            //todo: ulepsz weryfikację czy ktoś ma dostać role admina
-            if (request.AccessCode.StartsWith("A"))
+            switch (request.AccessCode)
             {
-                command.Parameter.Role = DataAccess.Enums.UserRole.Admin;
+                case string s when s.StartsWith("A"):
+                    command.Parameter.Role = DataAccess.Enums.UserRole.Admin;
+                    break;
+                case string s when s.StartsWith("V"):
+                    command.Parameter.Role = DataAccess.Enums.UserRole.Voter;
+                    break;
+                case string s when s.StartsWith("B"):
+                    command.Parameter.Role = DataAccess.Enums.UserRole.BreweryOwner;
+                    break;
+                default:
+                    break;
             }
 
-            var userFromDb = await commandExecutor.Execute(command);
+            DataAccess.Entities.User userFromDb = null;
+            try
+            {
+                userFromDb = await commandExecutor.Execute(command);
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException.Message.StartsWith("Cannot insert duplicate key row"))
+                {
+                    return new CreateUserResponse
+                    {
+                        Error = new ErrorModel(ErrorType.UserAlreadyExists)
+                    };
+                }
+            }
+
             if (userFromDb == null)
             {
                 return new CreateUserResponse()
@@ -77,7 +104,8 @@ namespace BeerCup.ApplicationServices.API.Handlers
 
             return new CreateUserResponse()
             {
-                Data = mapper.Map<User>(userFromDb)
+                IsAuthenticated = true,
+                Data = mapper.Map<UserDTO>(userFromDb)
             };
         }
 

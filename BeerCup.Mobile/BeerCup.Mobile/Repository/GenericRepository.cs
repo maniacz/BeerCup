@@ -35,24 +35,9 @@ namespace BeerCup.Mobile.Repository
                     .ExecuteAsync(() => httpClient.GetAsync(uri))
                     .GetAwaiter().GetResult();
 
-                //var temp = await httpClient.
-
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var json = JsonConvert.DeserializeObject<T>(jsonResult);
-                    return json;
-                }
-
-                if (responseMessage.StatusCode == HttpStatusCode.Forbidden ||
-                    responseMessage.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    throw new UnauthorizedAccessException();
-                    //todo: Bethany ma tu swój wyjątek
-                }
-
-                //todo: Bethany ma tu swój wyjątek, można tu dorzucić więcej info
-                throw new HttpRequestException();
+                jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var json = JsonConvert.DeserializeObject<T>(jsonResult);
+                return json;
             }
             catch (Exception e)
             {
@@ -84,22 +69,9 @@ namespace BeerCup.Mobile.Repository
                     )
                     .ExecuteAsync(async () => await httpClient.PostAsync(uri, content));
 
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var json = JsonConvert.DeserializeObject<T>(jsonResult);
-                    return json;
-                }
-
-                if (responseMessage.StatusCode == HttpStatusCode.Forbidden ||
-                    responseMessage.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    throw new UnauthorizedAccessException();
-                    //todo: Bethany ma tu swój wyjątek
-                }
-
-                //todo: Bethany ma tu swój wyjątek, można tu dorzucić więcej info
-                throw new HttpRequestException();
+                jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var json = JsonConvert.DeserializeObject<T>(jsonResult);
+                return json;
             }
             catch (Exception e)
             {
@@ -131,27 +103,10 @@ namespace BeerCup.Mobile.Repository
                     )
                     .ExecuteAsync(async () => await httpClient.PostAsync(uri, content));
 
-                if (responseMessage.IsSuccessStatusCode)
-                {
-                    jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var json = JsonConvert.DeserializeObject<TResponse>(jsonResult);
-                    return json;
-                }
 
-                if (responseMessage.StatusCode == HttpStatusCode.Forbidden ||
-                    responseMessage.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    throw new UnauthorizedAccessException();
-                    //todo: Bethany ma tu swój wyjątek
-                }
-
-                if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
-                {
-                    throw new ServiceUnavailableException();
-                }
-
-                //todo: Bethany ma tu swój wyjątek, można tu dorzucić więcej info
-                throw new HttpRequestException();
+                jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var json = JsonConvert.DeserializeObject<TResponse>(jsonResult);
+                return json;
             }
             catch (Exception e)
             {

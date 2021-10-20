@@ -61,22 +61,13 @@ namespace BeerCup.Mobile.ViewModels
             var authenticationResponse = await _authenticationService.Authenticate(Username, Password);
             if (authenticationResponse.IsAuthenticated)
             {
-                _settingsService.UserNameSetting = authenticationResponse.User.Username;
-                _settingsService.UserRoleSetting = authenticationResponse.User.Role;
-                _settingsService.UserIdSetting = authenticationResponse.User.UserId;
+                _settingsService.UserNameSetting = authenticationResponse.Data.Username;
+                _settingsService.UserRoleSetting = authenticationResponse.Data.Role;
+                _settingsService.UserIdSetting = authenticationResponse.Data.UserId;
                 //todo: finalnie musi się jakoś id bitwy ustawiać
                 _settingsService.BattleIdSetting = 1;
 
-                if (authenticationResponse.User.Role == Enums.UserRole.Voter)
-                {
-                    await _navigationService.NavigateToAsync<MainViewModel>(authenticationResponse.User.Role);
-                }
-
-
-
-
-
-                await _navigationService.NavigateToAsync<MainViewModel>();
+                await _navigationService.NavigateToAsync<MainViewModel>(authenticationResponse.Data.Role);
             }
             else
             {
