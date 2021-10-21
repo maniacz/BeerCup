@@ -15,5 +15,9 @@ namespace BeerCup.DataAccess.Entities
         public string Style { get; set; }
 
         public List<Beer> Beers { get; set; }
+
+        public BattleDate BattleDate { get; set; }
+
+        public bool IsRunning { get; set; }
     }
 }
