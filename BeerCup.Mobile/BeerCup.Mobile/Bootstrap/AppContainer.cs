@@ -31,11 +31,12 @@ namespace BeerCup.Mobile.Bootstrap
             builder.RegisterType<BattleViewModel>();
             builder.RegisterType<BreweryStatsViewModel>();
             builder.RegisterType<RegisterViewModel>();
-
+            builder.RegisterType<AdminPanelViewModel>();
 
             //services - data
             builder.RegisterType(typeof(AuthenticationService)).As(typeof(IAuthenticationService));
             builder.RegisterType(typeof(VotingDataService)).As(typeof(IVotingDataService));
+            builder.RegisterType(typeof(AdminPanelDataService)).As(typeof(IAdminPanelDataService));
 
             //services - general
             builder.RegisterType(typeof(NavigationService)).As(typeof(INavigationService));

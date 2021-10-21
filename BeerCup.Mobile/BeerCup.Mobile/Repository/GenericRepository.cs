@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace BeerCup.Mobile.Repository
 {
@@ -120,6 +121,77 @@ namespace BeerCup.Mobile.Repository
             HttpClient httpClient = CreateHttpClient(authToken);
             await httpClient.DeleteAsync(uri);
         }
+
+        public async Task<T> PutAsync<T>(string uri, T data, string authToken = "")
+        {
+            try
+            {
+                HttpClient httpClient = CreateHttpClient(authToken);
+
+                var content = new StringContent(JsonConvert.SerializeObject(data));
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                string jsonResult = string.Empty;
+
+                var responseMessage = await Policy
+                    .Handle<WebException>(ex =>
+                    {
+                        Debug.WriteLine($"{ex.GetType().Name} : {ex.Message}");
+                        return true;
+                    })
+                    .WaitAndRetryAsync(
+                        3,
+                        retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
+                    )
+                    .ExecuteAsync(async () => await httpClient.PutAsync(uri, content));
+
+                if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
+                {
+                    //todo: wykorzystać serwis, żeby zlikwodować coupling do view
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Serwis niedostępny", "OK");
+                }
+
+                jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var json = JsonConvert.DeserializeObject<T>(jsonResult);
+                return json;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"{e.GetType().Name} : {e.Message}");
+                throw;
+            }
+        }
+
+        //public async Task<TResponse> PutAsync<TResponse>(string uri, bool noRequestData, string authToken = "")
+        //{
+        //    try
+        //    {
+        //        HttpClient httpClient = CreateHttpClient(authToken);
+
+        //        string jsonResult = string.Empty;
+
+        //        var responseMessage = await Policy
+        //            .Handle<WebException>(ex =>
+        //            {
+        //                Debug.WriteLine($"{ex.GetType().Name} : {ex.Message}");
+        //                return true;
+        //            })
+        //            .WaitAndRetryAsync(
+        //                3,
+        //                retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
+        //            )
+        //            .ExecuteAsync(async () => await httpClient.PutAsync(uri, null));
+
+        //        jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+        //        var json = JsonConvert.DeserializeObject<TResponse>(jsonResult);
+        //        return json;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Debug.WriteLine($"{e.GetType().Name} : {e.Message}");
+        //        throw;
+        //    }
+        //}
 
         private HttpClient CreateHttpClient(string authToken)
         {

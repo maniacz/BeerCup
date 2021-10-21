@@ -19,7 +19,7 @@ namespace BeerCup.WebAPI.Controllers
         }
 
         [HttpPut]
-        [Route("{battleId}")]
+        [Route("")]
         public Task<IActionResult> StartBattle()
         {
             var request = new StartBattleRequest();

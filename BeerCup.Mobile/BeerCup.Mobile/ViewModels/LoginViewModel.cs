@@ -72,6 +72,7 @@ namespace BeerCup.Mobile.ViewModels
             else
             {
                 //todo: dodać dialogService, który zwróci jakiś pop up z info z niewłaściwym logowaniem
+                await Application.Current.MainPage.DisplayAlert("Logowanie", "Nie zalogowano", "OK");
             }
         }
 

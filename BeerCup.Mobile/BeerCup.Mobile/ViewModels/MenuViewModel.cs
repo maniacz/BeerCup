@@ -41,7 +41,6 @@ namespace BeerCup.Mobile.ViewModels
                 default:
                     break;
             }
-            //LoadMenuItems();
         }
 
         private Dictionary<MenuItemType, MainMenuItem> PopulateMenuItems()
@@ -69,13 +68,13 @@ namespace BeerCup.Mobile.ViewModels
             menuItems.Add(MenuItemType.AdminPanel, new MainMenuItem
             {
                 MenuText = "Panel Admina",
-                ViewModelToLoad = typeof(VoterHistoryViewModel),
+                ViewModelToLoad = typeof(AdminPanelViewModel),
                 MenuItemType = MenuItemType.AdminPanel
             });
             menuItems.Add(MenuItemType.BreweryStats, new MainMenuItem
             {
                 MenuText = "Statystyki mojego browaru",
-                ViewModelToLoad = typeof(VoterHistoryViewModel),
+                ViewModelToLoad = typeof(BattleViewModel),
                 MenuItemType = MenuItemType.BreweryStats
             });
 
@@ -136,23 +135,6 @@ namespace BeerCup.Mobile.ViewModels
 
             var type = menuItem?.ViewModelToLoad;
             _navigationService.NavigateToAsync(type);
-        }
-
-        private void LoadMenuItems()
-        {
-            MenuItems.Add(new MainMenuItem
-            {
-                MenuText = "Bitwa",
-                ViewModelToLoad = typeof(BattleViewModel),
-                MenuItemType = MenuItemType.Battle
-            });
-
-            MenuItems.Add(new MainMenuItem
-            {
-                MenuText = "Wyloguj",
-                ViewModelToLoad = typeof(LoginViewModel),
-                MenuItemType = MenuItemType.Logout
-            });
         }
     }
 }

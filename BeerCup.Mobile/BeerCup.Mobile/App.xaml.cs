@@ -5,6 +5,7 @@ using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using BeerCup.Mobile.Views;
+using BeerCup.Mobile.ViewModels;
 
 namespace BeerCup.Mobile
 {
@@ -27,7 +28,11 @@ namespace BeerCup.Mobile
         private async void InitializeDebug()
         {
             var authenticationService = AppContainer.Resolve<IAuthenticationService>();
-            //var response = await authenticationService.Authenticate("uq", "pass");
+            var navigationService = AppContainer.Resolve<INavigationService>();
+
+            var response = await authenticationService.Authenticate("uq", "pass");
+            await navigationService.NavigateToAsync<AdminPanelViewModel>();
+
             //var response = await authenticationService.Register("kamo", "pass", "kamo@gmail.com", "A002");
         }
 
