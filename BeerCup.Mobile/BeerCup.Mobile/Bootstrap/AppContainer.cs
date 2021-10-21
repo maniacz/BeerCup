@@ -37,6 +37,7 @@ namespace BeerCup.Mobile.Bootstrap
             builder.RegisterType(typeof(AuthenticationService)).As(typeof(IAuthenticationService));
             builder.RegisterType(typeof(VotingDataService)).As(typeof(IVotingDataService));
             builder.RegisterType(typeof(AdminPanelDataService)).As(typeof(IAdminPanelDataService));
+            builder.RegisterType(typeof(BattleDataService)).As(typeof(IBattleDataService));
 
             //services - general
             builder.RegisterType(typeof(NavigationService)).As(typeof(INavigationService));

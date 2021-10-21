@@ -162,37 +162,6 @@ namespace BeerCup.Mobile.Repository
             }
         }
 
-        //public async Task<TResponse> PutAsync<TResponse>(string uri, bool noRequestData, string authToken = "")
-        //{
-        //    try
-        //    {
-        //        HttpClient httpClient = CreateHttpClient(authToken);
-
-        //        string jsonResult = string.Empty;
-
-        //        var responseMessage = await Policy
-        //            .Handle<WebException>(ex =>
-        //            {
-        //                Debug.WriteLine($"{ex.GetType().Name} : {ex.Message}");
-        //                return true;
-        //            })
-        //            .WaitAndRetryAsync(
-        //                3,
-        //                retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
-        //            )
-        //            .ExecuteAsync(async () => await httpClient.PutAsync(uri, null));
-
-        //        jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-        //        var json = JsonConvert.DeserializeObject<TResponse>(jsonResult);
-        //        return json;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Debug.WriteLine($"{e.GetType().Name} : {e.Message}");
-        //        throw;
-        //    }
-        //}
-
         private HttpClient CreateHttpClient(string authToken)
         {
             HttpClient httpClient = new HttpClient();

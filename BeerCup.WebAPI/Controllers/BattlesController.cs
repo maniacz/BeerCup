@@ -30,6 +30,14 @@ namespace BeerCup.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("current")]
+        public Task<IActionResult> GetCurrentRunningBattle()
+        {
+            var request = new GetCurrentRunningBattleRequest();
+            return this.HandleRequest<GetCurrentRunningBattleRequest, GetCurrentRunningBattleResponse>(request);
+        }
+
+        [HttpGet]
         [Route("{battleId}")]
         public Task<IActionResult> GetBattleById([FromRoute] int battleId)
         {

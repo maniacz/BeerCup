@@ -19,10 +19,6 @@ namespace BeerCup.Mobile.Views
         public BattleView()
         {
             InitializeComponent();
-            //todo: wywalić poniższe
-            var navigationService = AppContainer.Resolve<INavigationService>();
-            var votingDataService = AppContainer.Resolve<IVotingDataService>();
-            BindingContext = new BattleViewModel(votingDataService, navigationService);
         }
     }
 }

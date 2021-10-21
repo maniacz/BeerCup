@@ -54,12 +54,20 @@ namespace BeerCup.Mobile.ViewModels
             }
         }
 
-        public BattleViewModel(IVotingDataService votingDataService, INavigationService navigationService)
+        public BattleViewModel(IVotingDataService votingDataService, INavigationService navigationService, IBattleDataService battleDataService)
             : base(navigationService)
         {
-            Beers = new MultiSelectObservableCollection<Beer>();
-            LoadStartingBeers();
-            _votingDataService = votingDataService;
+            var runningBattle = battleDataService.GetCurrentRunningBattle().Result;
+            if (runningBattle != null)
+            {
+                Beers = new MultiSelectObservableCollection<Beer>();
+                LoadStartingBeers();
+                _votingDataService = votingDataService;
+            }
+            else
+            {
+                Application.Current.MainPage.DisplayAlert("Bitwa", "Nie odbywa się teraz żadna bitwa", "OK");
+            }
         }
 
         private void LoadStartingBeers()
