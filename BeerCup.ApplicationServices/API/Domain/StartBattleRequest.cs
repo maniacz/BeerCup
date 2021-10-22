@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using BeerCup.ApplicationServices.API.Domain.Models;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace BeerCup.ApplicationServices.API.Domain
 {
     public class StartBattleRequest : IRequest<StartBattleResponse>
     {
+        public BattlePlace Place { get; set; }
     }
 }

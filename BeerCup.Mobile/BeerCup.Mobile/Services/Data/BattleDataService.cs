@@ -29,7 +29,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.BattlesEndpoint + "/current"
             };
 
-            var response = await _genericRepository.GetAsync<BattleResponseDTO>(uri.ToString());
+            var response = await _genericRepository.GetAsync<BattleResponse>(uri.ToString());
             if (response.Data == null)
             {
                 return null;

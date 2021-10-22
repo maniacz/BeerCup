@@ -11,7 +11,7 @@ namespace BeerCup.Mobile.Mappings
     {
         public BeersProfile()
         {
-            CreateMap<BeerFromBattleResponseDTO, Beer>()
+            CreateMap<BeerFromBattleResponse, Beer>()
                 .ForMember(x => x.BeerId, y => y.MapFrom(z => z.Data.BeerId))
                 .ForPath(x => x.Battle.BattleId, y => y.MapFrom(z => z.Data.BattleId));
         }

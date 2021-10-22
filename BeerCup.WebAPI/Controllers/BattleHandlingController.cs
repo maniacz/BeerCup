@@ -20,11 +20,20 @@ namespace BeerCup.WebAPI.Controllers
 
         [HttpPut]
         [Route("")]
-        public Task<IActionResult> StartBattle()
+        public Task<IActionResult> StartBattle(StartBattleRequest request)
         {
-            var request = new StartBattleRequest();
+            //var request = new StartBattleRequest();
             return this.HandleRequest<StartBattleRequest, StartBattleResponse>(request);
         }
+
+        /*
+        [HttpPost]
+        [Route("place")]
+        public Task<IActionResult> AddBattlePlace([FromBody] AddBattlePlaceRequest request)
+        {
+            return this.HandleRequest<AddBattlePlaceRequest, AddBattlePlaceResponse>(request);
+        }
+        */
     }
 
 

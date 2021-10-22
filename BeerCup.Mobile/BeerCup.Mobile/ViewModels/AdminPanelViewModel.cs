@@ -1,4 +1,5 @@
-﻿using BeerCup.Mobile.Contracts.Services.Data;
+﻿using AutoMapper;
+using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Contracts.Services.General;
 using BeerCup.Mobile.ViewModels.Base;
 using System;
@@ -12,12 +13,16 @@ namespace BeerCup.Mobile.ViewModels
     public class AdminPanelViewModel : ViewModelBase
     {
         private readonly IAdminPanelDataService _adminPanelDataService;
-
+        private readonly IGeolocationService _geolocationService;
+        private readonly IMapper _mapper;
         private bool _battleStartAllowed;
 
-        public AdminPanelViewModel(INavigationService navigationService, IAdminPanelDataService adminPanelDataService) : base(navigationService)
+        public AdminPanelViewModel(INavigationService navigationService, IAdminPanelDataService adminPanelDataService, IGeolocationService geolocationService, IMapper mapper) 
+            : base(navigationService)
         {
             _adminPanelDataService = adminPanelDataService;
+            _geolocationService = geolocationService;
+            _mapper = mapper;
             BattleStartAllowed = true;
         }
 
@@ -33,9 +38,10 @@ namespace BeerCup.Mobile.ViewModels
             }
         }
 
-        private void OnStartBattle()
+        private async void OnStartBattle()
         {
-            var startedBattle = _adminPanelDataService.StartBattle();
+            var battlePlace = await _geolocationService.GetBattlePlace();
+            var startedBattle = await _adminPanelDataService.StartBattle(battlePlace);
             if (startedBattle != null)
             {
                 BattleStartAllowed = false;

@@ -41,6 +41,7 @@ namespace BeerCup.ApplicationServices.API.Handlers
             }
 
             battleToStart.IsRunning = true;
+            battleToStart.Place = _mapper.Map<DataAccess.Entities.BattlePlace>(request.Place);
             var command = new StartBattleCommand
             {
                 Parameter = battleToStart

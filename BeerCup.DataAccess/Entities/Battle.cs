@@ -19,5 +19,9 @@ namespace BeerCup.DataAccess.Entities
         public BattleDate BattleDate { get; set; }
 
         public bool IsRunning { get; set; }
+
+        public int? BattlePlaceId { get; set; }
+
+        public BattlePlace Place { get; set; }
     }
 }

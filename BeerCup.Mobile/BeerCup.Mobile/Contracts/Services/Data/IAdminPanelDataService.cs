@@ -8,6 +8,6 @@ namespace BeerCup.Mobile.Contracts.Services.Data
 {
     public interface IAdminPanelDataService
     {
-        Task<Battle> StartBattle();
+        Task<Battle> StartBattle(BattlePlace battlePlace);
     }
 }

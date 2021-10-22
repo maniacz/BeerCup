@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BeerCup.Mobile.Models.DTO
 {
-    public class BeerFromBattleResponseDTO : ApiResponseDTO<BeerFromBattleDTO>
+    public class VotesListResponse : ApiResponseBase<List<Vote>>
     {
     }
 }

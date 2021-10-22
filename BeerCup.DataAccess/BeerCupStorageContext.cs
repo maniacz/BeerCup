@@ -49,6 +49,9 @@ namespace BeerCup.DataAccess
 
         public DbSet<BattleDate> BattleDates { get; set; }
 
+        public DbSet<BattlePlace> BattlePlaces { get; set; }
+
+
         private AccessCode[] _defaultAccessCodes = new AccessCode[]
         {
             new AccessCode { AccessCodeId = 1, Code = "A001" },

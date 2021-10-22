@@ -4,10 +4,10 @@ using System.Text;
 
 namespace BeerCup.Mobile.Models
 {
-    public class Battle
+    public class BattlePlace
     {
-        public int BattleId { get; set; }
+        public double Latitude { get; set; }
 
-        public BattlePlace Place { get; set; }
+        public double Longitude { get; set; }
     }
 }

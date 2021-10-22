@@ -11,7 +11,7 @@ namespace BeerCup.Mobile.Mappings
     {
         public BattleProfile()
         {
-            CreateMap<BattleResponseDTO, Battle>()
+            CreateMap<BattleResponse, Battle>()
                 .ForMember(x => x.BattleId, y => y.Condition(r => r.Data != null))
                 .ForMember(x => x.BattleId, y => y.MapFrom(z => z.Data.Id));
         }

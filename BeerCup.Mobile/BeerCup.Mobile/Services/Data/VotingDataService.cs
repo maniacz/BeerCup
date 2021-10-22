@@ -27,13 +27,13 @@ namespace BeerCup.Mobile.Services.Data
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<VoteResponseDTO>> SendVotes(IEnumerable<Beer> chosenBeers)
+        public async Task<IEnumerable<VoteResponse>> SendVotes(IEnumerable<Beer> chosenBeers)
         {
             var userId = _settingsService.UserIdSetting;
             UriBuilder uri = SetUriForCurrentBattleUserVotes();
 
             //user has already voted in current battle
-            var userVotesInCurrentBattle = await _genericRepository.GetAsync<VotesListResponseDTO>(uri.ToString());
+            var userVotesInCurrentBattle = await _genericRepository.GetAsync<VotesListResponse>(uri.ToString());
             if (userVotesInCurrentBattle.Data.Count > 0)
             {
                 if (userVotesInCurrentBattle.Data.Count != 2)
@@ -47,7 +47,7 @@ namespace BeerCup.Mobile.Services.Data
 
             uri.Path = ApiConstants.BattlesEndpoint;
 
-            List<VoteResponseDTO> userVotes = new List<VoteResponseDTO>();
+            List<VoteResponse> userVotes = new List<VoteResponse>();
             try
             {
                 foreach (var selectedBeer in chosenBeers)
@@ -55,7 +55,7 @@ namespace BeerCup.Mobile.Services.Data
                     var beerFromDb = await GetBeer(selectedBeer);
                     var vote = new Vote { VoterId = userId, BeerId = beerFromDb.BeerId, BattleId = beerFromDb.Battle.BattleId };
                     //todo: poniżej może zadziałać indeks na tabeli na unikalność głosów, trza by to obsłużyć
-                    var savedVote = await _genericRepository.PostAsync<Vote, VoteResponseDTO>(uri.ToString() , vote);
+                    var savedVote = await _genericRepository.PostAsync<Vote, VoteResponse>(uri.ToString() , vote);
                     userVotes.Add(savedVote);
                 }
             }
@@ -102,7 +102,7 @@ namespace BeerCup.Mobile.Services.Data
             query["AssignedNumberInBattle"] = beer.AssignedNumberInBattle.ToString();
             uri.Query = query.ToString();
 
-            var beerFromDb = await _genericRepository.GetAsync<BeerFromBattleResponseDTO>(uri.ToString());
+            var beerFromDb = await _genericRepository.GetAsync<BeerFromBattleResponse>(uri.ToString());
             var modelBeer =_mapper.Map<Beer>(beerFromDb);
             return modelBeer;
         }

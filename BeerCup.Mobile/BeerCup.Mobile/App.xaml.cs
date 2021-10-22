@@ -31,7 +31,7 @@ namespace BeerCup.Mobile
             var navigationService = AppContainer.Resolve<INavigationService>();
 
             var response = await authenticationService.Authenticate("uq", "pass");
-            await navigationService.NavigateToAsync<BattleViewModel>();
+            await navigationService.NavigateToAsync<AdminPanelViewModel>();
 
             //var response = await authenticationService.Register("kamo", "pass", "kamo@gmail.com", "A002");
         }

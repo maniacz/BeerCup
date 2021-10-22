@@ -16,5 +16,7 @@ namespace BeerCup.Mobile.Contracts.Repository
         Task DeleteAsync(string uri, string authToken = "");
 
         Task<T> PutAsync<T>(string uri, T data, string authToken = "");
+
+        Task<TResponse> PutAsync<TRequest, TResponse>(string uri, TRequest data, string authToken = "");
     }
 }
