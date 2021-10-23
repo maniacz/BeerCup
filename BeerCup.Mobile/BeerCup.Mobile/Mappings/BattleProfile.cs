@@ -13,7 +13,8 @@ namespace BeerCup.Mobile.Mappings
         {
             CreateMap<BattleResponse, Battle>()
                 .ForMember(x => x.BattleId, y => y.Condition(r => r.Data != null))
-                .ForMember(x => x.BattleId, y => y.MapFrom(z => z.Data.Id));
+                .ForMember(x => x.BattleId, y => y.MapFrom(z => z.Data.Id))
+                .ForMember(x => x.Place, y => y.MapFrom(z => z.Data.Place));
         }
     }
 }

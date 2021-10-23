@@ -17,5 +17,7 @@ namespace BeerCup.Mobile.Contracts.Services.General
         Task NavigateToAsync(Type viewModelType);
 
         Task ClearBackStack();
+
+        Task PopToRootAsync();
     }
 }

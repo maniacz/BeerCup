@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.MultiSelectListView;
@@ -16,6 +17,8 @@ namespace BeerCup.Mobile.ViewModels
     public class BattleViewModel : ViewModelBase
     {
         private readonly IVotingDataService _votingDataService;
+        private readonly IBattleDataService _battleDataService;
+        private readonly IGeolocationService _geolocationService;
 
         public MultiSelectObservableCollection<Beer> Beers { get; set; }
         public ICommand BeerTappedCommand => new Command(OnBeerTappedCommand);
@@ -54,19 +57,30 @@ namespace BeerCup.Mobile.ViewModels
             }
         }
 
-        public BattleViewModel(IVotingDataService votingDataService, INavigationService navigationService, IBattleDataService battleDataService)
+        public BattleViewModel(IVotingDataService votingDataService, INavigationService navigationService, IBattleDataService battleDataService, IGeolocationService geolocationService)
             : base(navigationService)
         {
-            var runningBattle = battleDataService.GetCurrentRunningBattle().Result;
-            if (runningBattle != null)
+            _votingDataService = votingDataService;
+            _battleDataService = battleDataService;
+            _geolocationService = geolocationService;
+
+            Beers = new MultiSelectObservableCollection<Beer>();
+            LoadStartingBeers();
+        }
+
+        public override async Task InitializeAsync(object data)
+        {
+            var runningBattle = await _battleDataService.GetCurrentRunningBattle();
+            if (runningBattle == null)
             {
-                Beers = new MultiSelectObservableCollection<Beer>();
-                LoadStartingBeers();
-                _votingDataService = votingDataService;
+                await Application.Current.MainPage.DisplayAlert("Bitwa", "Nie odbywa się teraz żadna bitwa", "OK");
+                await _navigationService.PopToRootAsync();
             }
-            else
+
+            if (!_geolocationService.IsUserOnBattlePlace(runningBattle).Result)
             {
-                Application.Current.MainPage.DisplayAlert("Bitwa", "Nie odbywa się teraz żadna bitwa", "OK");
+                await Application.Current.MainPage.DisplayAlert("Bitwa", "Aby zagłosować musisz udać się na miejsce bitwy", "OK");
+                await _navigationService.PopToRootAsync();
             }
         }
 

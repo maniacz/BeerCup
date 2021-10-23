@@ -12,7 +12,11 @@ namespace BeerCup.DataAccess.CQRS.Queries
     {
         public async override Task<Battle> Execute(BeerCupStorageContext context)
         {
-            return await context.Battles.Where(b => b.IsRunning == true).SingleOrDefaultAsync();
+            var currentBattle = await context.Battles
+                                        .Where(b => b.IsRunning == true)
+                                        .Include(b => b.Place)
+                                        .SingleOrDefaultAsync();
+            return currentBattle;
         }
     }
 }

@@ -36,6 +36,12 @@ namespace BeerCup.Mobile.Repository
                     .ExecuteAsync(() => httpClient.GetAsync(uri))
                     .GetAwaiter().GetResult();
 
+                if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
+                {
+                    //todo: wykorzystać serwis, żeby zlikwodować coupling do view
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Serwis niedostępny", "OK");
+                }
+
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var json = JsonConvert.DeserializeObject<T>(jsonResult);
                 return json;

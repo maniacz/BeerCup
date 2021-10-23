@@ -136,6 +136,14 @@ namespace BeerCup.Mobile.Services.General
             await CurrentApplication.MainPage.Navigation.PopToRootAsync();
         }
 
+        public async Task PopToRootAsync()
+        {
+            if (CurrentApplication.MainPage is MainView mainPage)
+            {
+                await mainPage.Detail.Navigation.PopToRootAsync();
+            }
+        }
+
         //todo: zaimplementuj NavigateBackAsync() i PopToRootAsync() jeśli będzie potrzebne
     }
 }

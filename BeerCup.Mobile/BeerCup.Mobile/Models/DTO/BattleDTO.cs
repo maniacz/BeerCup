@@ -11,5 +11,7 @@ namespace BeerCup.Mobile.Models.DTO
         public string Style { get; set; }
 
         public List<Beer> Beers { get; set; }
+
+        public BattlePlace Place { get; set; }
     }
 }

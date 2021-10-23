@@ -13,5 +13,7 @@ namespace BeerCup.ApplicationServices.API.Domain.Models
         public string Style { get; set; }
 
         public List<Beer> Beers { get; set; }
+
+        public BattlePlace Place { get; set; }
     }
 }
