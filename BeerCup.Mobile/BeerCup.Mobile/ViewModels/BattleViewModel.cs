@@ -64,7 +64,6 @@ namespace BeerCup.Mobile.ViewModels
             _battleDataService = battleDataService;
             _geolocationService = geolocationService;
 
-            Beers = new MultiSelectObservableCollection<Beer>();
             LoadStartingBeers();
         }
 

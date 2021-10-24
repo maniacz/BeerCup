@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BeerCup.Mobile.Views.ResultsView">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="RESULTS VIEW!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <ListView x:Name="Results" VerticalOptions="FillAndExpand" ItemsSource="{Binding BattleResults}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding FinalRank}" Grid.Column="1" />
+                                <Label Text="{Binding Brewery.Name}" Grid.Column="2" />
+                                <Label Text="{Binding VotesReceived}" Grid.Column="3" />
+                                <Label Text="{Binding Precentage}" Grid.Column="4" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

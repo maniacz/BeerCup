@@ -77,6 +77,12 @@ namespace BeerCup.Mobile.ViewModels
                 ViewModelToLoad = typeof(BattleViewModel),
                 MenuItemType = MenuItemType.BreweryStats
             });
+            menuItems.Add(MenuItemType.BattleResults, new MainMenuItem
+            {
+                MenuText = "Wyniki bitwy",
+                ViewModelToLoad = typeof(ResultsViewModel),
+                MenuItemType = MenuItemType.BattleResults
+            });
 
             return menuItems;
         }
@@ -89,21 +95,22 @@ namespace BeerCup.Mobile.ViewModels
         private void LoadAdminMenuItems()
         {
             _userMenuItems.Add(_menuItems[MenuItemType.AdminPanel]);
-            _userMenuItems.Add(_menuItems[MenuItemType.Battle]);
-            _userMenuItems.Add(_menuItems[MenuItemType.VoterHistory]);
-            _userMenuItems.Add(_menuItems[MenuItemType.Logout]);
+            LoadCommonMenuItems();
         }
 
         private void LoadVoterMenuItems()
         {
-            _userMenuItems.Add(_menuItems[MenuItemType.Battle]);
-            _userMenuItems.Add(_menuItems[MenuItemType.VoterHistory]);
-            _userMenuItems.Add(_menuItems[MenuItemType.Logout]);
+            LoadCommonMenuItems();
         }
         private void LoadBreweryStatsMenuItems()
         {
-            _userMenuItems.Add(_menuItems[MenuItemType.BreweryStats]);
+            LoadCommonMenuItems();
+        }
+
+        private void LoadCommonMenuItems()
+        {
             _userMenuItems.Add(_menuItems[MenuItemType.Battle]);
+            _userMenuItems.Add(_menuItems[MenuItemType.BattleResults]);
             _userMenuItems.Add(_menuItems[MenuItemType.VoterHistory]);
             _userMenuItems.Add(_menuItems[MenuItemType.Logout]);
         }

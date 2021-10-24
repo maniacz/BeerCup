@@ -6,5 +6,6 @@ namespace BeerCup.Mobile.Models
 {
     public class Brewery
     {
+        public string Name { get; set; }
     }
 }
