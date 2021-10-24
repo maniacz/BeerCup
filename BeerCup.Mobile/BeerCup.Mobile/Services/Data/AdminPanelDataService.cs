@@ -39,5 +39,16 @@ namespace BeerCup.Mobile.Services.Data
             var battleFromDb = await _genericRepository.PutAsync<Battle, BattleResponse>(uri.ToString(), battle);
             return _mapper.Map<Battle>(battleFromDb);
         }
+
+        public async Task<Battle> EndBattle(Battle battle)
+        {
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.AdminPanelEndpoint + "/EndBattle"
+            };
+
+            var battleFromDb = await _genericRepository.PutAsync<Battle, BattleResponse>(uri.ToString(), battle);
+            return _mapper.Map<Battle>(battleFromDb);
+        }
     }
 }
