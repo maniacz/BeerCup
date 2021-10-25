@@ -11,6 +11,7 @@ namespace BeerCup.DataAccess.Entities
 
         public int UserId { get; set; }
 
+        //todo: BreweryId nie jest tu potrzebne, można do Brewery dojść po encji Beer
         public int BreweryId { get; set; }
 
         public int BattleId { get; set; }

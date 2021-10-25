@@ -33,6 +33,13 @@ namespace BeerCup.WebAPI.Controllers
             return this.HandleRequest<EndBattleRequest, EndBattleResponse>(request);
         }
 
+        [HttpGet]
+        [Route("ShowResults")]
+        public Task<IActionResult> ShowBattleResults(ShowBattleResultRequest request)
+        {
+            return this.HandleRequest<ShowBattleResultRequest, ShowBattleResultResponse>(request);
+        }
+
         /*
         [HttpPost]
         [Route("place")]
