@@ -10,5 +10,9 @@ namespace BeerCup.Mobile.Contracts.Services.Data
     public interface IBattleDataService
     {
         Task<Battle> GetCurrentRunningBattle();
+
+        Task<Battle> GetTodaysBattle();
+
+        Task<List<Result>> GetBattleResults(int battleId);
     }
 }

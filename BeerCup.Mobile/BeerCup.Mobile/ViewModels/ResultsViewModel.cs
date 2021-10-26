@@ -7,15 +7,18 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
+using BeerCup.Mobile.Contracts.Services.Data;
 
 namespace BeerCup.Mobile.ViewModels
 {
     public class ResultsViewModel : ViewModelBase
     {
+        private readonly IBattleDataService _battleDataService;
         private ObservableCollection<Result> _battleResults;
 
-        public ResultsViewModel(INavigationService navigationService) : base(navigationService)
+        public ResultsViewModel(INavigationService navigationService, IBattleDataService battleDataService) : base(navigationService)
         {
+            _battleDataService = battleDataService;
             //todo: dodać data service
         }
 
@@ -31,8 +34,11 @@ namespace BeerCup.Mobile.ViewModels
 
         public override async Task InitializeAsync(object data)
         {
-            BattleResults = (await GetFakeBattleResultsAsync()).ToObservableCollection();
+            //BattleResults = (await GetFakeBattleResultsAsync()).ToObservableCollection();
+            BattleResults = (await _battleDataService.GetBattleResults(1)).ToObservableCollection();
         }
+
+
 
         private async Task<List<Result>> GetFakeBattleResultsAsync()
         {

@@ -53,7 +53,7 @@ namespace BeerCup.Mobile.Services.Data
                 foreach (var selectedBeer in chosenBeers)
                 {
                     var beerFromDb = await GetBeer(selectedBeer);
-                    var vote = new Vote { VoterId = userId, BeerId = beerFromDb.BeerId, BattleId = beerFromDb.Battle.BattleId };
+                    var vote = new Vote { VoterId = userId, BeerId = beerFromDb.BeerId, BattleId = beerFromDb.Battle.Id };
                     //todo: poniżej może zadziałać indeks na tabeli na unikalność głosów, trza by to obsłużyć
                     var savedVote = await _genericRepository.PostAsync<Vote, VoteResponse>(uri.ToString() , vote);
                     userVotes.Add(savedVote);

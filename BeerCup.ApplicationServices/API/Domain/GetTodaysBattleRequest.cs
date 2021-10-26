@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace BeerCup.ApplicationServices.API.Domain
 {
-    public class EndBattleRequest : IRequest<EndBattleResponse>
+    public class GetTodaysBattleRequest : IRequest<GetTodaysBattleResponse>
     {
-        public int Id { get; set; }
     }
 }

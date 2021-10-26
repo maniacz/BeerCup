@@ -40,6 +40,13 @@ namespace BeerCup.WebAPI.Controllers
             return this.HandleRequest<ShowBattleResultRequest, ShowBattleResultResponse>(request);
         }
 
+        [HttpPut]
+        [Route("PublishResults")]
+        public Task<IActionResult> PublishBattleResults(PublishResultsRequest request)
+        {
+            return this.HandleRequest<PublishResultsRequest, PublishResultsResponse>(request);
+        }
+
         /*
         [HttpPost]
         [Route("place")]

@@ -23,5 +23,7 @@ namespace BeerCup.DataAccess.Entities
         public int? BattlePlaceId { get; set; }
 
         public BattlePlace Place { get; set; }
+
+        public bool ResultsPublished { get; set; }
     }
 }

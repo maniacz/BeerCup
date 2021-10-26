@@ -13,7 +13,7 @@ namespace BeerCup.Mobile.Mappings
         {
             CreateMap<BeerFromBattleResponse, Beer>()
                 .ForMember(x => x.BeerId, y => y.MapFrom(z => z.Data.BeerId))
-                .ForPath(x => x.Battle.BattleId, y => y.MapFrom(z => z.Data.BattleId));
+                .ForPath(x => x.Battle.Id, y => y.MapFrom(z => z.Data.BattleId));
         }
     }
 }

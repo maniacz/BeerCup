@@ -1,5 +1,6 @@
 ﻿using BeerCup.Mobile.Contracts.Repository;
 using BeerCup.Mobile.Exceptions;
+using BeerCup.Mobile.Models;
 using Newtonsoft.Json;
 using Polly;
 using System;
@@ -43,8 +44,8 @@ namespace BeerCup.Mobile.Repository
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var json = JsonConvert.DeserializeObject<T>(jsonResult);
-                return json;
+                var json = JsonConvert.DeserializeObject<ApiResponse<T>>(jsonResult);
+                return json.Data;
             }
             catch (Exception e)
             {
@@ -83,8 +84,8 @@ namespace BeerCup.Mobile.Repository
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var json = JsonConvert.DeserializeObject<T>(jsonResult);
-                return json;
+                var json = JsonConvert.DeserializeObject<ApiResponse<T>>(jsonResult);
+                return json.Data;
             }
             catch (Exception e)
             {
@@ -123,8 +124,8 @@ namespace BeerCup.Mobile.Repository
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var json = JsonConvert.DeserializeObject<TResponse>(jsonResult);
-                return json;
+                var json = JsonConvert.DeserializeObject<ApiResponse<TResponse>>(jsonResult);
+                return json.Data;
             }
             catch (Exception e)
             {
@@ -169,8 +170,8 @@ namespace BeerCup.Mobile.Repository
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var json = JsonConvert.DeserializeObject<T>(jsonResult);
-                return json;
+                var json = JsonConvert.DeserializeObject<ApiResponse<T>>(jsonResult);
+                return json.Data;
             }
             catch (Exception e)
             {
@@ -209,8 +210,8 @@ namespace BeerCup.Mobile.Repository
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var json = JsonConvert.DeserializeObject<TResponse>(jsonResult);
-                return json;
+                var json = JsonConvert.DeserializeObject<ApiResponse<TResponse>>(jsonResult);
+                return json.Data;
             }
             catch (Exception e)
             {

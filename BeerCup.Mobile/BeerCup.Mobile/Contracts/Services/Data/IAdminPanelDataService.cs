@@ -10,5 +10,6 @@ namespace BeerCup.Mobile.Contracts.Services.Data
     {
         Task<Battle> StartBattle(BattlePlace battlePlace);
         Task<Battle> EndBattle(Battle battle);
+        Task<Battle> PublishResults(Battle runningBattle);
     }
 }

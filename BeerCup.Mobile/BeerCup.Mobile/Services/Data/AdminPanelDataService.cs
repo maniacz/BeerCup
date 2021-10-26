@@ -16,12 +16,10 @@ namespace BeerCup.Mobile.Services.Data
     public class AdminPanelDataService : IAdminPanelDataService
     {
         private readonly IGenericRepository _genericRepository;
-        private readonly IMapper _mapper;
 
-        public AdminPanelDataService(IGenericRepository genericRepository, IMapper mapper)
+        public AdminPanelDataService(IGenericRepository genericRepository)
         {
             _genericRepository = genericRepository;
-            _mapper = mapper;
         }
 
         public async Task<Battle> StartBattle(BattlePlace battlePlace)
@@ -36,8 +34,7 @@ namespace BeerCup.Mobile.Services.Data
                 Place = battlePlace
             };
 
-            var battleFromDb = await _genericRepository.PutAsync<Battle, BattleResponse>(uri.ToString(), battle);
-            return _mapper.Map<Battle>(battleFromDb);
+            return await _genericRepository.PutAsync(uri.ToString(), battle);
         }
 
         public async Task<Battle> EndBattle(Battle battle)
@@ -47,8 +44,17 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.AdminPanelEndpoint + "/EndBattle"
             };
 
-            var battleFromDb = await _genericRepository.PutAsync<Battle, BattleResponse>(uri.ToString(), battle);
-            return _mapper.Map<Battle>(battleFromDb);
+            return await _genericRepository.PutAsync(uri.ToString(), battle);
+        }
+
+        public async Task<Battle> PublishResults(Battle battle)
+        {
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.AdminPanelEndpoint + "/PublishResults"
+            };
+
+            return await _genericRepository.PutAsync(uri.ToString(), battle);
         }
     }
 }

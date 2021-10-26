@@ -29,14 +29,42 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.BattlesEndpoint + "/current"
             };
 
-            var response = await _genericRepository.GetAsync<BattleResponse>(uri.ToString());
-            if (response.Data == null)
+            var response = await _genericRepository.GetAsync<Battle>(uri.ToString());
+            if (response == null)
             {
                 return null;
             }
 
             var modelBattle = _mapper.Map<Battle>(response);
             return modelBattle;
+        }
+
+        public async Task<List<Result>> GetBattleResults(int battleId)
+        {
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.AdminPanelEndpoint + "/ShowResults/" + battleId
+            };
+
+            var response = await _genericRepository.GetAsync<List<Result>>(uri.ToString());
+
+            return response;
+        }
+
+        public async Task<Battle> GetTodaysBattle()
+        {
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.BattlesEndpoint + "/TodaysBattle"
+            };
+
+            var response = await _genericRepository.GetAsync<Battle>(uri.ToString());
+            if (response == null)
+            {
+                return null;
+            }
+
+            return response;
         }
     }
 }

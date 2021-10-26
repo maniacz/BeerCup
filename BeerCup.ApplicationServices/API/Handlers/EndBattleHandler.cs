@@ -32,7 +32,7 @@ namespace BeerCup.ApplicationServices.API.Handlers
         {
             var query = new GetRunningBattleQuery
             {
-                BattleId = request.BattleId
+                BattleId = request.Id
             };
 
             var runningBattle = await _queryExecutor.Execute(query);

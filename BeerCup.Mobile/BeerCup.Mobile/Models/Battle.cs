@@ -6,7 +6,11 @@ namespace BeerCup.Mobile.Models
 {
     public class Battle
     {
-        public int BattleId { get; set; }
+        public int Id { get; set; }
+
+        public string Style { get; set; }
+
+        public List<Beer> Beers { get; set; }
 
         public BattlePlace Place { get; set; }
     }
