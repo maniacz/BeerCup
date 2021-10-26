@@ -44,6 +44,15 @@ namespace BeerCup.ApplicationServices.API.Handlers
                 };
             }
 
+            if (request.ResultsPublished)
+            {
+                battleToPublish.ResultsPublished = true;
+            }
+            else
+            {
+                battleToPublish.ResultsPublished = false;
+            }
+
             var command = new PublishBattleResultsCommand
             {
                 Parameter = _mapper.Map<DataAccess.Entities.Battle>(battleToPublish)

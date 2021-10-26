@@ -14,6 +14,9 @@ namespace BeerCup.Mobile.ViewModels
 {
     public class AdminPanelViewModel : ViewModelBase
     {
+        private const string PublishBatteResultsText = "Ogłoś wyniki bitwy";
+        private const string HideBattleResultsText = "Ukryj wyniki bitwy";
+
         private readonly IAdminPanelDataService _adminPanelDataService;
         private readonly IBattleDataService _battleDataService;
         private readonly IGeolocationService _geolocationService;
@@ -22,6 +25,7 @@ namespace BeerCup.Mobile.ViewModels
         private bool _publishResultsAllowed;
         private Battle _runningBattle;
         private string _startButtonText;
+        private string _publishButtonText;
 
         public AdminPanelViewModel(INavigationService navigationService, IAdminPanelDataService adminPanelDataService, IBattleDataService battleDataService, IGeolocationService geolocationService)
             : base(navigationService)
@@ -79,12 +83,23 @@ namespace BeerCup.Mobile.ViewModels
             }
         }
 
+        public string PublishButtonText
+        {
+            get => _publishButtonText;
+            set
+            {
+                _publishButtonText = value;
+                OnPropertyChanged();
+            }
+        }
+
         public override async Task InitializeAsync(object data)
         {
             var todaysBattle = await _battleDataService.GetTodaysBattle();
             if (todaysBattle != null)
             {
                 StartButtonText = $"Wystartuj bitwę w stylu {todaysBattle.Style}";
+                PublishButtonText = PublishBatteResultsText;
             }
             else
             {
@@ -138,16 +153,41 @@ namespace BeerCup.Mobile.ViewModels
         }
         private async void OnPublishResult(object obj)
         {
-            var battlePublished = await _adminPanelDataService.PublishResults(_runningBattle);
-            if (battlePublished != null)
+            var todaysBattle = await _battleDataService.GetTodaysBattle();
+            if (todaysBattle != null)
+            {
+                if (!todaysBattle.ResultsPublished)
+                    await TogglePublishBattleResults(true);
+                else
+                    await TogglePublishBattleResults(false);
+            }
+        }
+
+        private async Task TogglePublishBattleResults(bool publishResults)
+        {
+            Battle battleResultsPublishStateChanged;
+
+            if (publishResults)
+                battleResultsPublishStateChanged = await _adminPanelDataService.PublishResults(_runningBattle);
+            else
+                battleResultsPublishStateChanged = await _adminPanelDataService.HideResults(_runningBattle);
+
+            if (battleResultsPublishStateChanged != null)
             {
                 BattleStartAllowed = false;
                 BattleEndAllowed = false;
-                PublishResultsAllowed = false;
+
+                if (publishResults)
+                    PublishButtonText = HideBattleResultsText;
+                else
+                    PublishButtonText = PublishBatteResultsText;
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Bitwa", "Nie udało się ogłosić wyników bitwy!", "OK");
+                if (publishResults)
+                    await Application.Current.MainPage.DisplayAlert("Bitwa", "Nie udało się ogłosić wyników bitwy!", "OK");
+                else
+                    await Application.Current.MainPage.DisplayAlert("Bitwa", "Nie udało się ukryć wyników bitwy!", "OK");
             }
         }
     }

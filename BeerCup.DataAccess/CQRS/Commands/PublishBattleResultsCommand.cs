@@ -10,7 +10,6 @@ namespace BeerCup.DataAccess.CQRS.Commands
     {
         public override async Task<Battle> Execute(BeerCupStorageContext context)
         {
-            Parameter.ResultsPublished = true;
             context.Battles.Update(this.Parameter);
             await context.SaveChangesAsync();
             return this.Parameter;

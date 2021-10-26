@@ -49,6 +49,18 @@ namespace BeerCup.Mobile.Services.Data
 
         public async Task<Battle> PublishResults(Battle battle)
         {
+            battle.ResultsPublished = true;
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.AdminPanelEndpoint + "/PublishResults"
+            };
+
+            return await _genericRepository.PutAsync(uri.ToString(), battle);
+        }
+
+        public async Task<Battle> HideResults(Battle battle)
+        {
+            battle.ResultsPublished = false;
             UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
             {
                 Path = ApiConstants.AdminPanelEndpoint + "/PublishResults"

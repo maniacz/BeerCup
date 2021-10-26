@@ -6,7 +6,7 @@
         <StackLayout>
             <Button Text="{Binding StartButtonText}" Command="{Binding StartBattleCommand}" IsEnabled="{Binding BattleStartAllowed}"/>
             <Button Text="Zakończ bitwę" Command="{Binding EndBattleCommand}" IsEnabled="{Binding BattleEndAllowed}"/>
-            <Button Text="Ogłoś wyniki bitwy" Command="{Binding PublishResultsCommand}" IsEnabled="{Binding PublishResultsAllowed}"/>
+            <Button Text="{Binding PublishButtonText}" Command="{Binding PublishResultsCommand}" IsEnabled="{Binding PublishResultsAllowed}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -15,5 +15,7 @@ namespace BeerCup.ApplicationServices.API.Domain.Models
         public List<Beer> Beers { get; set; }
 
         public BattlePlace Place { get; set; }
+
+        public bool ResultsPublished { get; set; }
     }
 }
