@@ -46,6 +46,14 @@ namespace BeerCup.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("Finished")]
+        public Task<IActionResult> GetFinishedBattles()
+        {
+            var request = new GetFinishedBattlesResultsRequest();
+            return this.HandleRequest<GetFinishedBattlesResultsRequest, GetFinishedBattlesResponse>(request);
+        }
+
+        [HttpGet]
         [Route("{battleId}")]
         public Task<IActionResult> GetBattleById([FromRoute] int battleId)
         {

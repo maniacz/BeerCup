@@ -22,7 +22,7 @@ namespace BeerCup.Mobile.Services.Data
             _settingsService = settingsService;
         }
 
-        public async Task<AuthenticationResponse> Authenticate(string username, string password)
+        public async Task<ApiResponse<User>> Authenticate(string username, string password)
         {
             UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
             {
@@ -36,24 +36,18 @@ namespace BeerCup.Mobile.Services.Data
             //};
 
             var authToken = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}"));
-            try
-            {
-                return await _genericRepository.GetAsync<AuthenticationResponse>(uri.ToString(), authToken);
-            }
-            catch (Exception)
-            {
-                return new AuthenticationResponse { IsAuthenticated = false };
-            }
+
+            return await _genericRepository.GetAsync<ApiResponse<User>>(uri.ToString(), authToken);
         }
 
-        public async Task<AuthenticationResponse> Register(string username, string password, string email, string accessCode)
+        public async Task<ApiResponse<User>> Register(string username, string password, string email, string accessCode)
         {
             UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
             {
                 Path = ApiConstants.RegisterEndpoint
             };
 
-            AuthenticationRequest authenticationRequest = new AuthenticationRequest
+            ReqistrationRequest authenticationRequest = new ReqistrationRequest
             {
                 Username = username,
                 Password = password,
@@ -61,14 +55,7 @@ namespace BeerCup.Mobile.Services.Data
                 AccessCode = accessCode
             };
 
-            try
-            {
-                return await _genericRepository.PostAsync<AuthenticationRequest, AuthenticationResponse>(uri.ToString(), authenticationRequest);
-            }
-            catch (Exception)
-            {
-                return new AuthenticationResponse { IsAuthenticated = false };
-            }
+            return await _genericRepository.PostAsync<ReqistrationRequest, ApiResponse<User>>(uri.ToString(), authenticationRequest);
         }
 
         public bool IsUserAuthenticated()

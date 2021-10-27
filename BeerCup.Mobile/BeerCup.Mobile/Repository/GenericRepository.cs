@@ -44,8 +44,10 @@ namespace BeerCup.Mobile.Repository
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var json = JsonConvert.DeserializeObject<ApiResponse<T>>(jsonResult);
-                return json.Data;
+                var json = JsonConvert.DeserializeObject<T>(jsonResult);
+                return json;
+
+
             }
             catch (Exception e)
             {
@@ -84,8 +86,8 @@ namespace BeerCup.Mobile.Repository
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var json = JsonConvert.DeserializeObject<ApiResponse<T>>(jsonResult);
-                return json.Data;
+                var json = JsonConvert.DeserializeObject<T>(jsonResult);
+                return json;
             }
             catch (Exception e)
             {
@@ -124,8 +126,8 @@ namespace BeerCup.Mobile.Repository
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var json = JsonConvert.DeserializeObject<ApiResponse<TResponse>>(jsonResult);
-                return json.Data;
+                var json = JsonConvert.DeserializeObject<TResponse>(jsonResult);
+                return json;
             }
             catch (Exception e)
             {
@@ -170,8 +172,8 @@ namespace BeerCup.Mobile.Repository
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var json = JsonConvert.DeserializeObject<ApiResponse<T>>(jsonResult);
-                return json.Data;
+                var json = JsonConvert.DeserializeObject<T>(jsonResult);
+                return json;
             }
             catch (Exception e)
             {
@@ -210,8 +212,8 @@ namespace BeerCup.Mobile.Repository
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var json = JsonConvert.DeserializeObject<ApiResponse<TResponse>>(jsonResult);
-                return json.Data;
+                var json = JsonConvert.DeserializeObject<TResponse>(jsonResult);
+                return json;
             }
             catch (Exception e)
             {

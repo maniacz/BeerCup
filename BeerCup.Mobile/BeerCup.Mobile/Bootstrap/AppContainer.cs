@@ -33,6 +33,7 @@ namespace BeerCup.Mobile.Bootstrap
             builder.RegisterType<RegisterViewModel>();
             builder.RegisterType<AdminPanelViewModel>();
             builder.RegisterType<ResultsViewModel>();
+            builder.RegisterType<ResultsCatalogViewModel>();
 
             //services - data
             builder.RegisterType(typeof(AuthenticationService)).As(typeof(IAuthenticationService));

@@ -58,13 +58,29 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.BattlesEndpoint + "/TodaysBattle"
             };
 
-            var response = await _genericRepository.GetAsync<Battle>(uri.ToString());
+            var response = await _genericRepository.GetAsync<ApiResponse<Battle>>(uri.ToString());
+            if (response.Error != null)
+            {
+                return null;
+            }
+
+            return response.Data;
+        }
+
+        public async Task<List<Battle>> GetFinishedBattles()
+        {
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.BattlesEndpoint + "/Finished"
+            };
+
+            var response = await _genericRepository.GetAsync<ApiResponse<List<Battle>>>(uri.ToString());
             if (response == null)
             {
                 return null;
             }
 
-            return response;
+            return response.Data;
         }
     }
 }

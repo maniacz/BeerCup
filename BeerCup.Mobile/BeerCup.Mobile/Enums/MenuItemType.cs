@@ -11,6 +11,7 @@ namespace BeerCup.Mobile.Enums
         AdminPanel,
         BreweryStats,
         BattleResults,
+        ResultsCatalog,
         Logout
     }
 }

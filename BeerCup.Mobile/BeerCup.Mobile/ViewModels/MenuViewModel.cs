@@ -83,6 +83,12 @@ namespace BeerCup.Mobile.ViewModels
                 ViewModelToLoad = typeof(ResultsViewModel),
                 MenuItemType = MenuItemType.BattleResults
             });
+            menuItems.Add(MenuItemType.ResultsCatalog, new MainMenuItem
+            {
+                MenuText = "Zakończone bitwy",
+                ViewModelToLoad = typeof(ResultsCatalogViewModel),
+                MenuItemType = MenuItemType.ResultsCatalog
+            });
 
             return menuItems;
         }
@@ -111,6 +117,7 @@ namespace BeerCup.Mobile.ViewModels
         {
             _userMenuItems.Add(_menuItems[MenuItemType.Battle]);
             _userMenuItems.Add(_menuItems[MenuItemType.BattleResults]);
+            _userMenuItems.Add(_menuItems[MenuItemType.ResultsCatalog]);
             _userMenuItems.Add(_menuItems[MenuItemType.VoterHistory]);
             _userMenuItems.Add(_menuItems[MenuItemType.Logout]);
         }
