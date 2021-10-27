@@ -26,14 +26,14 @@ namespace BeerCup.ApplicationServices.API.Handlers
     {
         private readonly ICommandExecutor commandExecutor;
         private readonly IQueryExecutor _queryExecutor;
-        private readonly IMapper mapper;
+        private readonly IMapper _mapper;
         private readonly ILogger<CreateUserHandler> logger;
 
         public CreateUserHandler(ICommandExecutor commandExecutor, IQueryExecutor queryExecutor, IMapper mapper, ILogger<CreateUserHandler> logger)
         {
             this.commandExecutor = commandExecutor;
             _queryExecutor = queryExecutor;
-            this.mapper = mapper;
+            this._mapper = mapper;
             this.logger = logger;
         }
 
@@ -42,19 +42,23 @@ namespace BeerCup.ApplicationServices.API.Handlers
             var accessCodeId = await ConfirmAccessCodeIsValid(request.AccessCode);
             if (accessCodeId == 0)
             {
-                return new CreateUserResponse
+                var resonse = 
+                 new CreateUserResponse
                 {
+                    Data = new UserDTO { IsAuthenticated = false },
                     Error = new ErrorModel(ErrorType.NotValidAccessCode)
                 };
+
+                return resonse;
             }
 
             var salt = Encryption.Encryption.GenerateSalt();
             var hashedPassword = Encryption.Encryption.HashPassword(request.Password, salt);
 
-            var userDAO = mapper.Map<UserDAO>(request);
+            var userDAO = _mapper.Map<UserDAO>(request);
             userDAO.AccessCodeId = accessCodeId;
 
-            var user = mapper.Map<DataAccess.Entities.User>(userDAO);
+            var user = _mapper.Map<DataAccess.Entities.User>(userDAO);
             user.Salt = Convert.ToBase64String(salt);
             user.Password = hashedPassword;
 
@@ -89,6 +93,7 @@ namespace BeerCup.ApplicationServices.API.Handlers
                 {
                     return new CreateUserResponse
                     {
+                        Data = new UserDTO { IsAuthenticated = false },
                         Error = new ErrorModel(ErrorType.UserAlreadyExists)
                     };
                 }
@@ -98,14 +103,17 @@ namespace BeerCup.ApplicationServices.API.Handlers
             {
                 return new CreateUserResponse()
                 {
+                    Data = new UserDTO { IsAuthenticated = false },
                     Error = new ErrorModel(ErrorType.InternalServerError)
                 };
             }
 
+            var mappedUser = _mapper.Map<UserDTO>(userFromDb);
+            mappedUser.IsAuthenticated = true;
+
             return new CreateUserResponse()
             {
-                IsAuthenticated = true,
-                Data = mapper.Map<UserDTO>(userFromDb)
+                Data = mappedUser
             };
         }
 

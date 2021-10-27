@@ -59,7 +59,7 @@ namespace BeerCup.Mobile.ViewModels
 
             //todo: connectionService
             var authenticationResponse = await _authenticationService.Authenticate(Username, Password);
-            if (authenticationResponse.IsAuthenticated)
+            if (authenticationResponse.Data.IsAuthenticated)
             {
                 _settingsService.UserNameSetting = authenticationResponse.Data.Username;
                 _settingsService.UserRoleSetting = authenticationResponse.Data.Role;

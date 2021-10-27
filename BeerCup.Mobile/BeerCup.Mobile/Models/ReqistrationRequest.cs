@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BeerCup.Mobile.Models
 {
-    public class AuthenticationRequest
+    public class ReqistrationRequest
     {
         public string Username { get; set; }
 

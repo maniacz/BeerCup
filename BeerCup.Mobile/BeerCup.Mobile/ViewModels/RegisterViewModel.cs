@@ -76,21 +76,29 @@ namespace BeerCup.Mobile.ViewModels
             //todo: connectionService
             //todo: fluent validation czy wszystkie pola są wypełnione
 
+            //todo: checking if e-mail already registered
             //todo: DEBUG values
-            Username = "Kamo";
-            Password = "KamoPass";
+            Username = "ehe";
+            Password = "fedf";
             Email = "kamo@wp.pl";
-            AccessCode = "A002";
+            AccessCode = "A003";
 
             var registrationResponse = await _authenticationService.Register(Username, Password, Email, AccessCode);
-            if (registrationResponse.IsAuthenticated)
+            if (string.IsNullOrEmpty(registrationResponse.Error))
             {
-                //todo: await _dialogService.ShowDialog("Registration successful", "Message", "OK");
-                _settingsService.UserNameSetting = registrationResponse.Data.Username;
-                _settingsService.UserRoleSetting = registrationResponse.Data.Role;
-                _settingsService.UserIdSetting = registrationResponse.Data.UserId;
+                if (registrationResponse.Data != null && registrationResponse.Data.IsAuthenticated)
+                {
+                    //todo: await _dialogService.ShowDialog("Registration successful", "Message", "OK");
+                    _settingsService.UserNameSetting = registrationResponse.Data.Username;
+                    _settingsService.UserRoleSetting = registrationResponse.Data.Role;
+                    _settingsService.UserIdSetting = registrationResponse.Data.UserId;
 
-                await _navigationService.NavigateToAsync<MainViewModel>(registrationResponse.Data.Role);
+                    await _navigationService.NavigateToAsync<MainViewModel>(registrationResponse.Data.Role);
+                }
+                else
+                {
+                    //todo: _dialogService.ShowDialog("Rejestracja nieudana", "Nie autoryzowano", "OK");
+                }
             }
             else
             {

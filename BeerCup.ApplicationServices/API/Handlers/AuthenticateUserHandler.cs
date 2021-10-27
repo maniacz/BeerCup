@@ -2,6 +2,7 @@
 using BeerCup.ApplicationServices.API.Domain;
 using BeerCup.ApplicationServices.API.Domain.Models;
 using BeerCup.ApplicationServices.API.Domain.Models.DTO;
+using BeerCup.ApplicationServices.API.ErrorHandling;
 using BeerCup.DataAccess;
 using BeerCup.DataAccess.CQRS.Queries;
 using MediatR;
@@ -51,14 +52,17 @@ namespace BeerCup.ApplicationServices.API.Handlers
             {
                 return new AuthenticationResponse()
                 {
-                    IsAuthenticated = false
+                    Data = new UserDTO { IsAuthenticated = false},
+                    Error = new ErrorModel(ErrorType.NotAuthenticated)
                 };
             }
 
+            var mappedUser = _mapper.Map<UserDTO>(userFromDb);
+            mappedUser.IsAuthenticated = true;
+
             return new AuthenticationResponse()
             {
-                IsAuthenticated = true,
-                Data = _mapper.Map<UserDTO>(userFromDb)
+                Data = mappedUser
             };
         }
     }

@@ -9,9 +9,9 @@ namespace BeerCup.Mobile.Contracts.Services.Data
 {
     public interface IAuthenticationService
     {
-        Task<AuthenticationResponse> Register(string username, string password, string email, string accessCode);
+        Task<ApiResponse<User>> Register(string username, string password, string email, string accessCode);
 
-        Task<AuthenticationResponse> Authenticate(string username, string password);
+        Task<ApiResponse<User>> Authenticate(string username, string password);
 
         bool IsUserAuthenticated();
 

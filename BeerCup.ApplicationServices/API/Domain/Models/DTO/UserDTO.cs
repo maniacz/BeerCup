@@ -13,5 +13,7 @@ namespace BeerCup.ApplicationServices.API.Domain.Models.DTO
         public string Username { get; set; }
 
         public int Role { get; set; }
+
+        public bool IsAuthenticated { get; set; }
     }
 }

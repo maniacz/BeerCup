@@ -5,6 +5,5 @@ namespace BeerCup.ApplicationServices.API.Domain
 {
     public class CreateUserResponse : ResponseBase<UserDTO>
     {
-        public bool IsAuthenticated { get; set; }
     }
 }

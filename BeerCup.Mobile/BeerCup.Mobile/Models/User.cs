@@ -14,5 +14,7 @@ namespace BeerCup.Mobile.Models
         public string Password { get; set; }
 
         public UserRole Role { get; set; }
+
+        public bool IsAuthenticated { get; set; }
     }
 }
