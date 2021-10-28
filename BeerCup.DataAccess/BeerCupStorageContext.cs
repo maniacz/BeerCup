@@ -47,8 +47,6 @@ namespace BeerCup.DataAccess
 
         public DbSet<AccessCode> AccessCodes { get; set; }
 
-        public DbSet<BattleDate> BattleDates { get; set; }
-
         public DbSet<BattlePlace> BattlePlaces { get; set; }
 
 

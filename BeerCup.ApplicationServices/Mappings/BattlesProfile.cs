@@ -17,14 +17,18 @@ namespace BeerCup.ApplicationServices.Mappings
                 .ForMember(x => x.Style, y => y.MapFrom(z => z.Style))
                 .ForMember(x => x.Beers, y => y.MapFrom(z => z.Beers != null ? z.Beers : new List<DataAccess.Entities.Beer>()))
                 .ForMember(x => x.Place, y => y.MapFrom(z => z.Place))
-                .ForMember(x => x.ResultsPublished, y => y.MapFrom(z => z.ResultsPublished));
+                .ForMember(x => x.ResultsPublished, y => y.MapFrom(z => z.ResultsPublished))
+                .ForMember(x => x.Date, y => y.MapFrom(z => z.Date))
+                .ForMember(x => x.PubName, y => y.MapFrom(z => z.PubName));
 
             this.CreateMap<Battle, DataAccess.Entities.Battle>()
                 .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
                 .ForMember(x => x.Style, y => y.MapFrom(z => z.Style))
                 .ForMember(x => x.Beers, y => y.MapFrom(z => z.Beers != null ? z.Beers : new List<Beer>()))
                 .ForMember(x => x.Place, y => y.MapFrom(z => z.Place))
-                .ForMember(x => x.ResultsPublished, y => y.MapFrom(z => z.ResultsPublished));
+                .ForMember(x => x.ResultsPublished, y => y.MapFrom(z => z.ResultsPublished))
+                .ForMember(x => x.Date, y => y.MapFrom(z => z.Date))
+                .ForMember(x => x.PubName, y => y.MapFrom(z => z.PubName));
         }
     }
 }

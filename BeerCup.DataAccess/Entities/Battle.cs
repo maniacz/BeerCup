@@ -16,7 +16,7 @@ namespace BeerCup.DataAccess.Entities
 
         public List<Beer> Beers { get; set; }
 
-        public BattleDate BattleDate { get; set; }
+        public DateTime? Date { get; set; }
 
         public bool IsRunning { get; set; }
 
@@ -25,5 +25,7 @@ namespace BeerCup.DataAccess.Entities
         public BattlePlace Place { get; set; }
 
         public bool ResultsPublished { get; set; }
+
+        public string PubName { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace BeerCup.DataAccess.CQRS.Queries
         public async override Task<Battle> Execute(BeerCupStorageContext context)
         {
             var battle = await context.Battles
-                                .Where(b => b.BattleDate.Date.Date == DateTime.Today)
+                                .Where(b => b.Date.Value.Date == DateTime.Today)
                                 .SingleOrDefaultAsync();
             return battle;
         }

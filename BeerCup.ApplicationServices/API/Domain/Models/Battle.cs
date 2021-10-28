@@ -17,5 +17,9 @@ namespace BeerCup.ApplicationServices.API.Domain.Models
         public BattlePlace Place { get; set; }
 
         public bool ResultsPublished { get; set; }
+
+        public DateTime Date { get; set; }
+
+        public string PubName { get; set; }
     }
 }
