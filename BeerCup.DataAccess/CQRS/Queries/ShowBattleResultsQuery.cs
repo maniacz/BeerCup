@@ -14,20 +14,17 @@ namespace BeerCup.DataAccess.CQRS.Queries
 
         public override Task<List<BattleResult>> Execute(BeerCupStorageContext context)
         {
-            var results = context.Breweries.SelectMany(b => context.Votes
-                                        .Where(v => v.BattleId == BattleId && v.BreweryId == b.Id).DefaultIfEmpty(), (b, v) => new
-                                        {
-                                            Brewery = b,
-                                            Vote = v
-                                        }).AsEnumerable()
-                                            .GroupBy(a => a.Brewery)
-                                                .Select(g => new BattleResult
-                                                {
-                                                    Brewery = g.Key,
-                                                    VotesReceived = g.Where(a => a.Vote != null).Count()
-                                                })
-                                            .OrderByDescending(g => g.VotesReceived).ThenBy(g => g.Brewery.Name)
-                                            .ToList();
+            var results = (from b in context.Set<Brewery>()
+                           join p in context.Set<Beer>()
+                             on b.Id equals p.BreweryId into grouping
+                           from p in grouping.DefaultIfEmpty()
+                           where p.BattleId == BattleId
+                           orderby p.Votes.Count descending, b.Name ascending
+                           select new BattleResult
+                           {
+                               Brewery = b,
+                               VotesReceived = p.Votes.Count
+                           }).ToList();
 
             return Task.FromResult(results);
         }

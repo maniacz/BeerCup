@@ -1,9 +1,7 @@
-﻿using AutoMapper;
-using BeerCup.Mobile.Constants;
+﻿using BeerCup.Mobile.Constants;
 using BeerCup.Mobile.Contracts.Repository;
 using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Models;
-using BeerCup.Mobile.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,12 +12,10 @@ namespace BeerCup.Mobile.Services.Data
     public class BattleDataService : IBattleDataService
     {
         private readonly IGenericRepository _genericRepository;
-        private readonly IMapper _mapper;
 
-        public BattleDataService(IGenericRepository genericRepository, IMapper mapper)
+        public BattleDataService(IGenericRepository genericRepository)
         {
             _genericRepository = genericRepository;
-            _mapper = mapper;
         }
 
         public async Task<Battle> GetCurrentRunningBattle()
@@ -29,14 +25,9 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.BattlesEndpoint + "/current"
             };
 
-            var response = await _genericRepository.GetAsync<Battle>(uri.ToString());
-            if (response == null)
-            {
-                return null;
-            }
+            var response = await _genericRepository.GetAsync<ApiResponse<Battle>>(uri.ToString());
 
-            var modelBattle = _mapper.Map<Battle>(response);
-            return modelBattle;
+            return response?.Data;
         }
 
         public async Task<List<Result>> GetBattleResults(int battleId)
@@ -46,9 +37,9 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.AdminPanelEndpoint + "/ShowResults/" + battleId
             };
 
-            var response = await _genericRepository.GetAsync<List<Result>>(uri.ToString());
+            var response = await _genericRepository.GetAsync<ApiResponse<List<Result>>>(uri.ToString());
 
-            return response;
+            return response.Data;
         }
 
         public async Task<Battle> GetTodaysBattle()
@@ -75,12 +66,8 @@ namespace BeerCup.Mobile.Services.Data
             };
 
             var response = await _genericRepository.GetAsync<ApiResponse<List<Battle>>>(uri.ToString());
-            if (response == null)
-            {
-                return null;
-            }
 
-            return response.Data;
+            return response?.Data;
         }
     }
 }

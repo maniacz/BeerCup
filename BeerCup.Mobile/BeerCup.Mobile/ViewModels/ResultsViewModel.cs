@@ -15,11 +15,11 @@ namespace BeerCup.Mobile.ViewModels
     {
         private readonly IBattleDataService _battleDataService;
         private ObservableCollection<Result> _battleResults;
+        private Battle _selectedBattle;
 
         public ResultsViewModel(INavigationService navigationService, IBattleDataService battleDataService) : base(navigationService)
         {
             _battleDataService = battleDataService;
-            //todo: dodać data service
         }
 
         public ObservableCollection<Result> BattleResults
@@ -32,10 +32,23 @@ namespace BeerCup.Mobile.ViewModels
             }
         }
 
+        public Battle SelectedBattle
+        {
+            get => _selectedBattle;
+            set
+            {
+                _selectedBattle = value;
+                OnPropertyChanged();
+            }
+        }
+
         public override async Task InitializeAsync(object data)
         {
+            SelectedBattle = (Battle)data;
+            BattleResults = (await _battleDataService.GetBattleResults(SelectedBattle.Id)).ToObservableCollection();
+            bool temp = false;
+
             //BattleResults = (await GetFakeBattleResultsAsync()).ToObservableCollection();
-            BattleResults = (await _battleDataService.GetBattleResults(1)).ToObservableCollection();
         }
 
 

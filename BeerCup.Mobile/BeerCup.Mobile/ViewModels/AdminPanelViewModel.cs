@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BeerCup.Mobile.Contracts.Services.Data;
+﻿using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Contracts.Services.General;
 using BeerCup.Mobile.Models;
 using BeerCup.Mobile.ViewModels.Base;
@@ -165,14 +164,14 @@ namespace BeerCup.Mobile.ViewModels
 
         private async Task TogglePublishBattleResults(bool publishResults)
         {
-            Battle battleResultsPublishStateChanged;
+            Battle battleWithResultsPublishStateChanged;
 
             if (publishResults)
-                battleResultsPublishStateChanged = await _adminPanelDataService.PublishResults(_runningBattle);
+                battleWithResultsPublishStateChanged = await _adminPanelDataService.PublishResults(_runningBattle);
             else
-                battleResultsPublishStateChanged = await _adminPanelDataService.HideResults(_runningBattle);
+                battleWithResultsPublishStateChanged = await _adminPanelDataService.HideResults(_runningBattle);
 
-            if (battleResultsPublishStateChanged != null)
+            if (battleWithResultsPublishStateChanged != null)
             {
                 BattleStartAllowed = false;
                 BattleEndAllowed = false;

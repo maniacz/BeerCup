@@ -34,9 +34,13 @@ namespace BeerCup.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("ShowResults")]
-        public Task<IActionResult> ShowBattleResults(ShowBattleResultRequest request)
+        [Route("ShowResults/{battleId}")]
+        public Task<IActionResult> ShowBattleResults(int battleId)
         {
+            var request = new ShowBattleResultRequest
+            {
+                BattleId = battleId
+            };
             return this.HandleRequest<ShowBattleResultRequest, ShowBattleResultResponse>(request);
         }
 

@@ -69,7 +69,7 @@ namespace BeerCup.Mobile.Services.General
             }
         }
 
-        public int BattleIdSetting 
+        public int RunningBattleIdSetting 
         { 
             get => GetIntItem(BattleId); 
             set => AddItem(BattleId, value);

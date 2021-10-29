@@ -10,8 +10,6 @@ using BeerCup.Mobile.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using AutoMapper.Contrib.Autofac.DependencyInjection;
-using BeerCup.Mobile.Mappings;
 
 namespace BeerCup.Mobile.Bootstrap
 {
@@ -48,9 +46,6 @@ namespace BeerCup.Mobile.Bootstrap
 
             //General
             builder.RegisterType(typeof(GenericRepository)).As(typeof(IGenericRepository));
-
-            //AutoMapper
-            builder.RegisterAutoMapper(typeof(BeersProfile).Assembly);
 
             _container = builder.Build();
         }

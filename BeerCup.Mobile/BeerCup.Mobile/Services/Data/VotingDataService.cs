@@ -1,13 +1,12 @@
-﻿using AutoMapper;
-using BeerCup.Mobile.Constants;
+﻿using BeerCup.Mobile.Constants;
 using BeerCup.Mobile.Contracts.Repository;
 using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Contracts.Services.General;
 using BeerCup.Mobile.Exceptions;
 using BeerCup.Mobile.Models;
-using BeerCup.Mobile.Models.DTO;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -18,22 +17,24 @@ namespace BeerCup.Mobile.Services.Data
     {
         private readonly IGenericRepository _genericRepository;
         private readonly ISettingsService _settingsService;
-        private readonly IMapper _mapper;
+        private readonly IBattleDataService _battleDataService;
 
-        public VotingDataService(IGenericRepository genericRepository, ISettingsService settingsService, IMapper mapper)
+        private int _runningBattleId;
+
+        public VotingDataService(IGenericRepository genericRepository, ISettingsService settingsService, IBattleDataService battleDataService)
         {
             _genericRepository = genericRepository;
             _settingsService = settingsService;
-            _mapper = mapper;
+            _battleDataService = battleDataService;
         }
 
-        public async Task<IEnumerable<VoteResponse>> SendVotes(IEnumerable<Beer> chosenBeers)
+        public async Task<IEnumerable<Vote>> SendVotes(IEnumerable<Beer> chosenBeers)
         {
             var userId = _settingsService.UserIdSetting;
-            UriBuilder uri = SetUriForCurrentBattleUserVotes();
+            UriBuilder uri = await SetUriForCurrentBattleUserVotes();
 
             //user has already voted in current battle
-            var userVotesInCurrentBattle = await _genericRepository.GetAsync<VotesListResponse>(uri.ToString());
+            var userVotesInCurrentBattle = await _genericRepository.GetAsync<ApiResponse<List<Vote>>>(uri.ToString());
             if (userVotesInCurrentBattle.Data.Count > 0)
             {
                 if (userVotesInCurrentBattle.Data.Count != 2)
@@ -47,24 +48,24 @@ namespace BeerCup.Mobile.Services.Data
 
             uri.Path = ApiConstants.BattlesEndpoint;
 
-            List<VoteResponse> userVotes = new List<VoteResponse>();
+            List<Vote> userVotes = new List<Vote>();
             try
             {
                 foreach (var selectedBeer in chosenBeers)
                 {
                     var beerFromDb = await GetBeer(selectedBeer);
-                    var vote = new Vote { VoterId = userId, BeerId = beerFromDb.BeerId, BattleId = beerFromDb.Battle.Id };
+                    var vote = new Vote { VoterId = userId, BeerId = beerFromDb.BeerId, BattleId = beerFromDb.BattleId };
                     //todo: poniżej może zadziałać indeks na tabeli na unikalność głosów, trza by to obsłużyć
-                    var savedVote = await _genericRepository.PostAsync<Vote, VoteResponse>(uri.ToString() , vote);
-                    userVotes.Add(savedVote);
+                    var response = await _genericRepository.PostAsync<Vote, ApiResponse<Vote>>(uri.ToString(), vote);
+                    userVotes.Add(response.Data);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 if (userVotes.Count > 0)
                     await RemoveRemainingBattleUserVotes();
 
-                throw;
+                Debug.WriteLine($"Sending votes failed. {ex.Message}");
             }
 
             return userVotes;
@@ -72,20 +73,21 @@ namespace BeerCup.Mobile.Services.Data
 
         private async Task RemoveRemainingBattleUserVotes()
         {
-            UriBuilder uri = SetUriForCurrentBattleUserVotes();
+            UriBuilder uri = await SetUriForCurrentBattleUserVotes();
 
             await _genericRepository.DeleteAsync(uri.ToString());
         }
 
-        private UriBuilder SetUriForCurrentBattleUserVotes()
+        private async Task<UriBuilder> SetUriForCurrentBattleUserVotes()
         {
             var userId = _settingsService.UserIdSetting.ToString();
-            //todo: zrób ustawianie battleId w _settingsService
-            string battleId = "1";
+            var currentRunningBattle = await _battleDataService.GetCurrentRunningBattle();
+            var battleId = currentRunningBattle.Id;
+            _settingsService.RunningBattleIdSetting = battleId;
 
             UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
             {
-                Path = ApiConstants.UserBattleVotesEndpoint.Replace("{battleId}", battleId).Replace("{userId}", userId)
+                Path = ApiConstants.UserBattleVotesEndpoint.Replace("{battleId}", battleId.ToString()).Replace("{userId}", userId)
             };
             return uri;
         }
@@ -98,13 +100,12 @@ namespace BeerCup.Mobile.Services.Data
             };
 
             var query = HttpUtility.ParseQueryString(uri.Query);
-            query["BattleId"] = "1";
+            query["BattleId"] = _settingsService.RunningBattleIdSetting.ToString();
             query["AssignedNumberInBattle"] = beer.AssignedNumberInBattle.ToString();
             uri.Query = query.ToString();
 
-            var beerFromDb = await _genericRepository.GetAsync<BeerFromBattleResponse>(uri.ToString());
-            var modelBeer =_mapper.Map<Beer>(beerFromDb);
-            return modelBeer;
+            var response = await _genericRepository.GetAsync<ApiResponse<Beer>>(uri.ToString());
+            return response.Data;
         }
     }
 }

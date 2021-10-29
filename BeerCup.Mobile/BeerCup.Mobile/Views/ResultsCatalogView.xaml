@@ -2,11 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BeerCup.Mobile.Views.ResultsCatalogView"
-             xmlns:behaviors="clr-namespace:BeerCup.Mobile.Behaviours">
+             xmlns:behaviors="clr-namespace:BeerCup.Mobile.Behaviours;assembly=BeerCup.Mobile">
     <ContentPage.Content>
         <ListView VerticalOptions="FillAndExpand" ItemsSource="{Binding FinishedBattles}" CachingStrategy="RecycleElement" SeparatorVisibility="Default" HasUnevenRows="True">
             <ListView.Behaviors>
-                <behaviors:EventToCommandBehavior EventName="ItemTapped" Command="{Binding BattleTappedCommand}" />
+                <behaviors:EventToCommandBehavior EventName="ItemTapped" Command="{Binding BattleTappedCommand}" EventArgsConverter="{StaticResource LocalItemTappedConverter}" />
             </ListView.Behaviors>
             <ListView.HeaderTemplate>
                 <DataTemplate>
@@ -26,8 +26,8 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Row="0" Grid.Column="0" Text="{Binding Style}" HorizontalOptions="StartAndExpand" />
-                            <Label Grid.Row="0" Grid.Column="1" Text="Data Bitwy" HorizontalOptions="EndAndExpand" />
-                            <Label Grid.Row="1" Grid.Column="0" Text="Absu/Biała Małpa" HorizontalOptions="StartAndExpand" />
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Date}" HorizontalOptions="EndAndExpand" />
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding PubName}" HorizontalOptions="StartAndExpand" />
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

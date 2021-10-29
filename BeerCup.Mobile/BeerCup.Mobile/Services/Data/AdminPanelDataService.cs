@@ -1,10 +1,7 @@
-﻿using AutoMapper;
-using BeerCup.Mobile.Constants;
+﻿using BeerCup.Mobile.Constants;
 using BeerCup.Mobile.Contracts.Repository;
 using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Models;
-using BeerCup.Mobile.Models.DTO;
-using BeerCup.Mobile.Models.DTO.Responses;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -24,13 +24,13 @@ namespace BeerCup.Mobile.ViewModels
         public ICommand BeerTappedCommand => new Command(OnBeerTappedCommand);
         public ICommand VoteCommand => new Command(OnVoteCommand);
 
-        private void OnVoteCommand()
+        private async void OnVoteCommand()
         {
             if (Beers.SelectedItems.Count() == 2)
             {
                 try
                 {
-                    _votingDataService.SendVotes(Beers.SelectedItems);
+                    await _votingDataService.SendVotes(Beers.SelectedItems);
                 }
                 catch (Exception)
                 {
@@ -38,7 +38,7 @@ namespace BeerCup.Mobile.ViewModels
                     throw;
                 }
 
-                //_navigationService.NavigateToAsync<HomeViewModel>();
+                await _navigationService.PopToRootAsync();
             }
         }
 
@@ -74,12 +74,14 @@ namespace BeerCup.Mobile.ViewModels
             {
                 await Application.Current.MainPage.DisplayAlert("Bitwa", "Nie odbywa się teraz żadna bitwa", "OK");
                 await _navigationService.PopToRootAsync();
+                return;
             }
 
             if (!_geolocationService.IsUserOnBattlePlace(runningBattle).Result)
             {
                 await Application.Current.MainPage.DisplayAlert("Bitwa", "Aby zagłosować musisz udać się na miejsce bitwy", "OK");
                 await _navigationService.PopToRootAsync();
+                return;
             }
         }
 

@@ -12,6 +12,8 @@ namespace BeerCup.Mobile.Models
 
         public Brewery BrewedBy { get; set; }
 
+        public int BattleId { get; set; }
+
         public Battle Battle { get; set; }
 
         public bool SelectedByVoter { get; set; }

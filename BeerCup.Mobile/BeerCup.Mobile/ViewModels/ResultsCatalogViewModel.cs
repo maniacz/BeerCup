@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace BeerCup.Mobile.ViewModels
 {
@@ -21,6 +23,8 @@ namespace BeerCup.Mobile.ViewModels
             _battleDataService = battleDataService;
         }
 
+        public ICommand BattleTappedCommand => new Command<Battle>(OnBattleTapped);
+
         public ObservableCollection<Battle> FinishedBattles
         {
             get => _finishedBattles;
@@ -29,6 +33,11 @@ namespace BeerCup.Mobile.ViewModels
                 _finishedBattles = value;
                 OnPropertyChanged();
             }
+        }
+
+        private void OnBattleTapped(Battle selectedBattle)
+        {
+            _navigationService.NavigateToAsync<ResultsViewModel>(selectedBattle);
         }
 
         public override async Task InitializeAsync(object data)
