@@ -46,7 +46,6 @@ namespace BeerCup.Mobile.ViewModels
         {
             SelectedBattle = (Battle)data;
             BattleResults = (await _battleDataService.GetBattleResults(SelectedBattle.Id)).ToObservableCollection();
-            bool temp = false;
 
             //BattleResults = (await GetFakeBattleResultsAsync()).ToObservableCollection();
         }
@@ -57,11 +56,11 @@ namespace BeerCup.Mobile.ViewModels
         {
             return new List<Result>
             {
-                new Result(1, "BroGar", 30, 60.0),
-                new Result(2, "Venom", 10, 20.0),
-                new Result(3, "Kazamat", 5, 10.0),
-                new Result(4, "Hołda", 3, 6.0),
-                new Result(5, "Bastion", 2, 4.0)
+                new Result(1, "BroGar", 30, "60.0"),
+                //new Result(2, "Venom", 10, 20.0M),
+                //new Result(3, "Kazamat", 5, 10.0M),
+                //new Result(4, "Hołda", 3, 6.0M),
+                //new Result(5, "Bastion", 2, 4.0M)
             };
         }
 

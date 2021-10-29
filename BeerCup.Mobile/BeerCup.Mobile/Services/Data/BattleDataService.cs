@@ -4,6 +4,7 @@ using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,6 +33,8 @@ namespace BeerCup.Mobile.Services.Data
 
         public async Task<List<Result>> GetBattleResults(int battleId)
         {
+            var battleResults = new List<Result>();
+
             UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
             {
                 Path = ApiConstants.AdminPanelEndpoint + "/ShowResults/" + battleId
@@ -39,7 +42,22 @@ namespace BeerCup.Mobile.Services.Data
 
             var response = await _genericRepository.GetAsync<ApiResponse<List<Result>>>(uri.ToString());
 
-            return response.Data;
+            int rank = 1;
+            int allBattleVotes = 0;
+            foreach (var result in response.Data.OrderByDescending(r => r.VotesReceived).ThenBy(r => r.Brewery.Name))
+            {
+                result.FinalRank = rank++;
+                allBattleVotes += result.VotesReceived;
+                battleResults.Add(result);
+            }
+
+            foreach (var result in battleResults)
+            {
+                var precentage = (decimal)result.VotesReceived / allBattleVotes * 100;
+                result.Precentage = precentage.ToString("0.0");
+            }
+
+            return battleResults;
         }
 
         public async Task<Battle> GetTodaysBattle()
