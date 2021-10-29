@@ -23,7 +23,8 @@ namespace BeerCup.DataAccess.CQRS.Queries
                            select new BattleResult
                            {
                                Brewery = b,
-                               VotesReceived = p.Votes.Count
+                               VotesReceived = p.Votes.Count,
+                               BeerNo = p.NumberInBattle
                            }).ToList();
 
             return Task.FromResult(results);

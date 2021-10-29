@@ -6,6 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <converters:ItemTappedConverter x:Key="LocalItemTappedConverter"></converters:ItemTappedConverter>
+            <converters:BeerNoConverter x:Key="LocalBeerNoConverter"></converters:BeerNoConverter>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

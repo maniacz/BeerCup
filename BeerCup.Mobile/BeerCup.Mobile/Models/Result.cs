@@ -10,6 +10,8 @@ namespace BeerCup.Mobile.Models
         public Brewery Brewery { get; set; }
         public int VotesReceived { get; set; }
         public string Precentage { get; set; }
+        public int BeerNo { get; set; }
+        public bool UserVotedFor { get; set; }
 
         public Result(int rank, string breweryName, int votes, string precentage)
         {
