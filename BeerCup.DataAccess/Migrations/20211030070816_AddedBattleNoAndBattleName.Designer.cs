@@ -4,14 +4,16 @@ using BeerCup.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BeerCup.DataAccess.Migrations
 {
     [DbContext(typeof(BeerCupStorageContext))]
-    partial class BeerCupStorageContextModelSnapshot : ModelSnapshot
+    [Migration("20211030070816_AddedBattleNoAndBattleName")]
+    partial class AddedBattleNoAndBattleName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

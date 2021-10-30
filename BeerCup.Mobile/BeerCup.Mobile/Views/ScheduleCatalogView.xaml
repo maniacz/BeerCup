@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BeerCup.Mobile.Views.ScheduleCatalogView"
+             xmlns:behaviors="clr-namespace:BeerCup.Mobile.Behaviours;assembly=BeerCup.Mobile">
+    <ContentPage.Content>
+        <ListView VerticalOptions="FillAndExpand" ItemsSource="{Binding Battles}" CachingStrategy="RecycleElement" SeparatorVisibility="Default" HasUnevenRows="True">
+            <ListView.Behaviors>
+                <behaviors:EventToCommandBehavior EventName="ItemTapped" Command="{Binding BattleTappedCommand}" EventArgsConverter="{StaticResource LocalItemTappedConverter}" />
+            </ListView.Behaviors>
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Label Text="można wrzucić jakiś nagłówek" />
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Margin="5" BackgroundColor="PaleTurquoise" HeightRequest="60">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding BattleName}" HorizontalOptions="StartAndExpand" />
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Style}" HorizontalOptions="EndAndExpand" />
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Date}" HorizontalOptions="StartAndExpand" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding PubName}" HorizontalOptions="EndAndExpand" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.FooterTemplate>
+                <DataTemplate>
+                    <Label Text="Tu można wrzucić jakąś stopkę" />
+                </DataTemplate>
+            </ListView.FooterTemplate>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>

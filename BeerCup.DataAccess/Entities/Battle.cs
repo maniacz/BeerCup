@@ -27,5 +27,12 @@ namespace BeerCup.DataAccess.Entities
         public bool ResultsPublished { get; set; }
 
         public string PubName { get; set; }
+
+        [Required]
+        public int BattleNo { get; set; }
+
+        [Required]
+        [MaxLength(15)]
+        public string BattleName { get; set; }
     }
 }

@@ -89,6 +89,12 @@ namespace BeerCup.Mobile.ViewModels
                 ViewModelToLoad = typeof(ResultsCatalogViewModel),
                 MenuItemType = MenuItemType.ResultsCatalog
             });
+            menuItems.Add(MenuItemType.ScheduleCatalog, new MainMenuItem
+            {
+                MenuText = "Plan bitew",
+                ViewModelToLoad = typeof(ScheduleCatalogViewModel),
+                MenuItemType = MenuItemType.ScheduleCatalog
+            });
 
             return menuItems;
         }
@@ -119,6 +125,7 @@ namespace BeerCup.Mobile.ViewModels
             _userMenuItems.Add(_menuItems[MenuItemType.BattleResults]);
             _userMenuItems.Add(_menuItems[MenuItemType.ResultsCatalog]);
             _userMenuItems.Add(_menuItems[MenuItemType.VoterHistory]);
+            _userMenuItems.Add(_menuItems[MenuItemType.ScheduleCatalog]);
             _userMenuItems.Add(_menuItems[MenuItemType.Logout]);
         }
 

@@ -19,5 +19,9 @@ namespace BeerCup.Mobile.Models
         public DateTime? Date { get; set; }
 
         public string PubName { get; set; }
+
+        public int BattleNo { get; set; }
+
+        public string BattleName { get; set; }
     }
 }

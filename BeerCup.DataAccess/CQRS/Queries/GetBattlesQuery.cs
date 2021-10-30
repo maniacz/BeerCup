@@ -12,17 +12,17 @@ namespace BeerCup.DataAccess.CQRS.Queries
     {
         public string Style { get; set; }
 
-        //todo: czy ta metoda nie było by lepiej gdyby była async?
-        public override Task<List<Battle>> Execute(BeerCupStorageContext context)
+        //todo: czy ta metoda nie było by lepiej gdyby była async? - LEPIEJ I TAK JĄ PRZEROBIŁEM, ZOSTAWIAM TODO ŻEBY PAMIĘTAĆ O PRZEROBIENIU TAK RESZTY QUERIES I COMMANDS
+        public override async Task<List<Battle>> Execute(BeerCupStorageContext context)
         {
             if (!string.IsNullOrEmpty(Style))
             {
-                return context.Battles.
+                return await context.Battles.
                         Include(b => b.Beers).
                         Where(b => b.Style == Style).ToListAsync();
             }
 
-            return context.Battles.ToListAsync();
+            return await context.Battles.OrderBy(b => b.BattleNo).ToListAsync();
         }
     }
 }

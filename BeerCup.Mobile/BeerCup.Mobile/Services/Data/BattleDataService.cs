@@ -15,11 +15,13 @@ namespace BeerCup.Mobile.Services.Data
     {
         private readonly IGenericRepository _genericRepository;
         private readonly ISettingsService _settingsService;
+        private readonly string _authToken;
 
         public BattleDataService(IGenericRepository genericRepository, ISettingsService settingsService)
         {
             _genericRepository = genericRepository;
             _settingsService = settingsService;
+            _authToken = settingsService.AuthTokenSetting;
         }
 
         public async Task<Battle> GetCurrentRunningBattle()
@@ -101,6 +103,18 @@ namespace BeerCup.Mobile.Services.Data
             };
 
             var response = await _genericRepository.GetAsync<ApiResponse<List<Vote>>>(uri.ToString());
+
+            return response?.Data;
+        }
+
+        public async Task<List<Battle>> GetAllBattles()
+        {
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.BattlesEndpoint
+            };
+
+            var response = await _genericRepository.GetAsync<ApiResponse<List<Battle>>>(uri.ToString(), _authToken);
 
             return response?.Data;
         }

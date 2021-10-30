@@ -14,6 +14,7 @@ namespace BeerCup.Mobile.Services.General
         private const string UserName = "UserName";
         private const string UserId = "UserId";
         private const string BattleId = "BattleId";
+        private const string AuthToken = "AuthToken";
 
         public SettingsService()
         {
@@ -73,6 +74,12 @@ namespace BeerCup.Mobile.Services.General
         { 
             get => GetIntItem(BattleId); 
             set => AddItem(BattleId, value);
+        }
+
+        public string AuthTokenSetting
+        {
+            get => GetItem(AuthToken);
+            set => AddItem(AuthToken, value);
         }
     }
 }

@@ -33,6 +33,8 @@ namespace BeerCup.DataAccess
             //modelBuilder.Entity<User>().HasOne(u => u.AccessCode).WithOne(c => c.User).HasForeignKey<AccessCode>(c => c.Id);
             modelBuilder.Entity<Vote>().HasIndex(v => new { v.UserId, v.BeerId, v.BreweryId }).IsUnique();
             modelBuilder.Entity<AccessCode>().HasData(_defaultAccessCodes);
+            modelBuilder.Entity<Battle>().Property(p => p.BattleNo).HasDefaultValue(0);
+            modelBuilder.Entity<Battle>().Property(p => p.BattleName).HasDefaultValue("DefaultName");
         }
 
         public DbSet<User> Users { get; set; }
