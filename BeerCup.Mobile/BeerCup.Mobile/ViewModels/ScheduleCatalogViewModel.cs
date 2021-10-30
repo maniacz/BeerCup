@@ -37,7 +37,7 @@ namespace BeerCup.Mobile.ViewModels
 
         private void OnBattleTapped(Battle selectedBattle)
         {
-            throw new NotImplementedException();
+            _navigationService.NavigateToAsync<ScheduleDetailViewModel>(selectedBattle);
         }
 
         public override async Task InitializeAsync(object data)

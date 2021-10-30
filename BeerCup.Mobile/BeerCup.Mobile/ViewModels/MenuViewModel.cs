@@ -80,7 +80,7 @@ namespace BeerCup.Mobile.ViewModels
             menuItems.Add(MenuItemType.BattleResults, new MainMenuItem
             {
                 MenuText = "Wyniki bitwy",
-                ViewModelToLoad = typeof(ResultsViewModel),
+                ViewModelToLoad = typeof(ResultsDetailViewModel),
                 MenuItemType = MenuItemType.BattleResults
             });
             menuItems.Add(MenuItemType.ResultsCatalog, new MainMenuItem

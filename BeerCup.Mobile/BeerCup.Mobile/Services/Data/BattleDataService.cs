@@ -118,5 +118,23 @@ namespace BeerCup.Mobile.Services.Data
 
             return response?.Data;
         }
+
+        public async Task<List<Brewery>> GetBreweriesFromBattle(int battleId)
+        {
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.BattlesEndpoint + "/" + battleId
+            };
+
+            var response = await _genericRepository.GetAsync<ApiResponse<Battle>>(uri.ToString(), _authToken);
+
+            if (response.Data != null)
+            {
+                var breweries = response.Data.Beers.Select(b => b.BrewedBy).OrderBy(b => b.Name).ToList();
+                return breweries;
+            }
+
+            return null;
+        }
     }
 }

@@ -11,5 +11,7 @@ namespace BeerCup.ApplicationServices.API.Domain.Models
         public int BeerId { get; set; }
 
         public int BattleId { get; set; }
+
+        public Brewery BrewedBy { get; set; }
     }
 }

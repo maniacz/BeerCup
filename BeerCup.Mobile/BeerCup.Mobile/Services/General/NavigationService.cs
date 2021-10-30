@@ -36,9 +36,10 @@ namespace BeerCup.Mobile.Services.General
             _mappings.Add(typeof(BreweryStatsViewModel), typeof(BreweryStatsView));
             _mappings.Add(typeof(RegisterViewModel), typeof(RegisterView));
             _mappings.Add(typeof(AdminPanelViewModel), typeof(AdminPanelView));
-            _mappings.Add(typeof(ResultsViewModel), typeof(ResultsView));
             _mappings.Add(typeof(ResultsCatalogViewModel), typeof(ResultsCatalogView));
+            _mappings.Add(typeof(ResultsDetailViewModel), typeof(ResultsDetailView));
             _mappings.Add(typeof(ScheduleCatalogViewModel), typeof(ScheduleCatalogView));
+            _mappings.Add(typeof(ScheduleDetailViewModel), typeof(ScheduleDetailView));
         }
 
         public async Task InitializeAsync()

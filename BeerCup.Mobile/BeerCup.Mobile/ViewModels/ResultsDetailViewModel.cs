@@ -12,13 +12,13 @@ using System.Linq;
 
 namespace BeerCup.Mobile.ViewModels
 {
-    public class ResultsViewModel : ViewModelBase
+    public class ResultsDetailViewModel : ViewModelBase
     {
         private readonly IBattleDataService _battleDataService;
         private ObservableCollection<Result> _battleResults;
         private Battle _selectedBattle;
 
-        public ResultsViewModel(INavigationService navigationService, IBattleDataService battleDataService) : base(navigationService)
+        public ResultsDetailViewModel(INavigationService navigationService, IBattleDataService battleDataService) : base(navigationService)
         {
             _battleDataService = battleDataService;
         }
