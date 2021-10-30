@@ -4,14 +4,16 @@ using BeerCup.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BeerCup.DataAccess.Migrations
 {
     [DbContext(typeof(BeerCupStorageContext))]
-    partial class BeerCupStorageContextModelSnapshot : ModelSnapshot
+    [Migration("20211030150149_AddedBattleRoutings")]
+    partial class AddedBattleRoutings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,106 +154,6 @@ namespace BeerCup.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BattleRoutings");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FromBattleNo = 1,
-                            IsSecondBattle = false,
-                            ToBattleNo = 9
-                        },
-                        new
-                        {
-                            Id = 2,
-                            FromBattleNo = 2,
-                            IsSecondBattle = true,
-                            ToBattleNo = 9
-                        },
-                        new
-                        {
-                            Id = 3,
-                            FromBattleNo = 3,
-                            IsSecondBattle = false,
-                            ToBattleNo = 10
-                        },
-                        new
-                        {
-                            Id = 4,
-                            FromBattleNo = 4,
-                            IsSecondBattle = true,
-                            ToBattleNo = 10
-                        },
-                        new
-                        {
-                            Id = 5,
-                            FromBattleNo = 5,
-                            IsSecondBattle = false,
-                            ToBattleNo = 11
-                        },
-                        new
-                        {
-                            Id = 6,
-                            FromBattleNo = 6,
-                            IsSecondBattle = true,
-                            ToBattleNo = 11
-                        },
-                        new
-                        {
-                            Id = 7,
-                            FromBattleNo = 7,
-                            IsSecondBattle = false,
-                            ToBattleNo = 12
-                        },
-                        new
-                        {
-                            Id = 8,
-                            FromBattleNo = 8,
-                            IsSecondBattle = true,
-                            ToBattleNo = 12
-                        },
-                        new
-                        {
-                            Id = 9,
-                            FromBattleNo = 9,
-                            IsSecondBattle = false,
-                            ToBattleNo = 13
-                        },
-                        new
-                        {
-                            Id = 10,
-                            FromBattleNo = 10,
-                            IsSecondBattle = true,
-                            ToBattleNo = 13
-                        },
-                        new
-                        {
-                            Id = 11,
-                            FromBattleNo = 11,
-                            IsSecondBattle = false,
-                            ToBattleNo = 14
-                        },
-                        new
-                        {
-                            Id = 12,
-                            FromBattleNo = 12,
-                            IsSecondBattle = true,
-                            ToBattleNo = 14
-                        },
-                        new
-                        {
-                            Id = 13,
-                            FromBattleNo = 13,
-                            IsSecondBattle = false,
-                            ToBattleNo = 15
-                        },
-                        new
-                        {
-                            Id = 14,
-                            FromBattleNo = 14,
-                            IsSecondBattle = true,
-                            ToBattleNo = 15
-                        });
                 });
 
             modelBuilder.Entity("BeerCup.DataAccess.Entities.Beer", b =>

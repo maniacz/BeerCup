@@ -35,6 +35,7 @@ namespace BeerCup.DataAccess
             modelBuilder.Entity<AccessCode>().HasData(_defaultAccessCodes);
             modelBuilder.Entity<Battle>().Property(p => p.BattleNo).HasDefaultValue(0);
             modelBuilder.Entity<Battle>().Property(p => p.BattleName).HasDefaultValue("DefaultName");
+            modelBuilder.Entity<BattleRouting>().HasData(_battleRoutings);
         }
 
         public DbSet<User> Users { get; set; }
@@ -51,6 +52,8 @@ namespace BeerCup.DataAccess
 
         public DbSet<BattlePlace> BattlePlaces { get; set; }
 
+        public DbSet<BattleRouting> BattleRoutings { get; set; }
+
 
         private AccessCode[] _defaultAccessCodes = new AccessCode[]
         {
@@ -60,6 +63,25 @@ namespace BeerCup.DataAccess
             new AccessCode { AccessCodeId = 4, Code = "A004" },
             new AccessCode { AccessCodeId = 5, Code = "V001" },
             new AccessCode { AccessCodeId = 6, Code = "V002" },
+        };
+        private BattleRouting[] _battleRoutings = new BattleRouting[]
+        {
+            new BattleRouting {Id = 1, FromBattleNo = 1, ToBattleNo = 9, IsSecondBattle = false},
+            new BattleRouting {Id = 2, FromBattleNo = 2, ToBattleNo = 9, IsSecondBattle = true},
+            new BattleRouting {Id = 3, FromBattleNo = 3, ToBattleNo = 10, IsSecondBattle = false},
+            new BattleRouting {Id = 4, FromBattleNo = 4, ToBattleNo = 10, IsSecondBattle = true},
+            new BattleRouting {Id = 5, FromBattleNo = 5, ToBattleNo = 11, IsSecondBattle = false},
+            new BattleRouting {Id = 6, FromBattleNo = 6, ToBattleNo = 11, IsSecondBattle = true},
+            new BattleRouting {Id = 7, FromBattleNo = 7, ToBattleNo = 12, IsSecondBattle = false},
+            new BattleRouting {Id = 8, FromBattleNo = 8, ToBattleNo = 12, IsSecondBattle = true},
+
+            new BattleRouting {Id = 9, FromBattleNo = 9, ToBattleNo = 13, IsSecondBattle = false},
+            new BattleRouting {Id = 10, FromBattleNo = 10, ToBattleNo = 13, IsSecondBattle = true},
+            new BattleRouting {Id = 11, FromBattleNo = 11, ToBattleNo = 14, IsSecondBattle = false},
+            new BattleRouting {Id = 12, FromBattleNo = 12, ToBattleNo = 14, IsSecondBattle = true},
+
+            new BattleRouting {Id = 13, FromBattleNo = 13, ToBattleNo = 15, IsSecondBattle = false},
+            new BattleRouting {Id = 14, FromBattleNo = 14, ToBattleNo = 15, IsSecondBattle = true},
         };
     }
 }
