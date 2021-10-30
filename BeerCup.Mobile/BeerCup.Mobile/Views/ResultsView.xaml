@@ -11,11 +11,11 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout BackgroundColor="#eee">
+                            <StackLayout BackgroundColor="{Binding UserVotedFor, Converter={StaticResource LocalUserVoteToColorConverter}}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="20" />
+                                        <ColumnDefinition Width="2*" />
                                         <ColumnDefinition Width="3*" />
                                         <ColumnDefinition Width="1*" />
                                         <ColumnDefinition Width="1*" />

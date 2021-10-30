@@ -41,6 +41,7 @@ namespace BeerCup.Mobile.Repository
                 {
                     //todo: wykorzystać serwis, żeby zlikwodować coupling do view
                     await Application.Current.MainPage.DisplayAlert("Alert", "Serwis niedostępny", "OK");
+                    //todo: navigate back lub to root i return
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);

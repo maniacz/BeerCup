@@ -15,12 +15,14 @@ namespace BeerCup.ApplicationServices.Mappings
             this.CreateMap<DataAccess.Entities.BattleResult, BattleResult>()
                 .ForMember(x => x.Brewery, y => y.MapFrom(z => z.Brewery))
                 .ForMember(x => x.VotesReceived, y => y.MapFrom(z => z.VotesReceived))
-                .ForMember(x => x.BeerNo, y => y.MapFrom(z => z.BeerNo));
+                .ForMember(x => x.BeerNo, y => y.MapFrom(z => z.BeerNo))
+                .ForMember(x => x.BeerId, y => y.MapFrom(z => z.BeerId));
 
             this.CreateMap<BattleResult, DataAccess.Entities.BattleResult>()
                 .ForMember(x => x.Brewery, y => y.MapFrom(z => z.Brewery))
                 .ForMember(x => x.VotesReceived, y => y.MapFrom(z => z.VotesReceived))
-                .ForMember(x => x.BeerNo, y => y.MapFrom(z => z.BeerNo));
+                .ForMember(x => x.BeerNo, y => y.MapFrom(z => z.BeerNo))
+                .ForMember(x => x.BeerId, y => y.MapFrom(z => z.BeerId));
         }
     }
 }

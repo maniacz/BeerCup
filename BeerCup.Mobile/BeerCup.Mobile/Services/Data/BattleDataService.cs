@@ -1,6 +1,7 @@
 ﻿using BeerCup.Mobile.Constants;
 using BeerCup.Mobile.Contracts.Repository;
 using BeerCup.Mobile.Contracts.Services.Data;
+using BeerCup.Mobile.Contracts.Services.General;
 using BeerCup.Mobile.Models;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,12 @@ namespace BeerCup.Mobile.Services.Data
     public class BattleDataService : IBattleDataService
     {
         private readonly IGenericRepository _genericRepository;
+        private readonly ISettingsService _settingsService;
 
-        public BattleDataService(IGenericRepository genericRepository)
+        public BattleDataService(IGenericRepository genericRepository, ISettingsService settingsService)
         {
             _genericRepository = genericRepository;
+            _settingsService = settingsService;
         }
 
         public async Task<Battle> GetCurrentRunningBattle()
@@ -84,6 +87,20 @@ namespace BeerCup.Mobile.Services.Data
             };
 
             var response = await _genericRepository.GetAsync<ApiResponse<List<Battle>>>(uri.ToString());
+
+            return response?.Data;
+        }
+
+        public async Task<List<Vote>> GetBattleUserVotes(int battleId)
+        {
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                //string endpoint =  ApiConstants.BattlesEndpoint;
+                //string.Concat(ApiConstants.BattlesEndpoint, "/")
+                Path = ApiConstants.BattlesEndpoint + "/" + battleId + "/" + _settingsService.UserIdSetting
+            };
+
+            var response = await _genericRepository.GetAsync<ApiResponse<List<Vote>>>(uri.ToString());
 
             return response?.Data;
         }

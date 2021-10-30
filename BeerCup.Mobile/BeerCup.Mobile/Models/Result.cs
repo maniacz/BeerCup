@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace BeerCup.Mobile.Models
 {
@@ -11,6 +12,7 @@ namespace BeerCup.Mobile.Models
         public int VotesReceived { get; set; }
         public string Precentage { get; set; }
         public int BeerNo { get; set; }
+        public int BeerId { get; set; }
         public bool UserVotedFor { get; set; }
 
         public Result(int rank, string breweryName, int votes, string precentage)

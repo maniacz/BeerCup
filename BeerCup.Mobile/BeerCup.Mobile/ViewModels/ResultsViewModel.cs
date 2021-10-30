@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using BeerCup.Mobile.Contracts.Services.Data;
+using System.Linq;
 
 namespace BeerCup.Mobile.ViewModels
 {
@@ -46,7 +47,15 @@ namespace BeerCup.Mobile.ViewModels
         {
             SelectedBattle = (Battle)data;
             BattleResults = (await _battleDataService.GetBattleResults(SelectedBattle.Id)).ToObservableCollection();
+            var userVotesInBattle = await _battleDataService.GetBattleUserVotes(SelectedBattle.Id);
 
+            foreach (var result in BattleResults)
+            {
+                if (userVotesInBattle.Where(uv => uv.BeerId == result.BeerId).Any())
+                {
+                    result.UserVotedFor = true;
+                }
+            }
             //BattleResults = (await GetFakeBattleResultsAsync()).ToObservableCollection();
         }
 

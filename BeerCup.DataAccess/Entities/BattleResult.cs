@@ -10,5 +10,6 @@ namespace BeerCup.DataAccess.Entities
         public Brewery Brewery { get; set; }
         public int VotesReceived { get; set; }
         public int BeerNo { get; set; }
+        public int BeerId { get; set; }
     }
 }

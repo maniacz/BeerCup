@@ -16,5 +16,7 @@ namespace BeerCup.Mobile.Contracts.Services.Data
         Task<List<Result>> GetBattleResults(int battleId);
 
         Task<List<Battle>> GetFinishedBattles();
+
+        Task<List<Vote>> GetBattleUserVotes(int battleId);
     }
 }
