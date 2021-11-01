@@ -34,7 +34,7 @@ namespace BeerCup.DataAccess.Entities
         public int BattleNo { get; set; }
 
         [Required]
-        [MaxLength(15)]
+        [MaxLength(25)]
         public string BattleName { get; set; }
     }
 }
