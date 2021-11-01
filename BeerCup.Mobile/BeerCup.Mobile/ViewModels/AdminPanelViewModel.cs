@@ -152,6 +152,12 @@ namespace BeerCup.Mobile.ViewModels
         }
         private async void OnPublishResult(object obj)
         {
+            await PublishResults();
+            await _adminPanelDataService.PromoteWinnersToFollowingBattles(_runningBattle);
+        }
+
+        private async Task PublishResults()
+        {
             var todaysBattle = await _battleDataService.GetTodaysBattle();
             if (todaysBattle != null)
             {

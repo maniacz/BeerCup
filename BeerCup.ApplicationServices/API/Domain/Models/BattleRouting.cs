@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace BeerCup.ApplicationServices.API.Domain.Models
 {
-    public class Brewery
+    public class BattleRouting
     {
-        public int BreweryId { get; set; }
-        public string Name { get; set; }
+        public int FromBattleNo { get; set; }
+
+        public int ToBattleNo { get; set; }
+
+        public bool IsSecondBattle { get; set; }
     }
 }

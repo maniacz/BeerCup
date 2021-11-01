@@ -9,6 +9,7 @@ namespace BeerCup.ApplicationServices.API.Domain
 {
     public class AddBreweryRequest : IRequest<AddBreweryResponse>
     {
+        public int BreweryId { get; set; }
         public string Name { get; set; }
     }
 }

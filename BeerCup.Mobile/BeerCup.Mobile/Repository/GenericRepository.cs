@@ -37,6 +37,8 @@ namespace BeerCup.Mobile.Repository
                     .ExecuteAsync(() => httpClient.GetAsync(uri))
                     .GetAwaiter().GetResult();
 
+                //todo: Unathorize'y
+
                 if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
                 {
                     //todo: wykorzystać serwis, żeby zlikwodować coupling do view

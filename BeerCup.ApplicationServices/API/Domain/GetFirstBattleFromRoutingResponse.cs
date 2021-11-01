@@ -2,7 +2,7 @@
 
 namespace BeerCup.ApplicationServices.API.Domain
 {
-    public class GetBattleByIdResponse : ResponseBase<Battle>
+    public class GetFirstBattleFromRoutingResponse : ResponseBase<Battle>
     {
     }
 }

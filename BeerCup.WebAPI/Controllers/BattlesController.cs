@@ -54,15 +54,15 @@ namespace BeerCup.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("{battleId}")]
-        public Task<IActionResult> GetBattleById([FromRoute] int battleId)
+        [Route("{battleNo}")]
+        public Task<IActionResult> GetBattleById([FromRoute] int battleNo)
         {
-            var request = new GetBattleByIdRequest()
+            var request = new GetBattleByNoRequest()
             {
-                BattleId = battleId
+                BattleId = battleNo
             };
 
-            return this.HandleRequest<GetBattleByIdRequest, GetBattleByIdResponse>(request);
+            return this.HandleRequest<GetBattleByNoRequest, GetBattleByNoResponse>(request);
         }
 
         [HttpPost]

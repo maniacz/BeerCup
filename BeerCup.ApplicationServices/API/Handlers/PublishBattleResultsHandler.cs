@@ -30,9 +30,9 @@ namespace BeerCup.ApplicationServices.API.Handlers
 
         public async Task<PublishResultsResponse> Handle(PublishResultsRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetBattleQuery()
+            var query = new GetBattleByNoQuery()
             {
-                Id = request.Id
+                BattleNo = request.Id
             };
 
             var battleToPublish = await _queryExecutor.Execute(query);

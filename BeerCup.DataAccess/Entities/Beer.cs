@@ -15,7 +15,7 @@ namespace BeerCup.DataAccess.Entities
 
         public Brewery Brewery { get; set; }
 
-        public int NumberInBattle { get; set; }
+        public int? NumberInBattle { get; set; }
 
         public ICollection<Vote> Votes { get; set; }
     }

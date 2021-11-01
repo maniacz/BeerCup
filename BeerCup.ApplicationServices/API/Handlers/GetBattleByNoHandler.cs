@@ -13,35 +13,35 @@ using System.Threading.Tasks;
 
 namespace BeerCup.ApplicationServices.API.Handlers
 {
-    public class GetBattleByIdHandler : IRequestHandler<GetBattleByIdRequest, GetBattleByIdResponse>
+    public class GetBattleByNoHandler : IRequestHandler<GetBattleByNoRequest, GetBattleByNoResponse>
     {
         private readonly IMapper mapper;
         private readonly IQueryExecutor queryExecutor;
 
-        public GetBattleByIdHandler(IMapper mapper, IQueryExecutor queryExecutor)
+        public GetBattleByNoHandler(IMapper mapper, IQueryExecutor queryExecutor)
         {
             this.mapper = mapper;
             this.queryExecutor = queryExecutor;
         }
 
-        public async Task<GetBattleByIdResponse> Handle(GetBattleByIdRequest request, CancellationToken cancellationToken)
+        public async Task<GetBattleByNoResponse> Handle(GetBattleByNoRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetBattleQuery()
+            var query = new GetBattleByNoQuery()
             {
-                Id = request.BattleId
+                BattleNo = request.BattleId
             };
 
             var battle = await this.queryExecutor.Execute(query);
             if (battle == null)
             {
-                return new GetBattleByIdResponse()
+                return new GetBattleByNoResponse()
                 {
                     Error = new ErrorModel(ErrorType.NotFound)
                 };
             }
 
             var mappedBattle = this.mapper.Map<Domain.Models.Battle>(battle);
-            var response = new GetBattleByIdResponse()
+            var response = new GetBattleByNoResponse()
             {
                 Data = mappedBattle
             };

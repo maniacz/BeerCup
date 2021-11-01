@@ -10,6 +10,8 @@ namespace BeerCup.Mobile.Models
 
         public int AssignedNumberInBattle { get; set; }
 
+        public int BreweryId { get; set; }
+
         public Brewery BrewedBy { get; set; }
 
         public int BattleId { get; set; }

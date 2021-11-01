@@ -24,7 +24,7 @@ namespace BeerCup.DataAccess.CQRS.Queries
                            {
                                Brewery = b,
                                VotesReceived = p.Votes.Count,
-                               BeerNo = p.NumberInBattle,
+                               BeerNo = p.NumberInBattle.Value,
                                BeerId = p.Id
                            }).ToList();
 

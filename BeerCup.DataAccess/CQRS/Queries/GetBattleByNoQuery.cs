@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace BeerCup.DataAccess.CQRS.Queries
 {
-    public class GetBattleQuery : QueryBase<Battle>
+    public class GetBattleByNoQuery : QueryBase<Battle>
     {
-        public int Id { get; set; }
+        public int BattleNo { get; set; }
 
         public override async Task<Battle> Execute(BeerCupStorageContext context)
         {
             var battle = await context.Battles
                                 .Include(b => b.Beers)
                                 .ThenInclude(b => b.Brewery)
-                                .FirstOrDefaultAsync(b => b.Id == this.Id);
+                                .FirstOrDefaultAsync(b => b.BattleNo == this.BattleNo);
             return battle;
         }
     }

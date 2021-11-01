@@ -65,7 +65,7 @@ namespace BeerCup.Mobile.ViewModels
         {
             return new List<Result>
             {
-                new Result(1, "BroGar", 30, "60.0"),
+                new Result(1, "BroGar", 30, 60.0M),
                 //new Result(2, "Venom", 10, 20.0M),
                 //new Result(3, "Kazamat", 5, 10.0M),
                 //new Result(4, "Hołda", 3, 6.0M),

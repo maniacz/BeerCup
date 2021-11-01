@@ -14,10 +14,12 @@ namespace BeerCup.ApplicationServices.Mappings
         public BreweryProfile()
         {
             this.CreateMap<AddBreweryRequest, DataAccess.Entities.Brewery>()
-                .ForMember(x => x.Name, y => y.MapFrom(z => z.Name));
+                .ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
+                .ForMember(x => x.Id, y => y.MapFrom(z => z.BreweryId));
 
             this.CreateMap<DataAccess.Entities.Brewery, Brewery>()
-                .ForMember(x => x.Name, y => y.MapFrom(z => z.Name));
+                .ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
+                .ForMember(x => x.BreweryId, y => y.MapFrom(z => z.Id));
         }
     }
 }

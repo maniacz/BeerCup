@@ -59,7 +59,7 @@ namespace BeerCup.Mobile.Services.Data
             foreach (var result in battleResults)
             {
                 var precentage = (decimal)result.VotesReceived / allBattleVotes * 100;
-                result.Precentage = precentage.ToString("0.0");
+                result.Precentage = precentage;
             }
 
             return battleResults;
@@ -136,5 +136,7 @@ namespace BeerCup.Mobile.Services.Data
 
             return null;
         }
+
+
     }
 }

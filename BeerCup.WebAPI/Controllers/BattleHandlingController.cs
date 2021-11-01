@@ -51,6 +51,30 @@ namespace BeerCup.WebAPI.Controllers
             return this.HandleRequest<PublishResultsRequest, PublishResultsResponse>(request);
         }
 
+        [HttpGet]
+        [Route("Routing/{battleId}")]
+        public Task<IActionResult> GetBattleRouting([FromRoute] int battleId)
+        {
+            var request = new GetBattleRoutingRequest
+            {
+                BattleId = battleId
+            };
+
+            return this.HandleRequest<GetBattleRoutingRequest, GetBattleRoutingResponse>(request);
+        }
+
+        [HttpGet]
+        [Route("FirstBattleFromRouting/{nextBattleNo}")]
+        public Task<IActionResult> GetFirstBattleFromRouting([FromRoute] int nextBattleNo)
+        {
+            var request = new GetFirstBattleFromRoutingRequest
+            {
+                NextBattleNo = nextBattleNo
+            };
+
+            return this.HandleRequest<GetFirstBattleFromRoutingRequest, GetFirstBattleFromRoutingResponse>(request);
+        }
+
         /*
         [HttpPost]
         [Route("place")]
