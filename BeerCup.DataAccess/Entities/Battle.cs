@@ -26,6 +26,8 @@ namespace BeerCup.DataAccess.Entities
 
         public bool ResultsPublished { get; set; }
 
+        public bool WinnersPromotedToNextRound { get; set; }
+
         public string PubName { get; set; }
 
         [Required]

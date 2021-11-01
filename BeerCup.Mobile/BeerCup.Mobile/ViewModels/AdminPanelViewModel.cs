@@ -22,9 +22,9 @@ namespace BeerCup.Mobile.ViewModels
         private bool _battleStartAllowed;
         private bool _battleEndAllowed;
         private bool _publishResultsAllowed;
-        private Battle _runningBattle;
         private string _startButtonText;
         private string _publishButtonText;
+        private Battle _todaysBattle;
 
         public AdminPanelViewModel(INavigationService navigationService, IAdminPanelDataService adminPanelDataService, IBattleDataService battleDataService, IGeolocationService geolocationService)
             : base(navigationService)
@@ -94,10 +94,10 @@ namespace BeerCup.Mobile.ViewModels
 
         public override async Task InitializeAsync(object data)
         {
-            var todaysBattle = await _battleDataService.GetTodaysBattle();
-            if (todaysBattle != null)
+            _todaysBattle = await _battleDataService.GetTodaysBattle();
+            if (_todaysBattle != null)
             {
-                StartButtonText = $"Wystartuj bitwę w stylu {todaysBattle.Style}";
+                StartButtonText = $"Wystartuj bitwę w stylu {_todaysBattle.Style}";
                 PublishButtonText = PublishBatteResultsText;
             }
             else
@@ -109,8 +109,8 @@ namespace BeerCup.Mobile.ViewModels
                 return;
             }
 
-            _runningBattle = await _battleDataService.GetCurrentRunningBattle();
-            if (_runningBattle != null)
+            var runningBattle = await _battleDataService.GetCurrentRunningBattle();
+            if (runningBattle != null)
             {
                 BattleStartAllowed = false;
                 BattleEndAllowed = true;
@@ -125,8 +125,8 @@ namespace BeerCup.Mobile.ViewModels
         private async void OnStartBattle()
         {
             var battlePlace = await _geolocationService.GetBattlePlace();
-            _runningBattle = await _adminPanelDataService.StartBattle(battlePlace);
-            if (_runningBattle != null)
+            var runningBattle = await _adminPanelDataService.StartBattle(battlePlace);
+            if (runningBattle != null)
             {
                 BattleStartAllowed = false;
                 BattleEndAllowed = true;
@@ -138,7 +138,7 @@ namespace BeerCup.Mobile.ViewModels
         }
         private async void OnEndBattle()
         {
-            var endedBattle = await _adminPanelDataService.EndBattle(_runningBattle);
+            var endedBattle = await _adminPanelDataService.EndBattle(_todaysBattle);
             if (endedBattle != null)
             {
                 BattleStartAllowed = true;
@@ -153,7 +153,11 @@ namespace BeerCup.Mobile.ViewModels
         private async void OnPublishResult(object obj)
         {
             await PublishResults();
-            await _adminPanelDataService.PromoteWinnersToFollowingBattles(_runningBattle);
+
+            if (! await _adminPanelDataService.IsWinnersAlreadyPromotedToNextRound(_todaysBattle))
+            {
+                await _adminPanelDataService.PromoteWinnersToFollowingBattles(_todaysBattle);
+            }
         }
 
         private async Task PublishResults()
@@ -173,9 +177,9 @@ namespace BeerCup.Mobile.ViewModels
             Battle battleWithResultsPublishStateChanged;
 
             if (publishResults)
-                battleWithResultsPublishStateChanged = await _adminPanelDataService.PublishResults(_runningBattle);
+                battleWithResultsPublishStateChanged = await _adminPanelDataService.PublishResults(_todaysBattle);
             else
-                battleWithResultsPublishStateChanged = await _adminPanelDataService.HideResults(_runningBattle);
+                battleWithResultsPublishStateChanged = await _adminPanelDataService.HideResults(_todaysBattle);
 
             if (battleWithResultsPublishStateChanged != null)
             {

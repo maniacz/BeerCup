@@ -10,14 +10,10 @@ namespace BeerCup.ApplicationServices.API.Domain
 {
     public class PublishResultsRequest : IRequest<PublishResultsResponse>
     {
-        public int Id { get; set; }
-
-        public string Style { get; set; }
-
-        public List<Beer> Beers { get; set; }
-
-        public BattlePlace Place { get; set; }
+        public int BattleNo { get; set; }
 
         public bool ResultsPublished { get; set; }
+
+        public bool WinnersPromotedToNextRound { get; set; }
     }
 }

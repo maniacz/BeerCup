@@ -32,7 +32,7 @@ namespace BeerCup.ApplicationServices.API.Handlers
         {
             var query = new GetBattleByNoQuery()
             {
-                BattleNo = request.Id
+                BattleNo = request.BattleNo
             };
 
             var battleToPublish = await _queryExecutor.Execute(query);
@@ -51,6 +51,15 @@ namespace BeerCup.ApplicationServices.API.Handlers
             else
             {
                 battleToPublish.ResultsPublished = false;
+            }
+
+            if (request.WinnersPromotedToNextRound)
+            {
+                battleToPublish.WinnersPromotedToNextRound = true;
+            }
+            else
+            {
+                battleToPublish.WinnersPromotedToNextRound = false;
             }
 
             var command = new PublishBattleResultsCommand

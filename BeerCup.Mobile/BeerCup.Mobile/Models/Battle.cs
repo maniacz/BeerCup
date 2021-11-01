@@ -16,6 +16,8 @@ namespace BeerCup.Mobile.Models
 
         public bool ResultsPublished { get; set; }
 
+        public bool WinnersPromotedToNextRound { get; set; }
+
         public DateTime? Date { get; set; }
 
         public string PubName { get; set; }

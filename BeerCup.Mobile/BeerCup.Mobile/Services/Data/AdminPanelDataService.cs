@@ -112,6 +112,8 @@ namespace BeerCup.Mobile.Services.Data
 
                 await _genericRepository.PostAsync(beerForNextRoundUri.ToString(), newBeer);
             }
+
+            SetWinnersPromotedToNextRoundToTrue(runningBattle);
         }
 
         private async Task<Brewery> GetBetterBreweryFromThirdPlace(int nextBattleNo, List<Result> finishedBattleResults)
@@ -148,6 +150,26 @@ namespace BeerCup.Mobile.Services.Data
         private List<Brewery> GetFirstTwoBreweries(List<Result> battleResults)
         {
             return battleResults.Where(r => r.FinalRank < 3).Select(r => r.Brewery).ToList();
+        }
+
+        private async void SetWinnersPromotedToNextRoundToTrue(Battle runningBattle)
+        {
+            runningBattle.WinnersPromotedToNextRound = true;
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.AdminPanelEndpoint + "/PublishResults"
+            };
+
+            await _genericRepository.PutAsync(uri.ToString(), runningBattle);
+        }
+
+        public async Task<bool> IsWinnersAlreadyPromotedToNextRound(Battle battle)
+        {
+            var finishedBattle = await _battleDataService.GetBattleByBattleNo(battle.BattleNo);
+            if (finishedBattle.WinnersPromotedToNextRound)
+                return true;
+            else
+                return false;
         }
     }
 }

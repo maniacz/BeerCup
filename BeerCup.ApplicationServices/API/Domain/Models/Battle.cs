@@ -18,6 +18,8 @@ namespace BeerCup.ApplicationServices.API.Domain.Models
 
         public bool ResultsPublished { get; set; }
 
+        public bool WinnersPromotedToNextRound { get; set; }
+
         public DateTime Date { get; set; }
 
         public string PubName { get; set; }

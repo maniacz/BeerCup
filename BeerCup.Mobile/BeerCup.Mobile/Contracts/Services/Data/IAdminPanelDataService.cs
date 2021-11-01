@@ -17,5 +17,7 @@ namespace BeerCup.Mobile.Contracts.Services.Data
         Task<Battle> HideResults(Battle battle);
 
         Task PromoteWinnersToFollowingBattles(Battle runningBattle);
+
+        Task<bool> IsWinnersAlreadyPromotedToNextRound(Battle battle);
     }
 }

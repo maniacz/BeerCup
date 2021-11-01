@@ -45,7 +45,7 @@ namespace BeerCup.Mobile.ViewModels
         public override async Task InitializeAsync(object data)
         {
             SelectedBattle = (Battle)data;
-            Breweries = (await _battleDataService.GetBreweriesFromBattle(SelectedBattle.Id)).ToObservableCollection();
+            Breweries = (await _battleDataService.GetBreweriesFromBattle(SelectedBattle.BattleNo)).ToObservableCollection();
         }
     }
 }

@@ -22,6 +22,8 @@ namespace BeerCup.Mobile.Contracts.Services.Data
 
         Task<List<Battle>> GetAllBattles();
 
-        Task<List<Brewery>> GetBreweriesFromBattle(int battleId);
+        Task<List<Brewery>> GetBreweriesFromBattle(int battleNo);
+
+        Task<Battle> GetBattleByBattleNo(int battleNo);
     }
 }
