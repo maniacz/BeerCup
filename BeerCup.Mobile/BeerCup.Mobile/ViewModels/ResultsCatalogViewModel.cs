@@ -35,6 +35,7 @@ namespace BeerCup.Mobile.ViewModels
             }
         }
 
+        //todo: async?
         private void OnBattleTapped(Battle selectedBattle)
         {
             _navigationService.NavigateToAsync<ResultsDetailViewModel>(selectedBattle);

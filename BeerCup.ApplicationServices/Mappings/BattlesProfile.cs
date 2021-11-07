@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BeerCup.ApplicationServices.API.Domain;
 using BeerCup.ApplicationServices.API.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,13 @@ namespace BeerCup.ApplicationServices.Mappings
                 .ForMember(x => x.ResultsPublished, y => y.MapFrom(z => z.ResultsPublished))
                 .ForMember(x => x.Date, y => y.MapFrom(z => z.Date))
                 .ForMember(x => x.PubName, y => y.MapFrom(z => z.PubName));
+
+            this.CreateMap<AddNewBattleRequest, DataAccess.Entities.Battle>()
+                .ForMember(x => x.BattleNo, y => y.MapFrom(z => z.BattleNo))
+                .ForMember(x => x.BattleName, y => y.MapFrom(z => z.BattleName))
+                .ForMember(x => x.Style, y => y.MapFrom(z => z.Style))
+                .ForMember(x => x.PubName, y => y.MapFrom(z => z.PubName))
+                .ForMember(x => x.Date, y => y.MapFrom(z => z.Date));
         }
     }
 }

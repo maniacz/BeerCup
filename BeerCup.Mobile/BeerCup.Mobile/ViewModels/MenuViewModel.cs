@@ -95,6 +95,12 @@ namespace BeerCup.Mobile.ViewModels
                 ViewModelToLoad = typeof(ScheduleCatalogViewModel),
                 MenuItemType = MenuItemType.ScheduleCatalog
             });
+            menuItems.Add(MenuItemType.ManageBattles, new MainMenuItem
+            {
+                MenuText = "Edycja bitew",
+                ViewModelToLoad = typeof(ManageBattlesViewModel),
+                MenuItemType = MenuItemType.ManageBattles
+            });
 
             return menuItems;
         }
@@ -107,6 +113,7 @@ namespace BeerCup.Mobile.ViewModels
         private void LoadAdminMenuItems()
         {
             _userMenuItems.Add(_menuItems[MenuItemType.AdminPanel]);
+            _userMenuItems.Add(_menuItems[MenuItemType.ManageBattles]);
             LoadCommonMenuItems();
         }
 

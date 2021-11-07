@@ -97,8 +97,6 @@ namespace BeerCup.Mobile.Services.Data
         {
             UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
             {
-                //string endpoint =  ApiConstants.BattlesEndpoint;
-                //string.Concat(ApiConstants.BattlesEndpoint, "/")
                 Path = ApiConstants.BattlesEndpoint + "/" + battleId + "/" + _settingsService.UserIdSetting
             };
 

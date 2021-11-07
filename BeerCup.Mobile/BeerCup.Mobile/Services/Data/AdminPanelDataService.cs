@@ -171,5 +171,29 @@ namespace BeerCup.Mobile.Services.Data
             else
                 return false;
         }
+
+        public async Task<Battle> AddNewBattle(Battle battle)
+        {
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.AdminPanelEndpoint + "/AddNewBattle"
+            };
+
+            var response = await _genericRepository.PostAsync(uri.ToString(), battle);
+
+            return response;
+        }
+
+        public async Task<Battle> SaveEditBattle(Battle battle)
+        {
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.AdminPanelEndpoint + "/EditBattle"
+            };
+
+            var response = await _genericRepository.PutAsync(uri.ToString(), battle);
+
+            return response;
+        }
     }
 }

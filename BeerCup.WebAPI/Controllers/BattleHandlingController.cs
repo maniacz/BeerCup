@@ -75,6 +75,20 @@ namespace BeerCup.WebAPI.Controllers
             return this.HandleRequest<GetFirstBattleFromRoutingRequest, GetFirstBattleFromRoutingResponse>(request);
         }
 
+        [HttpPost]
+        [Route("AddNewBattle")]
+        public Task<IActionResult> AddNewBattle(AddNewBattleRequest request)
+        {
+            return this.HandleRequest<AddNewBattleRequest, AddNewBattleResponse>(request);
+        }
+
+        [HttpPut]
+        [Route("EditBattle")]
+        public Task<IActionResult> EditBattle(EditBattleRequest request)
+        {
+            return this.HandleRequest<EditBattleRequest, EditBattleResponse>(request);
+        }
+
         /*
         [HttpPost]
         [Route("place")]

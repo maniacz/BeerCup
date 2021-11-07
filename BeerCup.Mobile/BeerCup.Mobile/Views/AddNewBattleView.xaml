@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BeerCup.Mobile.Views.AddNewBattleView">
+    <ContentPage.Content>
+        <StackLayout>
+            <Stepper Minimum="1" Maximum="20" Value="{Binding BattleNo}" Visual="Material" />
+            <Label Text="{Binding BattleNo}" />
+            <Entry Placeholder="Np. Bitwa nr 1, Ćwierćfinał nr 3" PlaceholderColor="Olive" Text="{Binding BattleName}" />
+            <Entry Placeholder="Np. Hefeweizen, Black IPA, Dubbel" PlaceholderColor="Olive" Text="{Binding BattleStyle}" />
+            <Picker SelectedIndex="0" SelectedItem="{Binding PubName}">
+                <Picker.Items>
+                    <x:String>Absurdalna</x:String>
+                    <x:String>Biała Małpa</x:String>
+                </Picker.Items>
+            </Picker>
+            <DatePicker Date="{Binding BattleDate}" />
+            <Button Text="Dodaj bitwę" Command="{Binding AddBattleTappedCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
