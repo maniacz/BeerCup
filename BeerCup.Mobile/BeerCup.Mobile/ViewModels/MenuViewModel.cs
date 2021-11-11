@@ -101,6 +101,12 @@ namespace BeerCup.Mobile.ViewModels
                 ViewModelToLoad = typeof(ManageBattlesViewModel),
                 MenuItemType = MenuItemType.ManageBattles
             });
+            menuItems.Add(MenuItemType.ManageBreweries, new MainMenuItem
+            {
+                MenuText = "Edycja browarów",
+                ViewModelToLoad = typeof(ManageBreweriesViewModel),
+                MenuItemType = MenuItemType.ManageBreweries
+            });
 
             return menuItems;
         }
@@ -114,6 +120,7 @@ namespace BeerCup.Mobile.ViewModels
         {
             _userMenuItems.Add(_menuItems[MenuItemType.AdminPanel]);
             _userMenuItems.Add(_menuItems[MenuItemType.ManageBattles]);
+            _userMenuItems.Add(_menuItems[MenuItemType.ManageBreweries]);
             LoadCommonMenuItems();
         }
 

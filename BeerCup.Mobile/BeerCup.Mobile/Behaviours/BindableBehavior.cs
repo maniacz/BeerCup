@@ -7,7 +7,6 @@ namespace BeerCup.Mobile.Behaviours
     {
         public BindableBehavior()
         {
-            bool temp = false;
         }
 
         public T AssociatedObject { get; private set; }

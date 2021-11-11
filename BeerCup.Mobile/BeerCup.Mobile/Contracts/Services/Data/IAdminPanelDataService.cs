@@ -23,5 +23,9 @@ namespace BeerCup.Mobile.Contracts.Services.Data
         Task<Battle> AddNewBattle(Battle battle);
 
         Task<Battle> SaveEditBattle(Battle battle);
+
+        Task<List<Brewery>> GetAllBreweries();
+
+        Task DeleteBrewery(Brewery brewery);
     }
 }
