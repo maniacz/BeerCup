@@ -39,8 +39,7 @@ namespace BeerCup.Mobile.ViewModels
         private async void OnBreweryTapped(object obj)
         {
             var brewery = (Brewery)obj;
-            //todo: jakiś pop-up z pytaniem czy chcesz usunąć czy zmienić nazwę browaru i odpowiedni flow programu
-            await _adminPanelDataService.DeleteBrewery(brewery);
+            await _navigationService.NavigateToAsync<EditBreweryViewModel>(brewery);
         }
 
         public override async Task InitializeAsync(object data)

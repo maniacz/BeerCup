@@ -208,14 +208,16 @@ namespace BeerCup.Mobile.Services.Data
             return response?.Data;
         }
 
-        public async Task DeleteBrewery(Brewery brewery)
+        public async Task<Brewery> DeleteBrewery(Brewery brewery)
         {
             UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
             {
                 Path = ApiConstants.BreweriesEndpoint + "/" + brewery.BreweryId
             };
 
-            await _genericRepository.DeleteAsync(uri.ToString());
+            var response = await _genericRepository.DeleteAsync<ApiResponse<Brewery>>(uri.ToString());
+
+            return response?.Data;
         }
     }
 }

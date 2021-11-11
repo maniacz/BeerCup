@@ -139,10 +139,47 @@ namespace BeerCup.Mobile.Repository
             }
         }
 
-        public async Task DeleteAsync(string uri, string authToken = "")
+        public async Task<T> DeleteAsync<T>(string uri, string authToken = "")
         {
-            HttpClient httpClient = CreateHttpClient(authToken);
-            await httpClient.DeleteAsync(uri);
+            try
+            {
+                HttpClient httpClient = CreateHttpClient(authToken);
+
+                string jsonResult = string.Empty;
+
+                var responseMessage = Policy
+                    .Handle<WebException>(ex =>
+                    {
+                        Debug.WriteLine($"{ex.GetType().Name} : {ex.Message}");
+                        return true;
+                    })
+                    .WaitAndRetryAsync(
+                        1,
+                        retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
+                    )
+                    .ExecuteAsync(() => httpClient.DeleteAsync(uri))
+                    .GetAwaiter().GetResult();
+
+                if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
+                {
+                    //todo: wykorzystać serwis, żeby zlikwodować coupling do view
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Serwis niedostępny", "OK");
+                }
+
+                //if (!responseMessage.IsSuccessStatusCode)
+                //{
+                //    return default(T);
+                //}
+
+                jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var json = JsonConvert.DeserializeObject<T>(jsonResult);
+                return json;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"{e.GetType().Name} : {e.Message}");
+                throw;
+            }
         }
 
         public async Task<T> PutAsync<T>(string uri, T data, string authToken = "")

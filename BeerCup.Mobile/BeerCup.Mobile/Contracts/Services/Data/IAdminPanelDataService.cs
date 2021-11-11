@@ -26,6 +26,6 @@ namespace BeerCup.Mobile.Contracts.Services.Data
 
         Task<List<Brewery>> GetAllBreweries();
 
-        Task DeleteBrewery(Brewery brewery);
+        Task<Brewery> DeleteBrewery(Brewery brewery);
     }
 }

@@ -5,6 +5,7 @@ using BeerCup.ApplicationServices.API.ErrorHandling;
 using BeerCup.DataAccess;
 using BeerCup.DataAccess.CQRS.Commands;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +19,13 @@ namespace BeerCup.ApplicationServices.API.Handlers
     {
         private readonly ICommandExecutor _commandExecutor;
         private readonly IMapper _mapper;
+        private readonly ILogger<RemoveBreweryHandler> _logger;
 
-        public RemoveBreweryHandler(ICommandExecutor commandExecutor, IMapper mapper)
+        public RemoveBreweryHandler(ICommandExecutor commandExecutor, IMapper mapper, ILogger<RemoveBreweryHandler> logger)
         {
             _commandExecutor = commandExecutor;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<RemoveBreweryResponse> Handle(RemoveBreweryRequest request, CancellationToken cancellationToken)
@@ -32,7 +35,20 @@ namespace BeerCup.ApplicationServices.API.Handlers
                 Parameter = new DataAccess.Entities.Brewery { Id = request.breweryId }
             };
 
-            var removedBreweryFromDb = await _commandExecutor.Execute(command);
+            DataAccess.Entities.Brewery removedBreweryFromDb;
+            try
+            {
+                removedBreweryFromDb = await _commandExecutor.Execute(command);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Problem while removing brewery. \nRequest data: \n\tbrewery Id: {request.breweryId}");
+                return new RemoveBreweryResponse
+                {
+                    Error = new ErrorModel(ex.Message)
+                };
+            }
+
             if (removedBreweryFromDb == null)
             {
                 return new RemoveBreweryResponse

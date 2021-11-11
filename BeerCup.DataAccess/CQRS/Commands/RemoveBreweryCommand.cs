@@ -11,9 +11,9 @@ namespace BeerCup.DataAccess.CQRS.Commands
     {
         public override async Task<Brewery> Execute(BeerCupStorageContext context)
         {
-            context.Breweries.Remove(context.Breweries.Where(b => b.Id == Parameter.Id).SingleOrDefault());
+            var removedBrewery = context.Breweries.Remove(context.Breweries.Where(b => b.Id == Parameter.Id).Single());
             await context.SaveChangesAsync();
-            return Parameter;
+            return removedBrewery.Entity;
         }
     }
 }

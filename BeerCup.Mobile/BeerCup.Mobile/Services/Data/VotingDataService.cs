@@ -75,7 +75,8 @@ namespace BeerCup.Mobile.Services.Data
         {
             UriBuilder uri = await SetUriForCurrentBattleUserVotes();
 
-            await _genericRepository.DeleteAsync(uri.ToString());
+            //todo: przetestować bo była zmiana w genericRepo z DeleteAsync na DeleteAsync<T>
+            await _genericRepository.DeleteAsync<List<Vote>>(uri.ToString());
         }
 
         private async Task<UriBuilder> SetUriForCurrentBattleUserVotes()
