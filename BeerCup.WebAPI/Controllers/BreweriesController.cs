@@ -30,6 +30,25 @@ namespace BeerCup.WebAPI.Controllers
             return this.HandleRequest<GetBreweriesRequest, GetBreweriesResponse>(request);
         }
 
+        [HttpPut]
+        [Route("")]
+        public Task<IActionResult> EditBreweryName([FromBody] EditBreweryNameRequest request)
+        {
+            return this.HandleRequest<EditBreweryNameRequest, EditBreweryNameResponse>(request);
+        }
+
+        [HttpDelete]
+        [Route("{breweryId}")]
+        public Task<IActionResult> DeleteBrewery([FromRoute] int breweryId)
+        {
+            var request = new RemoveBreweryRequest
+            {
+                breweryId = breweryId
+            };
+
+            return this.HandleRequest<RemoveBreweryRequest, RemoveBreweryResponse>(request);
+        }
+
         //[HttpGet]
         //[Route("")]
         //public Task<IActionResult> GetBreweryByBeerId([FromQuery] GetBreweryByBeerIdRequest request)

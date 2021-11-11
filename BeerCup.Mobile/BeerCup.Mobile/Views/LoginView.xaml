@@ -15,7 +15,7 @@
         </Grid.ColumnDefinitions>
 
         <AbsoluteLayout HorizontalOptions="FillAndExpand" HeightRequest="300" WidthRequest="200" Grid.Row="1" Grid.Column="1">
-            <Frame AbsoluteLayout.LayoutFlags="SizeProportional" AbsoluteLayout.LayoutBounds="0.5 ,0.5, 1, 1"
+            <Frame AbsoluteLayout.LayoutFlags="SizeProportional" AbsoluteLayout.LayoutBounds="0.5, 0.5, 1, 1"
                    BackgroundColor="Beige" HasShadow="True"
                    CornerRadius="10" Margin="0, 25, 0, 25">
                 <StackLayout Margin="0, 30">

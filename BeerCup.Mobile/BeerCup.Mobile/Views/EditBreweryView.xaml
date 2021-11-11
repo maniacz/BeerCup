@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BeerCup.Mobile.Views.EditBreweryView">
+    <AbsoluteLayout>
+        <Frame AbsoluteLayout.LayoutFlags="SizeProportional" AbsoluteLayout.LayoutBounds="0.5, 0.5, 1, 1" HasShadow="True" CornerRadius="10">
+            <StackLayout Margin="0, 30">
+                <Label Text="Edytuj Browar" />
+                <Entry Text="{Binding BreweryName}" />
+                <StackLayout Orientation="Horizontal">
+                    <Button Text="Usuń Browar" TextColor="Red" Command="{Binding DeleteBreweryTapped}" />
+                    <Button Text="Zapisz" Command="{Binding SaveEditBreweryTapped}" />
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+    </AbsoluteLayout>
+</ContentPage>
