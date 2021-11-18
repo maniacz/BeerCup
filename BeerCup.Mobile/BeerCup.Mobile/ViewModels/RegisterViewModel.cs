@@ -84,7 +84,7 @@ namespace BeerCup.Mobile.ViewModels
             AccessCode = "A003";
 
             var registrationResponse = await _authenticationService.Register(Username, Password, Email, AccessCode);
-            if (string.IsNullOrEmpty(registrationResponse.Error))
+            if (string.IsNullOrEmpty(registrationResponse.Error.Message))
             {
                 if (registrationResponse.Data != null && registrationResponse.Data.IsAuthenticated)
                 {
@@ -102,7 +102,7 @@ namespace BeerCup.Mobile.ViewModels
             }
             else
             {
-                switch (registrationResponse.Error)
+                switch (registrationResponse.Error.Message)
                 {
                     case ErrorType.NotValidAccessCode:
                         //todo: _dialogService.ShowDialog("Rejestracja nieudana", "Nieprawidłowy kod dostępu", "OK");

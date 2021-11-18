@@ -36,7 +36,7 @@ namespace BeerCup.ApplicationServices.API.Handlers
             };
 
             var breweryToUpdate = await _queryExecutor.Execute(query);
-            breweryToUpdate.Name = request.BreweryName;
+            breweryToUpdate.Name = request.Name;
             var command = new EditBreweryNameCommand
             {
                 Parameter = breweryToUpdate

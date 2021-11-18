@@ -219,5 +219,29 @@ namespace BeerCup.Mobile.Services.Data
 
             return response?.Data;
         }
+
+        public async Task<Brewery> EditBreweryName(Brewery brewery)
+        {
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.BreweriesEndpoint
+            };
+
+            var response = await _genericRepository.PutAsync<Brewery, ApiResponse<Brewery>>(uri.ToString(), brewery);
+
+            return response?.Data;
+        }
+
+        public async Task<Brewery> AddNewBrewery(Brewery brewery)
+        {
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.BreweriesEndpoint
+            };
+
+            var response = await _genericRepository.PostAsync<Brewery, ApiResponse<Brewery>>(uri.ToString(), brewery);
+
+            return response?.Data;
+        }
     }
 }

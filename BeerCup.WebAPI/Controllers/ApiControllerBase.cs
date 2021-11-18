@@ -26,10 +26,18 @@ namespace BeerCup.WebAPI.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                return this.BadRequest(
-                    this.ModelState
-                        .Where(x => x.Value.Errors.Any())
-                        .Select(x => new { property = x.Key, errors = x.Value.Errors }));
+                var reasons = this.ModelState
+                                .Where(x => x.Value.Errors.Any())
+                                .SelectMany(x => x.Value.Errors.Select(x => x.ErrorMessage));
+
+                var errorMessage = String.Join(' ', reasons);
+
+                var errorResponse = new ResponseBase<TResponse>
+                {
+                    Error = new ErrorModel(errorMessage)
+                };
+
+                return BadRequest(errorResponse);
             }
 
             var userName = GetUserFromClaims();

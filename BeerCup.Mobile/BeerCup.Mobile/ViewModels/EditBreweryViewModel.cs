@@ -1,4 +1,5 @@
-﻿using BeerCup.Mobile.Contracts.Services.Data;
+﻿using BeerCup.Mobile.Constants;
+using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Contracts.Services.General;
 using BeerCup.Mobile.Models;
 using BeerCup.Mobile.ViewModels.Base;
@@ -24,7 +25,7 @@ namespace BeerCup.Mobile.ViewModels
         public ICommand DeleteBreweryTapped => new Command(OnDeleteBrewery);
         public ICommand SaveEditBreweryTapped => new Command(OnSaveEditBrewery);
 
-        public Brewery Brewery 
+        public Brewery Brewery
         {
             get => _brewery;
             set
@@ -34,9 +35,14 @@ namespace BeerCup.Mobile.ViewModels
             }
         }
 
-        private void OnSaveEditBrewery()
+        private async void OnSaveEditBrewery()
         {
-            throw new NotImplementedException();
+            var modifiedBrewery = await _adminPanelDataService.EditBreweryName(this.Brewery);
+            if (modifiedBrewery != null)
+            {
+                MessagingCenter.Send(this, MessagingConstants.BreweryNameChanged, modifiedBrewery);
+                await _navigationService.NavigateBackAsync();
+            }
         }
 
         private async void OnDeleteBrewery()
@@ -45,9 +51,9 @@ namespace BeerCup.Mobile.ViewModels
             if (removedBrewery != null)
             {
                 //todo: tu zrobić zamiast alertu okno typu "Czy na pewno chcesz usunąć browar ###?" i logikę do tego niżej
-                await Application.Current.MainPage.DisplayAlert("BeerCup", $"Usunięto z turnieju browar {this.Brewery.Name}", "OK");
-                //todo: _navigationService.NavigateBack
-                await _navigationService.NavigateToAsync<ManageBreweriesViewModel>();
+                //await Application.Current.MainPage.DisplayAlert("BeerCup", $"Usunięto z turnieju browar {this.Brewery.Name}", "OK");
+                MessagingCenter.Send<EditBreweryViewModel, Brewery>(this, MessagingConstants.BreweryDeleted, removedBrewery);
+                await _navigationService.NavigateBackAsync();
             }
         }
 

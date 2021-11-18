@@ -19,7 +19,7 @@ namespace BeerCup.Mobile
 
             InitializeNavigation();
 
-            InitializeDebug();
+            //InitializeDebug();
             //MainPage = new MainPage();
 
             //MainPage = new BattleView();
@@ -33,7 +33,7 @@ namespace BeerCup.Mobile
             //var response = await authenticationService.Authenticate("uq", "pass");
             var response = await authenticationService.Authenticate("uqy", "pass");
 
-            await navigationService.NavigateToAsync<ManageBreweriesViewModel>();
+            await navigationService.NavigateToAsync<AddNewBreweryViewModel>();
 
             //var response = await authenticationService.Register("kamo", "pass", "kamo@gmail.com", "A002");
         }

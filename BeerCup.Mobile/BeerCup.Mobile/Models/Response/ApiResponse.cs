@@ -4,9 +4,8 @@ using System.Text;
 
 namespace BeerCup.Mobile.Models
 {
-    public class ApiResponse<T>
+    public class ApiResponse<T> : ErrorResponseBase
     {
         public T Data { get; set; }
-        public string Error { get; set; }
     }
 }

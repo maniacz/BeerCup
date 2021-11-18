@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using BeerCup.Mobile.Contracts.Services.General;
 using BeerCup.Mobile.Bootstrap;
 using BeerCup.Mobile.Contracts.Services.Data;
+using System.Linq;
 
 namespace BeerCup.Mobile.Services.General
 {
@@ -45,6 +46,7 @@ namespace BeerCup.Mobile.Services.General
             _mappings.Add(typeof(EditBattleViewModel), typeof(EditBattleView));
             _mappings.Add(typeof(ManageBreweriesViewModel), typeof(ManageBreweriesView));
             _mappings.Add(typeof(EditBreweryViewModel), typeof(EditBreweryView));
+            _mappings.Add(typeof(AddNewBreweryViewModel), typeof(AddNewBreweryView));
         }
 
         public async Task InitializeAsync()
@@ -153,6 +155,16 @@ namespace BeerCup.Mobile.Services.General
             }
         }
 
-        //todo: zaimplementuj NavigateBackAsync() i PopToRootAsync() jeśli będzie potrzebne
+        public async Task NavigateBackAsync()
+        {
+            if (CurrentApplication.MainPage is MainView mainPage)
+            {
+                await mainPage.Detail.Navigation.PopAsync();
+            }
+            else if (CurrentApplication.MainPage != null)
+            {
+                await CurrentApplication.MainPage.Navigation.PopAsync();
+            }
+        }
     }
 }
