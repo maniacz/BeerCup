@@ -26,7 +26,6 @@ namespace BeerCup.Mobile.ViewModels
 
         public ICommand BattleTappedCommand => new Command<Battle>(OnBattleTapped);
 
-
         public ICommand AddBattleTappedCommand => new Command(OnAddBattleTapped);
 
         public ObservableCollection<Battle> Battles

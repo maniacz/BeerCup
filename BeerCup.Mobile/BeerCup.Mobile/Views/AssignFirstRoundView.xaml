@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BeerCup.Mobile.Views.AssignFirstRoundView"
+             xmlns:behaviors="clr-namespace:BeerCup.Mobile.Behaviours;assembly=BeerCup.Mobile">
+    <ContentPage.Content>
+        <StackLayout>
+            <Picker Title="-- Wybierz Bitwę --" HorizontalTextAlignment="Center" ItemsSource="{Binding FirstRoundBattles}" ItemDisplayBinding="{Binding Style}" SelectedItem="{Binding SelectedBattle}" />
+            <ListView ItemsSource="{Binding Breweries}" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label Text="{Binding Name}" />
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Dodaj browar do bitwy" Command="{Binding AddBreweryTappedCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

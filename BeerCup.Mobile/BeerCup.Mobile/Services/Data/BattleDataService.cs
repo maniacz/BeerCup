@@ -141,5 +141,17 @@ namespace BeerCup.Mobile.Services.Data
 
             return response?.Data;
         }
+
+        public async Task<List<Battle>> GetFirstRoundBattles()
+        {
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.BattlesEndpoint + "/firstRound"
+            };
+
+            var response = await _genericRepository.GetAsync<ApiResponse<List<Battle>>>(uri.ToString());
+
+            return response?.Data;
+        }
     }
 }

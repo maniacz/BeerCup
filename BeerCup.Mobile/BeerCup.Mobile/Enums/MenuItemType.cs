@@ -15,6 +15,7 @@ namespace BeerCup.Mobile.Enums
         ScheduleCatalog,
         ManageBattles,
         ManageBreweries,
+        AssignFirstRound,
         Logout
     }
 }

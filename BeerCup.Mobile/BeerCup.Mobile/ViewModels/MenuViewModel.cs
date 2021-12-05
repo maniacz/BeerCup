@@ -107,6 +107,12 @@ namespace BeerCup.Mobile.ViewModels
                 ViewModelToLoad = typeof(ManageBreweriesViewModel),
                 MenuItemType = MenuItemType.ManageBreweries
             });
+            menuItems.Add(MenuItemType.AssignFirstRound, new MainMenuItem
+            {
+                MenuText = "Podział 1szej rundy",
+                ViewModelToLoad = typeof(AssignFirstRoundViewModel),
+                MenuItemType = MenuItemType.AssignFirstRound
+            });
 
             return menuItems;
         }
@@ -121,6 +127,7 @@ namespace BeerCup.Mobile.ViewModels
             _userMenuItems.Add(_menuItems[MenuItemType.AdminPanel]);
             _userMenuItems.Add(_menuItems[MenuItemType.ManageBattles]);
             _userMenuItems.Add(_menuItems[MenuItemType.ManageBreweries]);
+            _userMenuItems.Add(_menuItems[MenuItemType.AssignFirstRound]);
             LoadCommonMenuItems();
         }
 

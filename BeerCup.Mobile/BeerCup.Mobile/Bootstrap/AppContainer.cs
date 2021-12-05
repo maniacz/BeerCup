@@ -4,7 +4,6 @@ using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Contracts.Services.General;
 using BeerCup.Mobile.Services.Data;
 using BeerCup.Mobile.Services.General;
-//using BeerCup.DataAccess;
 using BeerCup.Mobile.Repository;
 using BeerCup.Mobile.ViewModels;
 using System;
@@ -40,6 +39,7 @@ namespace BeerCup.Mobile.Bootstrap
             builder.RegisterType<ManageBreweriesViewModel>();
             builder.RegisterType<EditBreweryViewModel>();
             builder.RegisterType<AddNewBreweryViewModel>();
+            builder.RegisterType<AssignFirstRoundViewModel>();
 
             //services - data
             builder.RegisterType(typeof(AuthenticationService)).As(typeof(IAuthenticationService));

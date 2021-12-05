@@ -103,5 +103,13 @@ namespace BeerCup.WebAPI.Controllers
 
             return this.HandleRequest<GetUserVotesRequest, GetUserVotesResponse>(request);
         }
+
+        [HttpGet]
+        [Route("firstRound")]
+        public Task<IActionResult> GetFirstRoundBattles()
+        {
+            var request = new GetFirstRoundBattlesRequest();
+            return this.HandleRequest<GetFirstRoundBattlesRequest, GetFirstRoundBattlesResponse>(request);
+        }
     }
 }
