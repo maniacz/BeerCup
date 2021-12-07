@@ -15,7 +15,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Text="Dodaj browar do bitwy" Command="{Binding AddBreweryTappedCommand}" />
+            <Button Text="Dodaj browar do bitwy" Command="{Binding AddBreweryTappedCommand}" IsEnabled="{Binding AddBreweryEnabled}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -18,9 +18,10 @@ namespace BeerCup.Mobile.ViewModels
         private ObservableCollection<Battle> _firstRoundBattles;
         private ObservableCollection<Brewery> _breweries;
         private Battle _selectedBattle;
+        private bool _addBreweryEnabled;
         private readonly IBattleDataService _battleDataService;
 
-        public AssignFirstRoundViewModel(INavigationService navigationService, IBattleDataService battleDataService) : base(navigationService)
+        public AssignFirstRoundViewModel(INavigationService navigationService, IBattleDataService battleDataService, IBreweryDataService breweryDataService) : base(navigationService)
         {
             _battleDataService = battleDataService;
         }
@@ -60,14 +61,25 @@ namespace BeerCup.Mobile.ViewModels
             }
         }
 
+        public bool AddBreweryEnabled
+        {
+            get => _addBreweryEnabled;
+            set
+            {
+                _addBreweryEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
         private async void OnSelectedBattleChanged(Battle selectedBattle)
         {
             Breweries = (await _battleDataService.GetBreweriesFromBattle(selectedBattle.BattleNo)).ToObservableCollection();
+            AddBreweryEnabled = true;
         }
 
-        private void OnAddBreweryTapped(object obj)
+        private async void OnAddBreweryTapped(object obj)
         {
-            throw new NotImplementedException();
+            await _navigationService.NavigateToAsync<AddBreweryToFirstRoundBattleViewModel>();
         }
 
         public override async Task InitializeAsync(object data)

@@ -22,6 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\AddBreweryToFirstRoundBattleView.xaml.cs">
+      <DependentUpon>AddBreweryToFirstRoundBattleView.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\ResultsDetailView.xaml.cs">
       <DependentUpon>ResultsDetailView.xaml</DependentUpon>
     </Compile>
@@ -29,6 +32,9 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Templates\MenuItemTemplate.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\AddBreweryToFirstRoundBattleView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\AddNewBattleView.xaml">

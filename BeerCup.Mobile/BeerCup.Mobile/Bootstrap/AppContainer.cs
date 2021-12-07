@@ -40,12 +40,14 @@ namespace BeerCup.Mobile.Bootstrap
             builder.RegisterType<EditBreweryViewModel>();
             builder.RegisterType<AddNewBreweryViewModel>();
             builder.RegisterType<AssignFirstRoundViewModel>();
+            builder.RegisterType<AddBreweryToFirstRoundBattleViewModel>();
 
             //services - data
             builder.RegisterType(typeof(AuthenticationService)).As(typeof(IAuthenticationService));
             builder.RegisterType(typeof(VotingDataService)).As(typeof(IVotingDataService));
             builder.RegisterType(typeof(AdminPanelDataService)).As(typeof(IAdminPanelDataService));
             builder.RegisterType(typeof(BattleDataService)).As(typeof(IBattleDataService));
+            builder.RegisterType(typeof(BreweryDataService)).As(typeof(IBreweryDataService));
 
             //services - general
             builder.RegisterType(typeof(NavigationService)).As(typeof(INavigationService));

@@ -49,6 +49,14 @@ namespace BeerCup.WebAPI.Controllers
             return this.HandleRequest<RemoveBreweryRequest, RemoveBreweryResponse>(request);
         }
 
+        [HttpGet]
+        [Route("NotAssigned")]
+        public Task<IActionResult> GetNotAssignedBreweries()
+        {
+            var request = new GetNotAssignedBreweriesRequest();
+            return this.HandleRequest<GetNotAssignedBreweriesRequest, GetNotAssignedBreweriesResponse>(request);
+        }
+
         //[HttpGet]
         //[Route("")]
         //public Task<IActionResult> GetBreweryByBeerId([FromQuery] GetBreweryByBeerIdRequest request)
