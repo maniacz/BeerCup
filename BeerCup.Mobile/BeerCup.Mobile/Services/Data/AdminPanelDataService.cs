@@ -110,6 +110,7 @@ namespace BeerCup.Mobile.Services.Data
                     Path = ApiConstants.BeersEndpoint
                 };
 
+                //todo: Przerobić na _genericRepository.PostAsync<Beer, ApiResponse<Beer>>
                 await _genericRepository.PostAsync(beerForNextRoundUri.ToString(), newBeer);
             }
 

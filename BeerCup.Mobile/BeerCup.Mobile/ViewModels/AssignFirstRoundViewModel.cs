@@ -1,4 +1,5 @@
-﻿using BeerCup.Mobile.Contracts.Services.Data;
+﻿using BeerCup.Mobile.Constants;
+using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Contracts.Services.General;
 using BeerCup.Mobile.Extensions;
 using BeerCup.Mobile.Models;
@@ -19,11 +20,13 @@ namespace BeerCup.Mobile.ViewModels
         private ObservableCollection<Brewery> _breweries;
         private Battle _selectedBattle;
         private bool _addBreweryEnabled;
+        //private int _selectedIndex;
         private readonly IBattleDataService _battleDataService;
 
         public AssignFirstRoundViewModel(INavigationService navigationService, IBattleDataService battleDataService, IBreweryDataService breweryDataService) : base(navigationService)
         {
             _battleDataService = battleDataService;
+            InitializeMessenger();
         }
 
         public ICommand SelectedBattleChangedCommand => new Command<Battle>(OnSelectedBattleChanged);
@@ -61,6 +64,17 @@ namespace BeerCup.Mobile.ViewModels
             }
         }
 
+        //public int SelectedIndex
+        //{
+        //    get => _selectedIndex;
+        //    set
+        //    {
+        //        _selectedIndex = value;
+        //        OnPropertyChanged();
+        //        OnSelectedBattleChanged(_selectedBattle);
+        //    }
+        //}
+
         public bool AddBreweryEnabled
         {
             get => _addBreweryEnabled;
@@ -73,13 +87,29 @@ namespace BeerCup.Mobile.ViewModels
 
         private async void OnSelectedBattleChanged(Battle selectedBattle)
         {
-            Breweries = (await _battleDataService.GetBreweriesFromBattle(selectedBattle.BattleNo)).ToObservableCollection();
+            await RefreshBreweriesList(selectedBattle);
             AddBreweryEnabled = true;
         }
 
         private async void OnAddBreweryTapped(object obj)
         {
-            await _navigationService.NavigateToAsync<AddBreweryToFirstRoundBattleViewModel>();
+            await _navigationService.NavigateToAsync<AddBreweryToFirstRoundBattleViewModel>(SelectedBattle);
+        }
+
+        private void InitializeMessenger()
+        {
+            MessagingCenter.Subscribe<AddBreweryToFirstRoundBattleViewModel, Battle>(this, MessagingConstants.BreweryAssignedInFirstRound,
+                (addBreweryToFirstRoundViewModel, addedToBattle) => OnBreweryAssignedReceived(addedToBattle));
+        }
+
+        private async void OnBreweryAssignedReceived(Battle battle)
+        {
+            await RefreshBreweriesList(battle);
+        }
+
+        private async Task RefreshBreweriesList(Battle selectedBattle)
+        {
+            Breweries = (await _battleDataService.GetBreweriesFromBattle(selectedBattle.BattleNo)).ToObservableCollection();
         }
 
         public override async Task InitializeAsync(object data)

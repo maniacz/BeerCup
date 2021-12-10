@@ -11,5 +11,7 @@ namespace BeerCup.Mobile.Constants
         public const string BreweryNameChanged = "BreweryNameChanged";
 
         public const string BreweryAdded = "BreweryAdded";
+
+        public const string BreweryAssignedInFirstRound = "BreweryAssignedInFirstRound";
     }
 }

@@ -48,6 +48,7 @@ namespace BeerCup.Mobile.Bootstrap
             builder.RegisterType(typeof(AdminPanelDataService)).As(typeof(IAdminPanelDataService));
             builder.RegisterType(typeof(BattleDataService)).As(typeof(IBattleDataService));
             builder.RegisterType(typeof(BreweryDataService)).As(typeof(IBreweryDataService));
+            builder.RegisterType(typeof(BeerDataService)).As(typeof(IBeerDataService));
 
             //services - general
             builder.RegisterType(typeof(NavigationService)).As(typeof(INavigationService));
