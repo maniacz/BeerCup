@@ -15,7 +15,7 @@ namespace BeerCup.Mobile.ViewModels
     {
         private const string PublishBatteResultsText = "Ogłoś wyniki bitwy";
         private const string HideBattleResultsText = "Ukryj wyniki bitwy";
-
+        private readonly IDialogService _dialogService;
         private readonly IAdminPanelDataService _adminPanelDataService;
         private readonly IBattleDataService _battleDataService;
         private readonly IGeolocationService _geolocationService;
@@ -26,9 +26,10 @@ namespace BeerCup.Mobile.ViewModels
         private string _publishButtonText;
         private Battle _todaysBattle;
 
-        public AdminPanelViewModel(INavigationService navigationService, IAdminPanelDataService adminPanelDataService, IBattleDataService battleDataService, IGeolocationService geolocationService)
+        public AdminPanelViewModel(INavigationService navigationService, IDialogService dialogService, IAdminPanelDataService adminPanelDataService, IBattleDataService battleDataService, IGeolocationService geolocationService)
             : base(navigationService)
         {
+            _dialogService = dialogService;
             _adminPanelDataService = adminPanelDataService;
             _battleDataService = battleDataService;
             _geolocationService = geolocationService;
@@ -133,7 +134,7 @@ namespace BeerCup.Mobile.ViewModels
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Bitwa", "Nie udało się wystartować bitwy!", "OK");
+                await _dialogService.ShowDialog("Nie udało się wystartować bitwy!", "Bitwa", "OK");
             }
         }
         private async void OnEndBattle()
@@ -147,7 +148,7 @@ namespace BeerCup.Mobile.ViewModels
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Bitwa", "Nie udało się zakończyć bitwy!", "OK");
+                await _dialogService.ShowDialog("Nie udało się zakończyć bitwy!", "Bitwa", "OK");
             }
         }
         private async void OnPublishResult(object obj)
@@ -194,9 +195,9 @@ namespace BeerCup.Mobile.ViewModels
             else
             {
                 if (publishResults)
-                    await Application.Current.MainPage.DisplayAlert("Bitwa", "Nie udało się ogłosić wyników bitwy!", "OK");
+                    await _dialogService.ShowDialog("Nie udało się ogłosić wyników bitwy!", "Bitwa", "OK");
                 else
-                    await Application.Current.MainPage.DisplayAlert("Bitwa", "Nie udało się ukryć wyników bitwy!", "OK");
+                    await _dialogService.ShowDialog("Nie udało się ukryć wyników bitwy!", "Bitwa", "OK");
             }
         }
     }

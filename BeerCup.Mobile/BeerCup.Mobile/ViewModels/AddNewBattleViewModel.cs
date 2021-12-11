@@ -13,6 +13,7 @@ namespace BeerCup.Mobile.ViewModels
 {
     public class AddNewBattleViewModel : ViewModelBase
     {
+        private readonly IDialogService _dialogService;
         private readonly IAdminPanelDataService _adminPanelDataService;
         private readonly IBattleDataService _battleDataService;
         private int _battleNo;
@@ -21,8 +22,9 @@ namespace BeerCup.Mobile.ViewModels
         private string _pubName;
         private DateTime _battleDate;
 
-        public AddNewBattleViewModel(INavigationService navigationService, IAdminPanelDataService adminPanelDataService, IBattleDataService battleDataService) : base(navigationService)
+        public AddNewBattleViewModel(INavigationService navigationService, IDialogService dialogService, IAdminPanelDataService adminPanelDataService, IBattleDataService battleDataService) : base(navigationService)
         {
+            _dialogService = dialogService;
             _adminPanelDataService = adminPanelDataService;
             _battleDataService = battleDataService;
         }
@@ -102,13 +104,9 @@ namespace BeerCup.Mobile.ViewModels
             var addedBattle = await _adminPanelDataService.AddNewBattle(battle);
 
             if (addedBattle != null)
-            {
                 await _navigationService.NavigateToAsync<ManageBattlesViewModel>();
-            }
             else
-            {
-                await Application.Current.MainPage.DisplayAlert("Dodawanie bitwy", "Nie udało się dodać bitwy!", "OK");
-            }
+                await _dialogService.ShowDialog("Nie udało się dodać bitwy!", "Dodawanie bitwy", "OK");
         }
 
         public override async Task InitializeAsync(object data)

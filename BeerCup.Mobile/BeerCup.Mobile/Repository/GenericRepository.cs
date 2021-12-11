@@ -1,4 +1,5 @@
 ﻿using BeerCup.Mobile.Contracts.Repository;
+using BeerCup.Mobile.Contracts.Services.General;
 using BeerCup.Mobile.Exceptions;
 using BeerCup.Mobile.Models;
 using Newtonsoft.Json;
@@ -17,6 +18,13 @@ namespace BeerCup.Mobile.Repository
 {
     public class GenericRepository : IGenericRepository
     {
+        private readonly IDialogService _dialogService;
+
+        public GenericRepository(IDialogService dialogService)
+        {
+            _dialogService = dialogService;
+        }
+
         public async Task<T> GetAsync<T>(string uri, string authToken = "")
         {
             try
@@ -41,8 +49,7 @@ namespace BeerCup.Mobile.Repository
 
                 if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
                 {
-                    //todo: wykorzystać serwis, żeby zlikwodować coupling do view
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Serwis niedostępny", "OK");
+                    await _dialogService.ShowDialog("Serwis niedostępny", "Alert", "OK");
                     //todo: navigate back lub to root i return
                 }
 
@@ -84,8 +91,7 @@ namespace BeerCup.Mobile.Repository
 
                 if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
                 {
-                    //todo: wykorzystać serwis, żeby zlikwodować coupling do view
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Serwis niedostępny", "OK");
+                    await _dialogService.ShowDialog("Serwis niedostępny", "Alert", "OK");
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -124,8 +130,7 @@ namespace BeerCup.Mobile.Repository
 
                 if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
                 {
-                    //todo: wykorzystać serwis, żeby zlikwodować coupling do view
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Serwis niedostępny", "OK");
+                    await _dialogService.ShowDialog("Serwis niedostępny", "Alert", "OK");
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -162,8 +167,7 @@ namespace BeerCup.Mobile.Repository
 
                 if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
                 {
-                    //todo: wykorzystać serwis, żeby zlikwodować coupling do view
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Serwis niedostępny", "OK");
+                    await _dialogService.ShowDialog("Serwis niedostępny", "Alert", "OK");
                 }
 
                 //if (!responseMessage.IsSuccessStatusCode)
@@ -207,8 +211,7 @@ namespace BeerCup.Mobile.Repository
 
                 if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
                 {
-                    //todo: wykorzystać serwis, żeby zlikwodować coupling do view
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Serwis niedostępny", "OK");
+                    await _dialogService.ShowDialog("Serwis niedostępny", "Alert", "OK");
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -247,8 +250,7 @@ namespace BeerCup.Mobile.Repository
 
                 if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
                 {
-                    //todo: wykorzystać serwis, żeby zlikwodować coupling do view
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Serwis niedostępny", "OK");
+                    await _dialogService.ShowDialog("Serwis niedostępny", "Alert", "OK");
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);

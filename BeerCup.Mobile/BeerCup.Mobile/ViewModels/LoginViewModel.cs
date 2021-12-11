@@ -13,16 +13,18 @@ namespace BeerCup.Mobile.ViewModels
     public class LoginViewModel : ViewModelBase
     {
         private readonly IAuthenticationService _authenticationService;
+        private readonly IDialogService _dialogService;
         private readonly ISettingsService _settingsService;
 
 
         private string _username;
         private string _password;
 
-        public LoginViewModel(IAuthenticationService authenticationService, INavigationService navigationService, ISettingsService settingsService)
+        public LoginViewModel(IAuthenticationService authenticationService, INavigationService navigationService, IDialogService dialogService, ISettingsService settingsService)
             : base(navigationService)
         {
             _authenticationService = authenticationService;
+            _dialogService = dialogService;
             _settingsService = settingsService;
         }
 
@@ -69,8 +71,7 @@ namespace BeerCup.Mobile.ViewModels
             }
             else
             {
-                //todo: dodać dialogService, który zwróci jakiś pop up z info z niewłaściwym logowaniem
-                await Application.Current.MainPage.DisplayAlert("Logowanie", "Nie zalogowano", "OK");
+                await _dialogService.ShowDialog("Nie zalogowano", "Logowanie", "OK");
             }
         }
 

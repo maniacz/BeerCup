@@ -16,15 +16,17 @@ namespace BeerCup.Mobile.ViewModels
 {
     public class AddBreweryToFirstRoundBattleViewModel : ViewModelBase
     {
+        private readonly IDialogService _dialogService;
         private readonly IBreweryDataService _breweryDataService;
         private readonly IBeerDataService _beerDataService;
         private ObservableCollection<Brewery> _notAssignedBreweries;
         private Battle _battle;
         private Brewery _selectedBrewery;
 
-        public AddBreweryToFirstRoundBattleViewModel(INavigationService navigationService, IBreweryDataService breweryDataService, IBeerDataService beerDataService) 
+        public AddBreweryToFirstRoundBattleViewModel(INavigationService navigationService, IDialogService dialogService, IBreweryDataService breweryDataService, IBeerDataService beerDataService) 
             : base(navigationService)
         {
+            _dialogService = dialogService;
             _breweryDataService = breweryDataService;
             _beerDataService = beerDataService;
         }
@@ -71,7 +73,7 @@ namespace BeerCup.Mobile.ViewModels
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Rejestracja Browaru", "Nie udało się zarejestrować browaru do pierwszej rundy!", "OK");
+                await _dialogService.ShowDialog("Nie udało się zarejestrować browaru do pierwszej rundy!", "Rejestracja Browaru", "OK");
             }
         }
 

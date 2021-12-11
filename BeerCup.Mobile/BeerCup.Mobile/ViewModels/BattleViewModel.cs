@@ -16,9 +16,21 @@ namespace BeerCup.Mobile.ViewModels
 {
     public class BattleViewModel : ViewModelBase
     {
+        private readonly IDialogService _dialogService;
         private readonly IVotingDataService _votingDataService;
         private readonly IBattleDataService _battleDataService;
         private readonly IGeolocationService _geolocationService;
+
+        public BattleViewModel(INavigationService navigationService, IDialogService dialogService, IVotingDataService votingDataService, IBattleDataService battleDataService, IGeolocationService geolocationService)
+            : base(navigationService)
+        {
+            _dialogService = dialogService;
+            _votingDataService = votingDataService;
+            _battleDataService = battleDataService;
+            _geolocationService = geolocationService;
+
+            LoadStartingBeers();
+        }
 
         public MultiSelectObservableCollection<Beer> Beers { get; set; }
         public ICommand BeerTappedCommand => new Command(OnBeerTappedCommand);
@@ -50,21 +62,10 @@ namespace BeerCup.Mobile.ViewModels
                 {
                     var tappedBeer = Beers.Where(si => si.Data.AssignedNumberInBattle == selectedBeer.AssignedNumberInBattle).FirstOrDefault();
                     tappedBeer.IsSelected = false;
-                    //todo: wykorzystać serwis, żeby zlikwodować coupling do view
-                    await Application.Current.MainPage.DisplayAlert("Głosowanie", "Możesz wybrać max 2 piwa", "OK");
+                    await _dialogService.ShowDialog("Możesz wybrać max 2 piwa", "Głosowanie", "OK");
                     return;
                 }
             }
-        }
-
-        public BattleViewModel(IVotingDataService votingDataService, INavigationService navigationService, IBattleDataService battleDataService, IGeolocationService geolocationService)
-            : base(navigationService)
-        {
-            _votingDataService = votingDataService;
-            _battleDataService = battleDataService;
-            _geolocationService = geolocationService;
-
-            LoadStartingBeers();
         }
 
         public override async Task InitializeAsync(object data)
@@ -72,14 +73,14 @@ namespace BeerCup.Mobile.ViewModels
             var runningBattle = await _battleDataService.GetCurrentRunningBattle();
             if (runningBattle == null)
             {
-                await Application.Current.MainPage.DisplayAlert("Bitwa", "Nie odbywa się teraz żadna bitwa", "OK");
+                await _dialogService.ShowDialog("Nie odbywa się teraz żadna bitwa", "Bitwa", "OK");
                 await _navigationService.PopToRootAsync();
                 return;
             }
 
             if (!_geolocationService.IsUserOnBattlePlace(runningBattle).Result)
             {
-                await Application.Current.MainPage.DisplayAlert("Bitwa", "Aby zagłosować musisz udać się na miejsce bitwy", "OK");
+                await _dialogService.ShowDialog("Aby zagłosować musisz udać się na miejsce bitwy", "Bitwa", "OK");
                 await _navigationService.PopToRootAsync();
                 return;
             }
