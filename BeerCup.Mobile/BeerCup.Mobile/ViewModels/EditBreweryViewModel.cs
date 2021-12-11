@@ -15,11 +15,13 @@ namespace BeerCup.Mobile.ViewModels
     public class EditBreweryViewModel : ViewModelBase
     {
         private readonly IAdminPanelDataService _adminPanelDataService;
+        private readonly IDialogService _dialogService;
         private Brewery _brewery;
 
-        public EditBreweryViewModel(INavigationService navigationService, IAdminPanelDataService adminPanelDataService) : base(navigationService)
+        public EditBreweryViewModel(INavigationService navigationService, IAdminPanelDataService adminPanelDataService, IDialogService dialogService) : base(navigationService)
         {
             _adminPanelDataService = adminPanelDataService;
+            _dialogService = dialogService;
         }
 
         public ICommand DeleteBreweryTapped => new Command(OnDeleteBrewery);
@@ -47,13 +49,15 @@ namespace BeerCup.Mobile.ViewModels
 
         private async void OnDeleteBrewery()
         {
-            var removedBrewery = await _adminPanelDataService.DeleteBrewery(this.Brewery);
-            if (removedBrewery != null)
+            if (await _dialogService.Confirm($"Czy na pewno chcesz usunąć browar {Brewery.Name}?", "Usuwanie browaru", "Tak", "Nie"))
             {
-                //todo: tu zrobić zamiast alertu okno typu "Czy na pewno chcesz usunąć browar ###?" i logikę do tego niżej
-                //await Application.Current.MainPage.DisplayAlert("BeerCup", $"Usunięto z turnieju browar {this.Brewery.Name}", "OK");
-                MessagingCenter.Send<EditBreweryViewModel, Brewery>(this, MessagingConstants.BreweryDeleted, removedBrewery);
-                await _navigationService.NavigateBackAsync();
+                var removedBrewery = await _adminPanelDataService.DeleteBrewery(this.Brewery);
+                if (removedBrewery != null)
+                {
+                    MessagingCenter.Send<EditBreweryViewModel, Brewery>(this, MessagingConstants.BreweryDeleted, removedBrewery);
+                    _dialogService.ShowToast($"Usunięto browar {Brewery.Name}");
+                    await _navigationService.NavigateBackAsync();
+                }
             }
         }
 
