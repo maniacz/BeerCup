@@ -54,6 +54,7 @@ namespace BeerCup.DataAccess
 
         public DbSet<BattleRouting> BattleRoutings { get; set; }
 
+        public DbSet<LuckyVoter> LuckyVoters { get; set; }
 
         private AccessCode[] _defaultAccessCodes = new AccessCode[]
         {
