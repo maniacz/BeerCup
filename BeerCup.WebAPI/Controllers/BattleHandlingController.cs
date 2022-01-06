@@ -96,6 +96,17 @@ namespace BeerCup.WebAPI.Controllers
             return this.HandleRequest<DrawAwardWinnerRequest, DrawAwardWinnerResponse>(request);
         }
 
+        [HttpGet]
+        [Route("AwardDrawing/{battleId}")]
+        public Task<IActionResult> GetLuckyVoter([FromRoute] int battleId)
+        {
+            var request = new GetLuckyVoterRequest
+            {
+                battleId = battleId
+            };
+            return this.HandleRequest<GetLuckyVoterRequest, GetLuckyVoterResponse>(request);
+        }
+
         /*
         [HttpPost]
         [Route("place")]
