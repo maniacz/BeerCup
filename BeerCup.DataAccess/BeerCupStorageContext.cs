@@ -36,6 +36,7 @@ namespace BeerCup.DataAccess
             modelBuilder.Entity<Battle>().Property(p => p.BattleNo).HasDefaultValue(0);
             modelBuilder.Entity<Battle>().Property(p => p.BattleName).HasDefaultValue("DefaultName");
             modelBuilder.Entity<BattleRouting>().HasData(_battleRoutings);
+            modelBuilder.Entity<LuckyVoter>().HasIndex(l => l.BattleId).IsUnique();
         }
 
         public DbSet<User> Users { get; set; }
