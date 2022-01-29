@@ -29,7 +29,7 @@ namespace BeerCup.ApplicationServices.API.Handlers
         {
             var query = new GetLuckyVoterQuery
             {
-                battleId = request.battleId
+                BattleId = request.battleId
             };
 
             var luckyVoterFromDb = await _queryExecutor.Execute(query);

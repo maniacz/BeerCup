@@ -15,5 +15,6 @@ namespace BeerCup.Mobile.Constants
         public const string BeerFromBattleEndpoint = "BeerCup.WebAPI/Beers/frombattle";
         public const string UserBattleVotesEndpoint = "BeerCup.WebAPI/Battles/{battleId}/{userId}";
         public const string AdminPanelEndpoint = "BeerCup.WebAPI/BattleHandling";
+        public const string AwardDrawingEndpoint = "BeerCup.WebAPI/BattleHandling/AwardDrawing/";
     }
 }

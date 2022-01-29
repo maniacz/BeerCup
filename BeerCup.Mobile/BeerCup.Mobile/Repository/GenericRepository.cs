@@ -54,6 +54,7 @@ namespace BeerCup.Mobile.Repository
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                //todo: te jsony pozamieniaj na response i return response
                 var json = JsonConvert.DeserializeObject<T>(jsonResult);
                 return json;
 

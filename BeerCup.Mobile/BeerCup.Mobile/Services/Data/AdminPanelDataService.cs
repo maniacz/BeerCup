@@ -244,5 +244,29 @@ namespace BeerCup.Mobile.Services.Data
 
             return response?.Data;
         }
+
+        public async Task<LuckyVoter> GetLuckyVoter(int battleId)
+        {
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.AwardDrawingEndpoint + battleId
+            };
+
+            var response = await _genericRepository.GetAsync<ApiResponse<LuckyVoter>>(uri.ToString());
+
+            return response?.Data;
+        }
+
+        public async Task<LuckyVoter> DrawLuckyVoter(int battleId)
+        {
+            UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
+            {
+                Path = ApiConstants.AwardDrawingEndpoint + battleId
+            };
+
+            var response = await _genericRepository.PostAsync<Battle, ApiResponse<LuckyVoter>>(uri.ToString(), null);
+
+            return response?.Data;
+        }
     }
 }

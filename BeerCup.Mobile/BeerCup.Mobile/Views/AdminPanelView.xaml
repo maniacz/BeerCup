@@ -7,6 +7,7 @@
             <Button Text="{Binding StartButtonText}" Command="{Binding StartBattleCommand}" IsEnabled="{Binding BattleStartAllowed}"/>
             <Button Text="Zakończ bitwę" Command="{Binding EndBattleCommand}" IsEnabled="{Binding BattleEndAllowed}"/>
             <Button Text="{Binding PublishButtonText}" Command="{Binding PublishResultsCommand}" IsEnabled="{Binding PublishResultsAllowed}"/>
+            <Button Text="Wylosuj szczęśliwego głosującego" Command="{Binding DrawLuckyVoterCommand}" IsEnabled="{Binding DrawLuckyVoterAllowed}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

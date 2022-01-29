@@ -31,5 +31,9 @@ namespace BeerCup.Mobile.Contracts.Services.Data
         Task<Brewery> EditBreweryName(Brewery brewery);
 
         Task<Brewery> AddNewBrewery(Brewery brewery);
+
+        Task<LuckyVoter> GetLuckyVoter(int battleId);
+
+        Task<LuckyVoter> DrawLuckyVoter(int battleId);
     }
 }

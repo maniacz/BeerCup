@@ -22,6 +22,7 @@ namespace BeerCup.Mobile.ViewModels
         private bool _battleStartAllowed;
         private bool _battleEndAllowed;
         private bool _publishResultsAllowed;
+        private bool _drawLuckyVoterAllowed;
         private string _startButtonText;
         private string _publishButtonText;
         private Battle _todaysBattle;
@@ -36,11 +37,14 @@ namespace BeerCup.Mobile.ViewModels
             BattleStartAllowed = true;
             BattleEndAllowed = false;
             PublishResultsAllowed = false;
+            DrawLuckyVoterAllowed = true;
+            _publishButtonText = PublishBatteResultsText;
         }
 
         public ICommand StartBattleCommand => new Command(OnStartBattle);
         public ICommand EndBattleCommand => new Command(OnEndBattle);
         public ICommand PublishResultsCommand => new Command(OnPublishResult);
+        public ICommand DrawLuckyVoterCommand => new Command(OnDrawLuckyVoter);
 
 
         public bool BattleStartAllowed
@@ -69,6 +73,16 @@ namespace BeerCup.Mobile.ViewModels
             set
             {
                 _publishResultsAllowed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool DrawLuckyVoterAllowed
+        {
+            get => _drawLuckyVoterAllowed;
+            set
+            {
+                _drawLuckyVoterAllowed = value;
                 OnPropertyChanged();
             }
         }
@@ -107,6 +121,7 @@ namespace BeerCup.Mobile.ViewModels
                 BattleStartAllowed = false;
                 BattleEndAllowed = false;
                 PublishResultsAllowed = false;
+                DrawLuckyVoterAllowed = false;
                 return;
             }
 
@@ -188,9 +203,15 @@ namespace BeerCup.Mobile.ViewModels
                 BattleEndAllowed = false;
 
                 if (publishResults)
+                {
                     PublishButtonText = HideBattleResultsText;
+                    DrawLuckyVoterAllowed = true;
+                }
                 else
+                {
                     PublishButtonText = PublishBatteResultsText;
+                    DrawLuckyVoterAllowed = false;
+                }
             }
             else
             {
@@ -198,6 +219,24 @@ namespace BeerCup.Mobile.ViewModels
                     await _dialogService.ShowDialog("Nie udało się ogłosić wyników bitwy!", "Bitwa", "OK");
                 else
                     await _dialogService.ShowDialog("Nie udało się ukryć wyników bitwy!", "Bitwa", "OK");
+            }
+        }
+
+        private async void OnDrawLuckyVoter(object obj)
+        {
+            var luckyVoter = await _adminPanelDataService.GetLuckyVoter(_todaysBattle.Id);
+            if (luckyVoter != null)
+            {
+                if (await _dialogService.Confirm("Już został wylosowany zwycięzca. Chcesz wylosować nowego?", "Losowanie zwycięzcy głosowania", "Tak", "Nie"))
+                {
+                    var newLuckyVoter = await _adminPanelDataService.DrawLuckyVoter(_todaysBattle.Id);
+                    _dialogService.ShowDialog($"Nowym wygranym jest {newLuckyVoter.Username}", "Losowanie", "OK");
+                }
+            }
+            else
+            {
+                luckyVoter = await _adminPanelDataService.DrawLuckyVoter(_todaysBattle.Id);
+                _dialogService.ShowDialog($"Zwycięzcą losowania zostaje {luckyVoter.Username}", "Losowanie", "OK");
             }
         }
     }

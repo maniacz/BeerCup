@@ -33,7 +33,7 @@ namespace BeerCup.Mobile
             //var response = await authenticationService.Authenticate("uq", "pass");
             var response = await authenticationService.Authenticate("uqy", "pass");
 
-            await navigationService.NavigateToAsync<AssignFirstRoundViewModel>();
+            await navigationService.NavigateToAsync<AdminPanelViewModel>();
 
             //var response = await authenticationService.Register("kamo", "pass", "kamo@gmail.com", "A002");
         }

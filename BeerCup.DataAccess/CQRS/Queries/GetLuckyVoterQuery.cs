@@ -7,11 +7,11 @@ namespace BeerCup.DataAccess.CQRS.Queries
 {
     public class GetLuckyVoterQuery : QueryBase<LuckyVoter>
     {
-        public int battleId { get; set; }
+        public int BattleId { get; set; }
 
         public override async Task<LuckyVoter> Execute(BeerCupStorageContext context)
         {
-            return await context.LuckyVoters.SingleOrDefaultAsync(v => v.BattleId == battleId);
+            return await context.LuckyVoters.Include(v => v.User).Include(v => v.Battle).SingleOrDefaultAsync(v => v.BattleId == BattleId);
         }
     }
 }

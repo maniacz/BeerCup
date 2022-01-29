@@ -57,21 +57,53 @@ namespace BeerCup.ApplicationServices.API.Handlers
                 BattleId = request.BattleId, 
                 UserId = winner.Id 
             };
-            var command = new AddLuckyUserCommand { Parameter = luckyVoter };
 
-            var luckyVoterFromDb = await _commandExecutor.Execute(command);
-            if (luckyVoterFromDb is null)
+            var previousLuckyVoterQuery = new GetLuckyVoterQuery
             {
+                BattleId = request.BattleId
+            };
+            var previousLuckyVoterToUpdate = await _queryExecutor.Execute(previousLuckyVoterQuery);
+
+            if (previousLuckyVoterToUpdate != null)
+            {
+                previousLuckyVoterToUpdate.UserId = winner.Id;
+                var command = new EditLuckyVoterCommand
+                {
+                    Parameter = previousLuckyVoterToUpdate
+                };
+
+                var luckyVoterFromDb = await _commandExecutor.Execute(command);
+                if (luckyVoterFromDb == null)
+                {
+                    return new DrawAwardWinnerResponse
+                    {
+                        Error = new ErrorModel(ErrorType.InternalServerError)
+                    };
+                }
+
                 return new DrawAwardWinnerResponse
                 {
-                    Error = new ErrorModel(ErrorType.InternalServerError)
+                    Data = _mapper.Map<Domain.Models.LuckyVoter>(luckyVoterFromDb)
                 };
             }
-
-            return new DrawAwardWinnerResponse 
+            else
             {
-                Data = _mapper.Map<Domain.Models.LuckyVoter>(luckyVoterFromDb)
-            };
+                var command = new AddLuckyUserCommand { Parameter = luckyVoter };
+
+                var luckyVoterFromDb = await _commandExecutor.Execute(command);
+                if (luckyVoterFromDb is null)
+                {
+                    return new DrawAwardWinnerResponse
+                    {
+                        Error = new ErrorModel(ErrorType.InternalServerError)
+                    };
+                }
+
+                return new DrawAwardWinnerResponse 
+                {
+                    Data = _mapper.Map<Domain.Models.LuckyVoter>(luckyVoterFromDb)
+                };
+            }
         }
     }
 }
