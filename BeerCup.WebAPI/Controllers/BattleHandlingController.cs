@@ -1,10 +1,8 @@
 ﻿using BeerCup.ApplicationServices.API.Domain;
+using BeerCup.ApplicationServices.Components.VotingMachine;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BeerCup.WebAPI.Controllers
@@ -13,9 +11,11 @@ namespace BeerCup.WebAPI.Controllers
     [Route("[controller]")]
     public class BattleHandlingController : ApiControllerBase
     {
-        public BattleHandlingController(IMediator mediator, ILogger<BattleHandlingController> logger) : base(mediator)
-        {
+        private readonly IVotingMachine _votingMachine;
 
+        public BattleHandlingController(IMediator mediator, ILogger<BattleHandlingController> logger, IVotingMachine votingMachine) : base(mediator)
+        {
+            _votingMachine = votingMachine;
         }
 
         [HttpPut]
@@ -91,13 +91,14 @@ namespace BeerCup.WebAPI.Controllers
 
         [HttpPost]
         [Route("AwardDrawing/{battleId}")]
-        public Task<IActionResult> DrawAwardWinnerFromVoters([FromRoute] int battleId)
+        public Task<IActionResult> SetAwardWinnerFromVoters([FromRoute] int battleId, [FromQuery] bool isPaperVoteWinner = false)
         {
-            var request = new DrawAwardWinnerRequest
+            var request = new SetAwardWinnerRequest
             {
+                IsPaperVoteWinner = isPaperVoteWinner,
                 BattleId = battleId
             };
-            return this.HandleRequest<DrawAwardWinnerRequest, DrawAwardWinnerResponse>(request);
+            return this.HandleRequest<SetAwardWinnerRequest, SetAwardWinnerResponse>(request);
         }
 
         [HttpGet]
@@ -118,15 +119,12 @@ namespace BeerCup.WebAPI.Controllers
             return this.HandleRequest<EditLuckyVoterRequest, EditLuckyVoterResponse>(request);
         }
 
-        /*
         [HttpPost]
-        [Route("place")]
-        public Task<IActionResult> AddBattlePlace([FromBody] AddBattlePlaceRequest request)
+        [Route("AwardDrawingForAll/{battleId}/{paperVotesCount}")]
+        public async Task<IActionResult> SetLuckyVoterIncludingPaperVotes([FromRoute] int battleId, [FromRoute] int paperVotesCount)
         {
-            return this.HandleRequest<AddBattlePlaceRequest, AddBattlePlaceResponse>(request);
+            var isPaperVoterWinner = await _votingMachine.IsDrawWinnerFromPaperVotes(paperVotesCount, battleId);
+            return await SetAwardWinnerFromVoters(battleId, isPaperVoterWinner);
         }
-        */
     }
-
-
 }

@@ -2,7 +2,7 @@
 
 namespace BeerCup.ApplicationServices.API.Domain
 {
-    public class DrawAwardWinnerResponse : ResponseBase<LuckyVoter>
+    public class SetAwardWinnerResponse : ResponseBase<LuckyVoter>
     {
     }
 }

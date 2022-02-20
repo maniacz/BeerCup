@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using BeerCup.ApplicationServices.Components.OpenWeather;
 using Microsoft.AspNetCore.Authentication;
 using BeerCup.WebAPI.Authentication;
+using BeerCup.ApplicationServices.Components.VotingMachine;
 
 namespace BeerCup.WebAPI
 {
@@ -50,6 +51,7 @@ namespace BeerCup.WebAPI
             services.AddTransient<ICommandExecutor, CommandExecutor>();
             services.AddTransient<IQueryExecutor, QueryExecutor>();
             services.AddTransient<IWeatherConnector, WeatherConnector>();
+            services.AddTransient<IVotingMachine, VotingMachine>();
 
             services.AddAutoMapper(typeof(BattlesProfile).Assembly);
 

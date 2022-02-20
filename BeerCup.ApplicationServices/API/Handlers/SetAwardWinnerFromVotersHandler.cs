@@ -1,30 +1,28 @@
 ﻿using AutoMapper;
 using BeerCup.ApplicationServices.API.Domain;
-using BeerCup.ApplicationServices.API.Domain.Models;
 using BeerCup.ApplicationServices.API.ErrorHandling;
 using BeerCup.DataAccess;
 using BeerCup.DataAccess.CQRS.Commands;
 using BeerCup.DataAccess.CQRS.Queries;
-using BeerCup.DataAccess.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace BeerCup.ApplicationServices.API.Handlers
 {
-    public class DrawAwardWinnerFromVotersHandler : IRequestHandler<DrawAwardWinnerRequest, DrawAwardWinnerResponse>
+    public class SetAwardWinnerFromVotersHandler : IRequestHandler<SetAwardWinnerRequest, SetAwardWinnerResponse>
     {
+        private const int PaperVoteUserId = 0;
+
         private readonly IMapper _mapper;
         private readonly IQueryExecutor _queryExecutor;
         private readonly ICommandExecutor _commandExecutor;
         private readonly ILogger _logger;
 
-        public DrawAwardWinnerFromVotersHandler(IMapper mapper, IQueryExecutor queryExecutor, ICommandExecutor commandExecutor, ILogger<DrawAwardWinnerFromVotersHandler> logger)
+        public SetAwardWinnerFromVotersHandler(IMapper mapper, IQueryExecutor queryExecutor, ICommandExecutor commandExecutor, ILogger<SetAwardWinnerFromVotersHandler> logger)
         {
             _mapper = mapper;
             _queryExecutor = queryExecutor;
@@ -32,31 +30,39 @@ namespace BeerCup.ApplicationServices.API.Handlers
             _logger = logger;
         }
 
-        public async Task<DrawAwardWinnerResponse> Handle(DrawAwardWinnerRequest request, CancellationToken cancellationToken)
+        public async Task<SetAwardWinnerResponse> Handle(SetAwardWinnerRequest request, CancellationToken cancellationToken)
         {
-            var query = new GetVotersFromBattleQuery
+            var luckyVoter = new DataAccess.Entities.LuckyVoter
             {
-                BattleId = request.BattleId
+                BattleId = request.BattleId,
             };
 
-            var voters = await _queryExecutor.Execute(query);
-
-            if (voters is null)
+            if (!request.IsPaperVoteWinner)
             {
-                return new DrawAwardWinnerResponse
+                var query = new GetVotersFromBattleQuery
                 {
-                    Error = new ErrorModel(ErrorType.NotFound)
+                    BattleId = request.BattleId
                 };
+
+                var voters = await _queryExecutor.Execute(query);
+
+                if (voters is null)
+                {
+                    return new SetAwardWinnerResponse
+                    {
+                        Error = new ErrorModel(ErrorType.NotFound)
+                    };
+                }
+
+                var random = new Random();
+                var winner = voters.ElementAt(random.Next(voters.Count));
+
+                luckyVoter.UserId = winner.Id;
             }
-
-            var random = new Random();
-            var winner = voters.ElementAt(random.Next(voters.Count));
-
-            var luckyVoter = new DataAccess.Entities.LuckyVoter 
-            { 
-                BattleId = request.BattleId, 
-                UserId = winner.Id 
-            };
+            else
+            {
+                luckyVoter.UserId = PaperVoteUserId;
+            }
 
             var previousLuckyVoterQuery = new GetLuckyVoterQuery
             {
@@ -66,7 +72,7 @@ namespace BeerCup.ApplicationServices.API.Handlers
 
             if (previousLuckyVoterToUpdate != null)
             {
-                previousLuckyVoterToUpdate.UserId = winner.Id;
+                previousLuckyVoterToUpdate.UserId = luckyVoter.UserId;
                 var command = new EditLuckyVoterCommand
                 {
                     Parameter = previousLuckyVoterToUpdate
@@ -75,13 +81,13 @@ namespace BeerCup.ApplicationServices.API.Handlers
                 var luckyVoterFromDb = await _commandExecutor.Execute(command);
                 if (luckyVoterFromDb == null)
                 {
-                    return new DrawAwardWinnerResponse
+                    return new SetAwardWinnerResponse
                     {
                         Error = new ErrorModel(ErrorType.InternalServerError)
                     };
                 }
 
-                return new DrawAwardWinnerResponse
+                return new SetAwardWinnerResponse
                 {
                     Data = _mapper.Map<Domain.Models.LuckyVoter>(luckyVoterFromDb)
                 };
@@ -93,13 +99,13 @@ namespace BeerCup.ApplicationServices.API.Handlers
                 var luckyVoterFromDb = await _commandExecutor.Execute(command);
                 if (luckyVoterFromDb is null)
                 {
-                    return new DrawAwardWinnerResponse
+                    return new SetAwardWinnerResponse
                     {
                         Error = new ErrorModel(ErrorType.InternalServerError)
                     };
                 }
 
-                return new DrawAwardWinnerResponse 
+                return new SetAwardWinnerResponse
                 {
                     Data = _mapper.Map<Domain.Models.LuckyVoter>(luckyVoterFromDb)
                 };
