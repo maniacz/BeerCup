@@ -16,6 +16,7 @@ namespace BeerCup.ApplicationServices.API.Handlers
     public class SetAwardWinnerFromVotersHandler : IRequestHandler<SetAwardWinnerRequest, SetAwardWinnerResponse>
     {
         private const int PaperVoteUserId = 0;
+        private const string PaperVoteUsername = "Papierowy glos";
 
         private readonly IMapper _mapper;
         private readonly IQueryExecutor _queryExecutor;
@@ -57,11 +58,19 @@ namespace BeerCup.ApplicationServices.API.Handlers
                 var random = new Random();
                 var winner = voters.ElementAt(random.Next(voters.Count));
 
-                luckyVoter.UserId = winner.Id;
+                luckyVoter.User = winner;
+                luckyVoter.IsPaperVote = false;
             }
             else
             {
-                luckyVoter.UserId = PaperVoteUserId;
+                var query = new GetUserQuery
+                {
+                    Username = PaperVoteUsername
+                };
+                var paperVoteUser = await _queryExecutor.Execute(query);
+
+                luckyVoter.User = paperVoteUser;
+                luckyVoter.IsPaperVote = true;
             }
 
             var previousLuckyVoterQuery = new GetLuckyVoterQuery
@@ -72,7 +81,8 @@ namespace BeerCup.ApplicationServices.API.Handlers
 
             if (previousLuckyVoterToUpdate != null)
             {
-                previousLuckyVoterToUpdate.UserId = luckyVoter.UserId;
+                previousLuckyVoterToUpdate.UserId = luckyVoter.User.Id;
+                previousLuckyVoterToUpdate.IsPaperVote = luckyVoter.IsPaperVote;
                 var command = new EditLuckyVoterCommand
                 {
                     Parameter = previousLuckyVoterToUpdate

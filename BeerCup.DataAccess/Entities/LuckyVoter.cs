@@ -1,7 +1,4 @@
 ﻿using BeerCup.DataAccess.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BeerCup.DataAccess.Entities
 {
@@ -14,5 +11,7 @@ namespace BeerCup.DataAccess.Entities
         public int UserId { get; set; }
 
         public User User { get; set; }
+
+        public bool IsPaperVote { get; set; }
     }
 }

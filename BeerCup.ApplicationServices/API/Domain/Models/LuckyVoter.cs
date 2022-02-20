@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BeerCup.ApplicationServices.API.Domain.Models
+﻿namespace BeerCup.ApplicationServices.API.Domain.Models
 {
     public class LuckyVoter
     {
@@ -15,5 +9,7 @@ namespace BeerCup.ApplicationServices.API.Domain.Models
         public int BattleId { get; set; }
 
         public string BattleStyle { get; set; }
+
+        public bool IsPaperVote { get; set; }
     }
 }

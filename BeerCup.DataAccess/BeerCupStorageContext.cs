@@ -2,11 +2,6 @@
 using BeerCup.DataAccess.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BeerCup.DataAccess
 {
@@ -37,6 +32,7 @@ namespace BeerCup.DataAccess
             modelBuilder.Entity<Battle>().Property(p => p.BattleName).HasDefaultValue("DefaultName");
             modelBuilder.Entity<BattleRouting>().HasData(_battleRoutings);
             modelBuilder.Entity<LuckyVoter>().HasIndex(l => l.BattleId).IsUnique();
+            modelBuilder.Entity<LuckyVoter>().Property(p => p.IsPaperVote).HasDefaultValue(false);
         }
 
         public DbSet<User> Users { get; set; }
