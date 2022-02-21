@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Acr.UserDialogs;
 using System.Threading.Tasks;
 
 namespace BeerCup.Mobile.Contracts.Services.General
@@ -12,5 +10,7 @@ namespace BeerCup.Mobile.Contracts.Services.General
         void ShowToast(string message);
 
         Task<bool> Confirm(string message, string title, string okText, string cancelText);
+
+        Task<PromptResult> ShowPrompt(string message, string title, string okText, string cancelText, string placeholder, InputType inputType);
     }
 }

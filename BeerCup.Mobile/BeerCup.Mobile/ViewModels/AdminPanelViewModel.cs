@@ -2,9 +2,6 @@
 using BeerCup.Mobile.Contracts.Services.General;
 using BeerCup.Mobile.Models;
 using BeerCup.Mobile.ViewModels.Base;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -170,7 +167,7 @@ namespace BeerCup.Mobile.ViewModels
         {
             await PublishResults();
 
-            if (! await _adminPanelDataService.IsWinnersAlreadyPromotedToNextRound(_todaysBattle))
+            if (!await _adminPanelDataService.IsWinnersAlreadyPromotedToNextRound(_todaysBattle))
             {
                 await _adminPanelDataService.PromoteWinnersToFollowingBattles(_todaysBattle);
             }
@@ -224,20 +221,31 @@ namespace BeerCup.Mobile.ViewModels
 
         private async void OnDrawLuckyVoter(object obj)
         {
+            var result = await _dialogService.ShowPrompt("Podaj liczbę głosów oddanych na kartkach do głosowania", "Losowanie zwycięzcy głosowania", "OK", "Anuluj", "0", Acr.UserDialogs.InputType.DecimalNumber);
+
+            if (!int.TryParse(result.Value, out int paperVotesCount))
+            {
+                await _dialogService.ShowDialog("Podaj poprawną liczbę.", "Losowanie zwycięzcy głosowania", "OK");
+                return;
+            }
+
+            if (paperVotesCount < 0)
+            {
+                await _dialogService.ShowDialog("Podaj dodatnią liczbę.", "Losowanie zwycięzcy głosowania", "OK");
+                return;
+            }
+
             var luckyVoter = await _adminPanelDataService.GetLuckyVoter(_todaysBattle.Id);
             if (luckyVoter != null)
             {
-                if (await _dialogService.Confirm("Już został wylosowany zwycięzca. Chcesz wylosować nowego?", "Losowanie zwycięzcy głosowania", "Tak", "Nie"))
+                if (!await _dialogService.Confirm("Już został wylosowany zwycięzca. Chcesz wylosować nowego?", "Losowanie zwycięzcy głosowania", "Tak", "Nie"))
                 {
-                    var newLuckyVoter = await _adminPanelDataService.DrawLuckyVoter(_todaysBattle.Id);
-                    _dialogService.ShowDialog($"Nowym wygranym jest {newLuckyVoter.Username}", "Losowanie", "OK");
+                    return;
                 }
             }
-            else
-            {
-                luckyVoter = await _adminPanelDataService.DrawLuckyVoter(_todaysBattle.Id);
-                _dialogService.ShowDialog($"Zwycięzcą losowania zostaje {luckyVoter.Username}", "Losowanie", "OK");
-            }
+
+            luckyVoter = await _adminPanelDataService.DrawLuckyVoter(_todaysBattle.Id, paperVotesCount);
+            await _dialogService.ShowDialog($"Zwycięzcą losowania zostaje {luckyVoter.Username}", "Losowanie", "OK");
         }
     }
 }

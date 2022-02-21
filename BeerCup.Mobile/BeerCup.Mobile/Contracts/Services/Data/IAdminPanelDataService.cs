@@ -1,7 +1,5 @@
 ﻿using BeerCup.Mobile.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BeerCup.Mobile.Contracts.Services.Data
@@ -34,6 +32,6 @@ namespace BeerCup.Mobile.Contracts.Services.Data
 
         Task<LuckyVoter> GetLuckyVoter(int battleId);
 
-        Task<LuckyVoter> DrawLuckyVoter(int battleId);
+        Task<LuckyVoter> DrawLuckyVoter(int battleId, int paperVotesCount);
     }
 }

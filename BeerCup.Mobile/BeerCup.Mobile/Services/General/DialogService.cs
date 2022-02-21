@@ -1,8 +1,5 @@
 ﻿using Acr.UserDialogs;
 using BeerCup.Mobile.Contracts.Services.General;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BeerCup.Mobile.Services.General
@@ -18,9 +15,15 @@ namespace BeerCup.Mobile.Services.General
         {
             UserDialogs.Instance.Toast(message);
         }
+
         public Task<bool> Confirm(string message, string title, string okText, string cancelText)
         {
             return UserDialogs.Instance.ConfirmAsync(message, title, okText, cancelText);
+        }
+
+        public Task<PromptResult> ShowPrompt(string message, string title, string okText, string cancelText, string placeholder, InputType inputType)
+        {
+            return UserDialogs.Instance.PromptAsync(message, title, okText, cancelText, placeholder, inputType);
         }
     }
 }

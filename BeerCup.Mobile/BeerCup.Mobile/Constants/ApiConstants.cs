@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BeerCup.Mobile.Constants
+﻿namespace BeerCup.Mobile.Constants
 {
     public static class ApiConstants
     {
@@ -16,5 +12,6 @@ namespace BeerCup.Mobile.Constants
         public const string UserBattleVotesEndpoint = "BeerCup.WebAPI/Battles/{battleId}/{userId}";
         public const string AdminPanelEndpoint = "BeerCup.WebAPI/BattleHandling";
         public const string AwardDrawingEndpoint = "BeerCup.WebAPI/BattleHandling/AwardDrawing/";
+        public const string AwardDrawingWithPaperVotesEndpoint = "BeerCup.WebAPI/BattleHandling/AwardDrawingForAll/";
     }
 }

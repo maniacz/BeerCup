@@ -5,9 +5,7 @@ using BeerCup.Mobile.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace BeerCup.Mobile.Services.Data
 {
@@ -257,11 +255,11 @@ namespace BeerCup.Mobile.Services.Data
             return response?.Data;
         }
 
-        public async Task<LuckyVoter> DrawLuckyVoter(int battleId)
+        public async Task<LuckyVoter> DrawLuckyVoter(int battleId, int paperVotesCount)
         {
             UriBuilder uri = new UriBuilder(ApiConstants.BaseApiUrl)
             {
-                Path = ApiConstants.AwardDrawingEndpoint + battleId
+                Path = ApiConstants.AwardDrawingWithPaperVotesEndpoint + battleId + "/" + paperVotesCount
             };
 
             var response = await _genericRepository.PostAsync<Battle, ApiResponse<LuckyVoter>>(uri.ToString(), null);
