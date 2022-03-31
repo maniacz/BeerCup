@@ -16,10 +16,10 @@ namespace BeerCup.Mobile.ViewModels
         private readonly IAdminPanelDataService _adminPanelDataService;
         private readonly IBattleDataService _battleDataService;
         private readonly IGeolocationService _geolocationService;
-        private bool _battleStartAllowed;
-        private bool _battleEndAllowed;
-        private bool _publishResultsAllowed;
-        private bool _drawLuckyVoterAllowed;
+        private bool _battleStartAllowed = false;
+        private bool _battleEndAllowed = false;
+        private bool _publishResultsAllowed = false;
+        private bool _drawLuckyVoterAllowed = false;
         private string _startButtonText;
         private string _publishButtonText;
         private Battle _todaysBattle;
@@ -106,21 +106,14 @@ namespace BeerCup.Mobile.ViewModels
 
         public override async Task InitializeAsync(object data)
         {
-            _todaysBattle = await _battleDataService.GetTodaysBattle();
-            if (_todaysBattle != null)
+            var _todaysBattle = await _battleDataService.GetTodaysBattle();
+            if (_todaysBattle is null)
             {
-                StartButtonText = $"Wystartuj bitwę w stylu {_todaysBattle.Style}";
-                PublishButtonText = PublishBatteResultsText;
+                //                await _navigationService.NavigateBackAsync();
             }
-            else
-            {
-                StartButtonText = "Nie ma dzisiaj zaplanowanej bitwy";
-                BattleStartAllowed = false;
-                BattleEndAllowed = false;
-                PublishResultsAllowed = false;
-                DrawLuckyVoterAllowed = false;
-                return;
-            }
+
+            StartButtonText = $"Wystartuj bitwę w stylu {_todaysBattle.Style}";
+            PublishButtonText = PublishBatteResultsText;
 
             var runningBattle = await _battleDataService.GetCurrentRunningBattle();
             if (runningBattle != null)
@@ -176,6 +169,7 @@ namespace BeerCup.Mobile.ViewModels
         private async Task PublishResults()
         {
             var todaysBattle = await _battleDataService.GetTodaysBattle();
+
             if (todaysBattle != null)
             {
                 if (!todaysBattle.ResultsPublished)

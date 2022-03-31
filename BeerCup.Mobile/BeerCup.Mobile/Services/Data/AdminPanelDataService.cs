@@ -1,6 +1,7 @@
 ﻿using BeerCup.Mobile.Constants;
 using BeerCup.Mobile.Contracts.Repository;
 using BeerCup.Mobile.Contracts.Services.Data;
+using BeerCup.Mobile.Contracts.Services.General;
 using BeerCup.Mobile.Models;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,13 @@ namespace BeerCup.Mobile.Services.Data
     {
         private readonly IGenericRepository _genericRepository;
         private readonly IBattleDataService _battleDataService;
+        private readonly INavigationService _navigationService;
 
-        public AdminPanelDataService(IGenericRepository genericRepository, IBattleDataService battleDataService)
+        public AdminPanelDataService(IGenericRepository genericRepository, IBattleDataService battleDataService, INavigationService navigationService)
         {
             _genericRepository = genericRepository;
             _battleDataService = battleDataService;
+            _navigationService = navigationService;
         }
 
         public async Task<Battle> StartBattle(BattlePlace battlePlace)
@@ -74,7 +77,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.AdminPanelEndpoint + "/Routing/" + runningBattle.BattleNo
             };
 
-            var routingResponse = await _genericRepository.GetAsync<ApiResponse<BattleRouting>>(battleRoutingUri.ToString());
+            var routingResponse = await _genericRepository.GetAsync<BattleRouting>(battleRoutingUri.ToString());
             var nextBattleNo = routingResponse.Data.ToBattleNo;
 
             var finishedBattleResults = await _battleDataService.GetBattleResults(runningBattle.Id);
@@ -93,7 +96,7 @@ namespace BeerCup.Mobile.Services.Data
                     Path = ApiConstants.BattlesEndpoint + "/" + nextBattleNo
                 };
 
-                var battleResponse = await _genericRepository.GetAsync<ApiResponse<Battle>>(battleUri.ToString());
+                var battleResponse = await _genericRepository.GetAsync<Battle>(battleUri.ToString());
                 var nextRoundBattleId = battleResponse?.Data.Id;
 
                 var newBeer = new Beer
@@ -141,7 +144,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.AdminPanelEndpoint + "/FirstBattleFromRouting/" + nextBattleNo
             };
 
-            var response = await _genericRepository.GetAsync<ApiResponse<Battle>>(uri.ToString());
+            var response = await _genericRepository.GetAsync<Battle>(uri.ToString());
 
             return response?.Data;
         }
@@ -202,7 +205,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.BreweriesEndpoint
             };
 
-            var response = await _genericRepository.GetAsync<ApiResponse<List<Brewery>>>(uri.ToString());
+            var response = await _genericRepository.GetAsync<List<Brewery>>(uri.ToString());
 
             return response?.Data;
         }
@@ -250,7 +253,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.AwardDrawingEndpoint + battleId
             };
 
-            var response = await _genericRepository.GetAsync<ApiResponse<LuckyVoter>>(uri.ToString());
+            var response = await _genericRepository.GetAsync<LuckyVoter>(uri.ToString());
 
             return response?.Data;
         }

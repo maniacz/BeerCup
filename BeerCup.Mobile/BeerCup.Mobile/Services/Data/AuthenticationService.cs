@@ -38,7 +38,7 @@ namespace BeerCup.Mobile.Services.Data
             var authToken = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}"));
             _settingsService.AuthTokenSetting = authToken;
 
-            return await _genericRepository.GetAsync<ApiResponse<User>>(uri.ToString(), authToken);
+            return await _genericRepository.GetAsync<User>(uri.ToString(), authToken);
         }
 
         public async Task<ApiResponse<User>> Register(string username, string password, string email, string accessCode)

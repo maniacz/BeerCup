@@ -1,10 +1,7 @@
 ﻿using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Contracts.Services.General;
-using BeerCup.Mobile.Errors;
+using BeerCup.Mobile.Enums;
 using BeerCup.Mobile.ViewModels.Base;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -84,7 +81,7 @@ namespace BeerCup.Mobile.ViewModels
             AccessCode = "A003";
 
             var registrationResponse = await _authenticationService.Register(Username, Password, Email, AccessCode);
-            if (string.IsNullOrEmpty(registrationResponse.Error))
+            if (registrationResponse.Error != ErrorType.None)
             {
                 if (registrationResponse.Data != null && registrationResponse.Data.IsAuthenticated)
                 {

@@ -25,7 +25,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.BreweriesEndpoint + "/NotAssigned"
             };
 
-            var response = await _genericRepository.GetAsync<ApiResponse<List<Brewery>>>(uri.ToString());
+            var response = await _genericRepository.GetAsync<List<Brewery>>(uri.ToString());
 
             return response?.Data;
         }

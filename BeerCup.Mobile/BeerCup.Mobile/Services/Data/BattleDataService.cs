@@ -2,11 +2,11 @@
 using BeerCup.Mobile.Contracts.Repository;
 using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Contracts.Services.General;
+using BeerCup.Mobile.Enums;
 using BeerCup.Mobile.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BeerCup.Mobile.Services.Data
@@ -15,12 +15,14 @@ namespace BeerCup.Mobile.Services.Data
     {
         private readonly IGenericRepository _genericRepository;
         private readonly ISettingsService _settingsService;
+        private readonly INavigationService _navigationService;
         private readonly string _authToken;
 
-        public BattleDataService(IGenericRepository genericRepository, ISettingsService settingsService)
+        public BattleDataService(IGenericRepository genericRepository, ISettingsService settingsService, INavigationService navigationService)
         {
             _genericRepository = genericRepository;
             _settingsService = settingsService;
+            _navigationService = navigationService;
             _authToken = settingsService.AuthTokenSetting;
         }
 
@@ -31,7 +33,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.BattlesEndpoint + "/current"
             };
 
-            var response = await _genericRepository.GetAsync<ApiResponse<Battle>>(uri.ToString());
+            var response = await _genericRepository.GetAsync<Battle>(uri.ToString());
 
             return response?.Data;
         }
@@ -45,7 +47,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.AdminPanelEndpoint + "/ShowResults/" + battleId
             };
 
-            var response = await _genericRepository.GetAsync<ApiResponse<List<Result>>>(uri.ToString());
+            var response = await _genericRepository.GetAsync<List<Result>>(uri.ToString());
 
             int rank = 1;
             int allBattleVotes = 0;
@@ -72,13 +74,22 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.BattlesEndpoint + "/TodaysBattle"
             };
 
-            var response = await _genericRepository.GetAsync<ApiResponse<Battle>>(uri.ToString());
-            if (response.Error != null)
+            var response = await _genericRepository.GetAsync<Battle>(uri.ToString());
+
+            if (response.Error != ErrorType.None)
             {
-                return null;
+                switch (response.Error)
+                {
+                    case ErrorType.ServiceUnavailable:
+                        await _navigationService.NavigateBackAsync();
+                        return null;
+                    default:
+                        await _navigationService.NavigateBackAsync();
+                        break;
+                }
             }
 
-            return response.Data;
+            return response?.Data;
         }
 
         public async Task<List<Battle>> GetFinishedBattles()
@@ -88,7 +99,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.BattlesEndpoint + "/Finished"
             };
 
-            var response = await _genericRepository.GetAsync<ApiResponse<List<Battle>>>(uri.ToString());
+            var response = await _genericRepository.GetAsync<List<Battle>>(uri.ToString());
 
             return response?.Data;
         }
@@ -100,7 +111,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.BattlesEndpoint + "/" + battleId + "/" + _settingsService.UserIdSetting
             };
 
-            var response = await _genericRepository.GetAsync<ApiResponse<List<Vote>>>(uri.ToString());
+            var response = await _genericRepository.GetAsync<List<Vote>>(uri.ToString());
 
             return response?.Data;
         }
@@ -112,7 +123,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.BattlesEndpoint
             };
 
-            var response = await _genericRepository.GetAsync<ApiResponse<List<Battle>>>(uri.ToString(), _authToken);
+            var response = await _genericRepository.GetAsync<List<Battle>>(uri.ToString(), _authToken);
 
             return response?.Data;
         }
@@ -137,7 +148,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.BattlesEndpoint + "/" + battleNo
             };
 
-            var response = await _genericRepository.GetAsync<ApiResponse<Battle>>(uri.ToString(), _authToken);
+            var response = await _genericRepository.GetAsync<Battle>(uri.ToString(), _authToken);
 
             return response?.Data;
         }
@@ -149,7 +160,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.BattlesEndpoint + "/firstRound"
             };
 
-            var response = await _genericRepository.GetAsync<ApiResponse<List<Battle>>>(uri.ToString());
+            var response = await _genericRepository.GetAsync<List<Battle>>(uri.ToString());
 
             return response?.Data;
         }

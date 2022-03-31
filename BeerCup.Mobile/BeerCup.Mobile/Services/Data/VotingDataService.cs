@@ -34,7 +34,7 @@ namespace BeerCup.Mobile.Services.Data
             UriBuilder uri = await SetUriForCurrentBattleUserVotes();
 
             //user has already voted in current battle
-            var userVotesInCurrentBattle = await _genericRepository.GetAsync<ApiResponse<List<Vote>>>(uri.ToString());
+            var userVotesInCurrentBattle = await _genericRepository.GetAsync<List<Vote>>(uri.ToString());
             if (userVotesInCurrentBattle.Data.Count > 0)
             {
                 if (userVotesInCurrentBattle.Data.Count != 2)
@@ -105,7 +105,7 @@ namespace BeerCup.Mobile.Services.Data
             query["AssignedNumberInBattle"] = beer.AssignedNumberInBattle.ToString();
             uri.Query = query.ToString();
 
-            var response = await _genericRepository.GetAsync<ApiResponse<Beer>>(uri.ToString());
+            var response = await _genericRepository.GetAsync<Beer>(uri.ToString());
             return response.Data;
         }
     }

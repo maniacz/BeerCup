@@ -2,13 +2,11 @@
 using BeerCup.Mobile.Contracts.Repository;
 using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Contracts.Services.General;
+using BeerCup.Mobile.Repository;
 using BeerCup.Mobile.Services.Data;
 using BeerCup.Mobile.Services.General;
-using BeerCup.Mobile.Repository;
 using BeerCup.Mobile.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BeerCup.Mobile.Bootstrap
 {
@@ -51,7 +49,7 @@ namespace BeerCup.Mobile.Bootstrap
             builder.RegisterType(typeof(BeerDataService)).As(typeof(IBeerDataService));
 
             //services - general
-            builder.RegisterType(typeof(NavigationService)).As(typeof(INavigationService));
+            builder.RegisterType(typeof(NavigationService)).As(typeof(INavigationService)).SingleInstance().PropertiesAutowired(PropertyWiringOptions.AllowCircularDependencies);
             builder.RegisterType(typeof(SettingsService)).As(typeof(ISettingsService)).SingleInstance();
             builder.RegisterType(typeof(GeolocationService)).As(typeof(IGeolocationService));
             builder.RegisterType(typeof(DialogService)).As(typeof(IDialogService));
