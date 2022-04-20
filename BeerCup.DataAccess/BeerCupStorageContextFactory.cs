@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BeerCup.DataAccess
 {
@@ -18,7 +13,7 @@ namespace BeerCup.DataAccess
             optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=BeerCupStorage;Persist Security Info=True;User ID=sa;Password=sysadmin1.");
             //Azure
             //todo: Zupdatuj bazę na Azure
-            //optionsBuilder.UseSqlServer("Server=tcp:beercup-db.database.windows.net,1433;Initial Catalog=BeerCupStorage;Persist Security Info=False;User ID=lukasz;Password=ONxPFt4AMKH0WfXa;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            //removed, connection string stored in local file D:\BC - materiały\Wyrzucony connection string z secretami bazy z Azure.cs
             return new BeerCupStorageContext(optionsBuilder.Options);
         }
     }
