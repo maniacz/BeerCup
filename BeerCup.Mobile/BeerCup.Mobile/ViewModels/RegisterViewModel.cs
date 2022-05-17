@@ -1,6 +1,6 @@
-﻿using BeerCup.Mobile.Contracts.Services.Data;
+﻿using BeerCup.Mobile.Constants;
+using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Contracts.Services.General;
-using BeerCup.Mobile.Enums;
 using BeerCup.Mobile.ViewModels.Base;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -81,7 +81,7 @@ namespace BeerCup.Mobile.ViewModels
             AccessCode = "A003";
 
             var registrationResponse = await _authenticationService.Register(Username, Password, Email, AccessCode);
-            if (registrationResponse.Error != ErrorType.None)
+            if (string.IsNullOrEmpty(registrationResponse.Error))
             {
                 if (registrationResponse.Data != null && registrationResponse.Data.IsAuthenticated)
                 {
@@ -101,10 +101,10 @@ namespace BeerCup.Mobile.ViewModels
             {
                 switch (registrationResponse.Error)
                 {
-                    case ErrorType.NotValidAccessCode:
+                    case ApiErrorResponseConstants.NotValidAccessCode:
                         //todo: _dialogService.ShowDialog("Rejestracja nieudana", "Nieprawidłowy kod dostępu", "OK");
                         break;
-                    case ErrorType.UserAlreadyExists:
+                    case ApiErrorResponseConstants.UserAlreadyExists:
                         //todo: _dialogService.ShowDialog("Rejestracja nieudana", "Taki użytkownik już istnieje", "OK");
                         break;
                     default:

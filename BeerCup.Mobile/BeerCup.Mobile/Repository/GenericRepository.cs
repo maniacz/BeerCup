@@ -1,6 +1,6 @@
-﻿using BeerCup.Mobile.Contracts.Repository;
+﻿using BeerCup.Mobile.Constants;
+using BeerCup.Mobile.Contracts.Repository;
 using BeerCup.Mobile.Contracts.Services.General;
-using BeerCup.Mobile.Enums;
 using BeerCup.Mobile.Models;
 using Newtonsoft.Json;
 using Polly;
@@ -21,8 +21,6 @@ namespace BeerCup.Mobile.Repository
         {
             _dialogService = dialogService;
         }
-
-        //public INavigationService NavigationService { get; set; }
 
         public async Task<ApiResponse<T>> GetAsync<T>(string uri, string authToken = "")
         {
@@ -48,7 +46,7 @@ namespace BeerCup.Mobile.Repository
                 {
                     return new ApiResponse<T>
                     {
-                        Error = ErrorType.Unauthorized
+                        Error = ApiErrorResponseConstants.Unauthorized
                     };
                 }
 
@@ -57,16 +55,13 @@ namespace BeerCup.Mobile.Repository
                     await _dialogService.ShowDialog("Serwis niedostępny", "Alert", "OK");
                     return new ApiResponse<T>
                     {
-                        Error = ErrorType.ServiceUnavailable
+                        Error = ApiErrorResponseConstants.ServiceUnavailable
                     };
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var response = JsonConvert.DeserializeObject<ApiResponse<T>>(jsonResult);
-                response.Error = ErrorType.None;
                 return response;
-
-
             }
             catch (Exception e)
             {

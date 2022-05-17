@@ -2,7 +2,6 @@
 using BeerCup.Mobile.Contracts.Repository;
 using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Contracts.Services.General;
-using BeerCup.Mobile.Enums;
 using BeerCup.Mobile.Models;
 using System;
 using System.Collections.Generic;
@@ -76,11 +75,11 @@ namespace BeerCup.Mobile.Services.Data
 
             var response = await _genericRepository.GetAsync<Battle>(uri.ToString());
 
-            if (response.Error != ErrorType.None)
+            if (!string.IsNullOrEmpty(response.Error))
             {
                 switch (response.Error)
                 {
-                    case ErrorType.ServiceUnavailable:
+                    case ApiErrorResponseConstants.Unauthorized:
                         await _navigationService.NavigateBackAsync();
                         return null;
                     default:
