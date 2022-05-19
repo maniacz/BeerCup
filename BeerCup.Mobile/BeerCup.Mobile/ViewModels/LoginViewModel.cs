@@ -12,8 +12,6 @@ namespace BeerCup.Mobile.ViewModels
         private readonly IAuthenticationService _authenticationService;
         private readonly IDialogService _dialogService;
         private readonly ISettingsService _settingsService;
-
-
         private string _username;
         private string _password;
 
@@ -27,8 +25,6 @@ namespace BeerCup.Mobile.ViewModels
 
         public ICommand LoginCommand => new Command(OnLogin);
         public ICommand RegisterCommand => new Command(OnRegister);
-
-
 
         public string Username
         {
