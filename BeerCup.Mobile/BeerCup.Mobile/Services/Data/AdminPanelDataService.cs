@@ -35,7 +35,8 @@ namespace BeerCup.Mobile.Services.Data
                 Place = battlePlace
             };
 
-            return await _genericRepository.PutAsync(uri.ToString(), battle);
+            var response = await _genericRepository.PutAsync(uri.ToString(), battle);
+            return response?.Data;
         }
 
         public async Task<Battle> EndBattle(Battle battle)
@@ -45,7 +46,8 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.AdminPanelEndpoint + "/EndBattle"
             };
 
-            return await _genericRepository.PutAsync(uri.ToString(), battle);
+            var response = await _genericRepository.PutAsync(uri.ToString(), battle);
+            return response?.Data;
         }
 
         public async Task<Battle> PublishResults(Battle battle)
@@ -56,7 +58,8 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.AdminPanelEndpoint + "/PublishResults"
             };
 
-            return await _genericRepository.PutAsync(uri.ToString(), battle);
+            var response = await _genericRepository.PutAsync(uri.ToString(), battle);
+            return response?.Data;
         }
 
         public async Task<Battle> HideResults(Battle battle)
@@ -67,7 +70,8 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.AdminPanelEndpoint + "/PublishResults"
             };
 
-            return await _genericRepository.PutAsync(uri.ToString(), battle);
+            var response = await _genericRepository.PutAsync(uri.ToString(), battle);
+            return response?.Data;
         }
 
         public async Task PromoteWinnersToFollowingBattles(Battle runningBattle)
@@ -183,7 +187,7 @@ namespace BeerCup.Mobile.Services.Data
 
             var response = await _genericRepository.PostAsync(uri.ToString(), battle);
 
-            return response;
+            return response?.Data;
         }
 
         public async Task<Battle> SaveEditBattle(Battle battle)
@@ -195,7 +199,7 @@ namespace BeerCup.Mobile.Services.Data
 
             var response = await _genericRepository.PutAsync(uri.ToString(), battle);
 
-            return response;
+            return response?.Data;
         }
 
         public async Task<List<Brewery>> GetAllBreweries()
@@ -217,7 +221,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.BreweriesEndpoint + "/" + brewery.BreweryId
             };
 
-            var response = await _genericRepository.DeleteAsync<ApiResponse<Brewery>>(uri.ToString());
+            var response = await _genericRepository.DeleteAsync<Brewery>(uri.ToString());
 
             return response?.Data;
         }
@@ -229,7 +233,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.BreweriesEndpoint
             };
 
-            var response = await _genericRepository.PutAsync<Brewery, ApiResponse<Brewery>>(uri.ToString(), brewery);
+            var response = await _genericRepository.PutAsync<Brewery, Brewery>(uri.ToString(), brewery);
 
             return response?.Data;
         }
@@ -241,7 +245,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.BreweriesEndpoint
             };
 
-            var response = await _genericRepository.PostAsync<Brewery, ApiResponse<Brewery>>(uri.ToString(), brewery);
+            var response = await _genericRepository.PostAsync<Brewery, Brewery>(uri.ToString(), brewery);
 
             return response?.Data;
         }
@@ -265,7 +269,7 @@ namespace BeerCup.Mobile.Services.Data
                 Path = ApiConstants.AwardDrawingWithPaperVotesEndpoint + battleId + "/" + paperVotesCount
             };
 
-            var response = await _genericRepository.PostAsync<Battle, ApiResponse<LuckyVoter>>(uri.ToString(), null);
+            var response = await _genericRepository.PostAsync<Battle, LuckyVoter>(uri.ToString(), null);
 
             return response?.Data;
         }

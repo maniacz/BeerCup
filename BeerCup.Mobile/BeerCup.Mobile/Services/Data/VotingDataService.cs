@@ -7,7 +7,6 @@ using BeerCup.Mobile.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -56,7 +55,8 @@ namespace BeerCup.Mobile.Services.Data
                     var beerFromDb = await GetBeer(selectedBeer);
                     var vote = new Vote { VoterId = userId, BeerId = beerFromDb.BeerId, BattleId = beerFromDb.BattleId };
                     //todo: poniżej może zadziałać indeks na tabeli na unikalność głosów, trza by to obsłużyć
-                    var response = await _genericRepository.PostAsync<Vote, ApiResponse<Vote>>(uri.ToString(), vote);
+                    var response = await _genericRepository.PostAsync<Vote, Vote>(uri.ToString(), vote);
+                    // todo: response może być failem z ustawionym errorem
                     userVotes.Add(response.Data);
                 }
             }

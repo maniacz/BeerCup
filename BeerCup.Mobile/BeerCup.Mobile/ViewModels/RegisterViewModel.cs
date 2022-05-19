@@ -11,16 +11,18 @@ namespace BeerCup.Mobile.ViewModels
     {
         private readonly IAuthenticationService _authenticationService;
         private readonly ISettingsService _settingsService;
-
+        private readonly IDialogService _dialogService;
         private string _username;
         private string _password;
         private string _email;
         private string _accessCode;
 
-        public RegisterViewModel(IAuthenticationService authenticationService, INavigationService navigationService, ISettingsService settingsService) : base(navigationService)
+        public RegisterViewModel(IAuthenticationService authenticationService, INavigationService navigationService, ISettingsService settingsService, IDialogService dialogService)
+            : base(navigationService)
         {
             _authenticationService = authenticationService;
             _settingsService = settingsService;
+            _dialogService = dialogService;
         }
 
         public ICommand RegisterCommand => new Command(OnRegister);
@@ -99,19 +101,23 @@ namespace BeerCup.Mobile.ViewModels
             }
             else
             {
+                string registrationFailReason;
                 switch (registrationResponse.Error)
                 {
                     case ApiErrorResponseConstants.NotValidAccessCode:
-                        //todo: _dialogService.ShowDialog("Rejestracja nieudana", "Nieprawidłowy kod dostępu", "OK");
+                        registrationFailReason = "Nieprawidłowy kod dostępu dla rejestracji użytkownika";
                         break;
                     case ApiErrorResponseConstants.UserAlreadyExists:
-                        //todo: _dialogService.ShowDialog("Rejestracja nieudana", "Taki użytkownik już istnieje", "OK");
+                        registrationFailReason = "Taki użytkownik już istnieje";
                         break;
                     default:
+                        registrationFailReason = "Coś poszło nie tak";
                         break;
                 }
+                await _dialogService.ShowDialog(registrationFailReason, "Rejestracja nieudana", "OK");
             }
         }
+
         private void OnLogin()
         {
             _navigationService.NavigateToAsync<LoginViewModel>();

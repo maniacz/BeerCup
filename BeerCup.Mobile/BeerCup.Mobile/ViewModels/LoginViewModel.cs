@@ -1,12 +1,9 @@
-﻿using BeerCup.Mobile.Contracts.Services.Data;
+﻿using BeerCup.Mobile.Constants;
+using BeerCup.Mobile.Contracts.Services.Data;
 using BeerCup.Mobile.Contracts.Services.General;
 using BeerCup.Mobile.ViewModels.Base;
-using BeerCup.Mobile.Services.Data;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
-using System;
 
 namespace BeerCup.Mobile.ViewModels
 {
@@ -61,7 +58,7 @@ namespace BeerCup.Mobile.ViewModels
 
             //todo: connectionService
             var authenticationResponse = await _authenticationService.Authenticate(Username, Password);
-            if (authenticationResponse.Data.IsAuthenticated)
+            if (authenticationResponse?.Data?.IsAuthenticated == true)
             {
                 _settingsService.UserNameSetting = authenticationResponse.Data.Username;
                 _settingsService.UserRoleSetting = authenticationResponse.Data.Role;
@@ -71,6 +68,25 @@ namespace BeerCup.Mobile.ViewModels
             }
             else
             {
+                if (authenticationResponse.Error != null)
+                {
+                    string authenticationFailReason;
+                    switch (authenticationResponse.Error)
+                    {
+                        case ApiErrorResponseConstants.Unauthorized:
+                            authenticationFailReason = "Użytkownik nieautoryzowany";
+                            break;
+                        case ApiErrorResponseConstants.ServiceUnavailable:
+                            authenticationFailReason = "Serwis niedostępny";
+                            break;
+                        default:
+                            authenticationFailReason = "Coś poszło nie tak";
+                            break;
+                    }
+
+                    await _dialogService.ShowDialog(authenticationFailReason, "Logowanie", "OK");
+                    return;
+                }
                 await _dialogService.ShowDialog("Nie zalogowano", "Logowanie", "OK");
             }
         }

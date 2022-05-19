@@ -52,7 +52,7 @@ namespace BeerCup.Mobile.Repository
 
                 if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
                 {
-                    await _dialogService.ShowDialog("Serwis niedostępny", "Alert", "OK");
+                    // await _dialogService.ShowDialog("Serwis niedostępny", "Alert", "OK");
                     return new ApiResponse<T>
                     {
                         Error = ApiErrorResponseConstants.ServiceUnavailable
@@ -70,7 +70,7 @@ namespace BeerCup.Mobile.Repository
             }
         }
 
-        public async Task<T> PostAsync<T>(string uri, T data, string authToken = "")
+        public async Task<ApiResponse<T>> PostAsync<T>(string uri, T data, string authToken = "")
         {
             try
             {
@@ -95,11 +95,15 @@ namespace BeerCup.Mobile.Repository
 
                 if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
                 {
-                    await _dialogService.ShowDialog("Serwis niedostępny", "Alert", "OK");
+                    // await _dialogService.ShowDialog("Serwis niedostępny", "Alert", "OK");
+                    return new ApiResponse<T>
+                    {
+                        Error = ApiErrorResponseConstants.ServiceUnavailable
+                    };
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var response = JsonConvert.DeserializeObject<T>(jsonResult);
+                var response = JsonConvert.DeserializeObject<ApiResponse<T>>(jsonResult);
                 return response;
             }
             catch (Exception e)
@@ -109,7 +113,7 @@ namespace BeerCup.Mobile.Repository
             }
         }
 
-        public async Task<TResponse> PostAsync<TRequest, TResponse>(string uri, TRequest request, string authToken = "")
+        public async Task<ApiResponse<TResponse>> PostAsync<TRequest, TResponse>(string uri, TRequest request, string authToken = "")
         {
             try
             {
@@ -134,11 +138,15 @@ namespace BeerCup.Mobile.Repository
 
                 if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
                 {
-                    await _dialogService.ShowDialog("Serwis niedostępny", "Alert", "OK");
+                    // await _dialogService.ShowDialog("Serwis niedostępny", "Alert", "OK");
+                    return new ApiResponse<TResponse>
+                    {
+                        Error = ApiErrorResponseConstants.ServiceUnavailable
+                    };
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var response = JsonConvert.DeserializeObject<TResponse>(jsonResult);
+                var response = JsonConvert.DeserializeObject<ApiResponse<TResponse>>(jsonResult);
                 return response;
             }
             catch (Exception e)
@@ -148,7 +156,7 @@ namespace BeerCup.Mobile.Repository
             }
         }
 
-        public async Task<T> DeleteAsync<T>(string uri, string authToken = "")
+        public async Task<ApiResponse<T>> DeleteAsync<T>(string uri, string authToken = "")
         {
             try
             {
@@ -180,7 +188,7 @@ namespace BeerCup.Mobile.Repository
                 //}
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var response = JsonConvert.DeserializeObject<T>(jsonResult);
+                var response = JsonConvert.DeserializeObject<ApiResponse<T>>(jsonResult);
                 return response;
             }
             catch (Exception e)
@@ -190,7 +198,7 @@ namespace BeerCup.Mobile.Repository
             }
         }
 
-        public async Task<T> PutAsync<T>(string uri, T data, string authToken = "")
+        public async Task<ApiResponse<T>> PutAsync<T>(string uri, T data, string authToken = "")
         {
             try
             {
@@ -219,7 +227,7 @@ namespace BeerCup.Mobile.Repository
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var response = JsonConvert.DeserializeObject<T>(jsonResult);
+                var response = JsonConvert.DeserializeObject<ApiResponse<T>>(jsonResult);
                 return response;
             }
             catch (Exception e)
@@ -229,7 +237,7 @@ namespace BeerCup.Mobile.Repository
             }
         }
 
-        public async Task<TResponse> PutAsync<TRequest, TResponse>(string uri, TRequest data, string authToken = "")
+        public async Task<ApiResponse<TResponse>> PutAsync<TRequest, TResponse>(string uri, TRequest data, string authToken = "")
         {
             try
             {
@@ -258,7 +266,7 @@ namespace BeerCup.Mobile.Repository
                 }
 
                 jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var response = JsonConvert.DeserializeObject<TResponse>(jsonResult);
+                var response = JsonConvert.DeserializeObject<ApiResponse<TResponse>>(jsonResult);
                 return response;
             }
             catch (Exception e)

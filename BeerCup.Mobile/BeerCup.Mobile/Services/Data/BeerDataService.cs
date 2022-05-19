@@ -1,12 +1,8 @@
 ﻿using BeerCup.Mobile.Constants;
 using BeerCup.Mobile.Contracts.Repository;
 using BeerCup.Mobile.Contracts.Services.Data;
-using BeerCup.Mobile.Contracts.Services.General;
 using BeerCup.Mobile.Models;
-using BeerCup.Mobile.ViewModels.Base;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BeerCup.Mobile.Services.Data
@@ -33,7 +29,7 @@ namespace BeerCup.Mobile.Services.Data
                 BreweryId = breweryId
             };
 
-            var response = await _genericRepository.PostAsync<Beer, ApiResponse<Beer>>(uri.ToString(), beerToRegister);
+            var response = await _genericRepository.PostAsync<Beer, Beer>(uri.ToString(), beerToRegister);
 
             return response?.Data;
         }

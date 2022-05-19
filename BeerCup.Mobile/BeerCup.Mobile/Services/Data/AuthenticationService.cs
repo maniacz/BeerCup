@@ -1,13 +1,12 @@
-﻿using BeerCup.Mobile.Contracts.Repository;
+﻿using BeerCup.Mobile.Constants;
+using BeerCup.Mobile.Contracts.Repository;
 using BeerCup.Mobile.Contracts.Services.Data;
-using BeerCup.Mobile.Constants;
-using BeerCup.Mobile.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using BeerCup.Mobile.Contracts.Services.General;
 using BeerCup.Mobile.Enums;
+using BeerCup.Mobile.Models;
+using System;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BeerCup.Mobile.Services.Data
 {
@@ -56,7 +55,7 @@ namespace BeerCup.Mobile.Services.Data
                 AccessCode = accessCode
             };
 
-            return await _genericRepository.PostAsync<ReqistrationRequest, ApiResponse<User>>(uri.ToString(), authenticationRequest);
+            return await _genericRepository.PostAsync<ReqistrationRequest, User>(uri.ToString(), authenticationRequest);
         }
 
         public bool IsUserAuthenticated()
