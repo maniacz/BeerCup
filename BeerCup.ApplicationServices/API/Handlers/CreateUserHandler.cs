@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BeerCup.ApplicationServices.API.Domain;
-using BeerCup.ApplicationServices.API.Domain.Models;
 using BeerCup.ApplicationServices.API.Domain.Models.DAO;
 using BeerCup.ApplicationServices.API.Domain.Models.DTO;
 using BeerCup.ApplicationServices.API.ErrorHandling;
@@ -8,15 +7,9 @@ using BeerCup.DataAccess;
 using BeerCup.DataAccess.CQRS.Commands;
 using BeerCup.DataAccess.CQRS.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -42,14 +35,14 @@ namespace BeerCup.ApplicationServices.API.Handlers
             var accessCodeId = await ConfirmAccessCodeIsValid(request.AccessCode);
             if (accessCodeId == 0)
             {
-                var resonse = 
+                var response =
                  new CreateUserResponse
-                {
-                    Data = new UserDTO { IsAuthenticated = false },
-                    Error = new ErrorModel(ErrorType.NotValidAccessCode)
-                };
+                 {
+                     Data = new UserDTO { IsAuthenticated = false },
+                     Error = new ErrorModel(ErrorType.NotValidAccessCode)
+                 };
 
-                return resonse;
+                return response;
             }
 
             var salt = Encryption.Encryption.GenerateSalt();
