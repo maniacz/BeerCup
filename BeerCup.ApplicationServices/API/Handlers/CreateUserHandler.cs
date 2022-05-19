@@ -39,7 +39,7 @@ namespace BeerCup.ApplicationServices.API.Handlers
                  new CreateUserResponse
                  {
                      Data = new UserDTO { IsAuthenticated = false },
-                     Error = new ErrorModel(ErrorType.NotValidAccessCode)
+                     Error = new ErrorModel(ErrorType.AccessCodeAlreadyUsed)
                  };
 
                 return response;

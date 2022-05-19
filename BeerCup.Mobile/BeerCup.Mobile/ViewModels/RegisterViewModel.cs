@@ -104,6 +104,9 @@ namespace BeerCup.Mobile.ViewModels
                 string registrationFailReason;
                 switch (registrationResponse.Error)
                 {
+                    case ApiErrorResponseConstants.AccessCodeAlreadyUsed:
+                        registrationFailReason = "Ten kod dostępu został już wykorzystany";
+                        break;
                     case ApiErrorResponseConstants.NotValidAccessCode:
                         registrationFailReason = "Nieprawidłowy kod dostępu dla rejestracji użytkownika";
                         break;

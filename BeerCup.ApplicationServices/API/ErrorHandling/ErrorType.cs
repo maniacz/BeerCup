@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BeerCup.ApplicationServices.API.ErrorHandling
+﻿namespace BeerCup.ApplicationServices.API.ErrorHandling
 {
     public static class ErrorType
     {
@@ -27,6 +21,8 @@ namespace BeerCup.ApplicationServices.API.ErrorHandling
         public const string TooManyRequests = "TOO_MANY_REQUESTS";
 
         public const string NotValidAccessCode = "NOT_VALID_ACCESS_CODE";
+
+        public const string AccessCodeAlreadyUsed = "ACCESS_CODE_ALREADY_USED";
 
         public const string UserAlreadyExists = "USER_ALREADY_EXISTS";
     }
