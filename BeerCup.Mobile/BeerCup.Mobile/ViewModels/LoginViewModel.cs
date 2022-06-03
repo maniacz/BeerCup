@@ -12,15 +12,21 @@ namespace BeerCup.Mobile.ViewModels
         private readonly IAuthenticationService _authenticationService;
         private readonly IDialogService _dialogService;
         private readonly ISettingsService _settingsService;
+        private readonly IConnectionService _connectionService;
         private string _username;
         private string _password;
 
-        public LoginViewModel(IAuthenticationService authenticationService, INavigationService navigationService, IDialogService dialogService, ISettingsService settingsService)
+        public LoginViewModel(IAuthenticationService authenticationService,
+                    INavigationService navigationService,
+                    IDialogService dialogService,
+                    ISettingsService settingsService,
+                    IConnectionService connectionService)
             : base(navigationService)
         {
             _authenticationService = authenticationService;
             _dialogService = dialogService;
             _settingsService = settingsService;
+            _connectionService = connectionService;
         }
 
         public ICommand LoginCommand => new Command(OnLogin);
@@ -53,6 +59,11 @@ namespace BeerCup.Mobile.ViewModels
             Password = "pass";
 
             //todo: connectionService
+            if (!_connectionService.IsConnected())
+            {
+                return;
+            }
+
             var authenticationResponse = await _authenticationService.Authenticate(Username, Password);
             if (authenticationResponse?.Data?.IsAuthenticated == true)
             {

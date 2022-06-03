@@ -53,6 +53,7 @@ namespace BeerCup.Mobile.Bootstrap
             builder.RegisterType(typeof(SettingsService)).As(typeof(ISettingsService)).SingleInstance();
             builder.RegisterType(typeof(GeolocationService)).As(typeof(IGeolocationService));
             builder.RegisterType(typeof(DialogService)).As(typeof(IDialogService));
+            builder.RegisterType(typeof(ConnectionService)).As(typeof(IConnectionService));
 
             //General
             builder.RegisterType(typeof(GenericRepository)).As(typeof(IGenericRepository));
