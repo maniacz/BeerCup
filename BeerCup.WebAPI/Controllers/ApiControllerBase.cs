@@ -3,7 +3,6 @@ using BeerCup.ApplicationServices.API.ErrorHandling;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
@@ -58,7 +57,7 @@ namespace BeerCup.WebAPI.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public string GetUserFromClaims()
         {
-            return this.User.FindFirstValue(ClaimTypes.Name);
+            return this.User?.FindFirstValue(ClaimTypes.Name);
         }
 
         private IActionResult ErrorResponse(ErrorModel errorModel)

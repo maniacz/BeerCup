@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31229.75
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeerCup.DataAccess", "BeerCup.DataAccess\BeerCup.DataAccess.csproj", "{CB42BBC4-F2E5-44A1-8518-A3EE550AAAE6}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerCup.Mobile.iOS", "BeerCup.Mobile\BeerCup.Mobile.iOS\BeerCup.Mobile.iOS.csproj", "{096B9D29-989D-4763-99EE-7F1E276F0939}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeerCup.Mobile", "BeerCup.Mobile\BeerCup.Mobile\BeerCup.Mobile.csproj", "{2DBB68BF-273C-4733-BFA0-A264308F069F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerCup.WebAPI.Tests", "BeerCup.WebAPI.Tests\BeerCup.WebAPI.Tests.csproj", "{C0B6E7D2-24B5-4E92-A890-BBB0F50D17CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -115,6 +117,18 @@ Global
 		{2DBB68BF-273C-4733-BFA0-A264308F069F}.Release|iPhone.Build.0 = Release|Any CPU
 		{2DBB68BF-273C-4733-BFA0-A264308F069F}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{2DBB68BF-273C-4733-BFA0-A264308F069F}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{C0B6E7D2-24B5-4E92-A890-BBB0F50D17CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0B6E7D2-24B5-4E92-A890-BBB0F50D17CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0B6E7D2-24B5-4E92-A890-BBB0F50D17CF}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{C0B6E7D2-24B5-4E92-A890-BBB0F50D17CF}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{C0B6E7D2-24B5-4E92-A890-BBB0F50D17CF}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{C0B6E7D2-24B5-4E92-A890-BBB0F50D17CF}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{C0B6E7D2-24B5-4E92-A890-BBB0F50D17CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0B6E7D2-24B5-4E92-A890-BBB0F50D17CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0B6E7D2-24B5-4E92-A890-BBB0F50D17CF}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{C0B6E7D2-24B5-4E92-A890-BBB0F50D17CF}.Release|iPhone.Build.0 = Release|Any CPU
+		{C0B6E7D2-24B5-4E92-A890-BBB0F50D17CF}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{C0B6E7D2-24B5-4E92-A890-BBB0F50D17CF}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
