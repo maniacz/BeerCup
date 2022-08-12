@@ -42,6 +42,14 @@ namespace BeerCup.Mobile.Repository
                     .ExecuteAsync(() => httpClient.GetAsync(uri))
                     .GetAwaiter().GetResult();
 
+                if (!responseMessage.IsSuccessStatusCode)
+                {
+                    return new ApiResponse<T>
+                    {
+                        Error = ApiErrorResponseConstants.InternalServerError
+                    };
+                }
+
                 if (responseMessage.StatusCode == HttpStatusCode.Forbidden || responseMessage.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     return new ApiResponse<T>
@@ -93,6 +101,14 @@ namespace BeerCup.Mobile.Repository
                     )
                     .ExecuteAsync(async () => await httpClient.PostAsync(uri, content));
 
+                if (!responseMessage.IsSuccessStatusCode)
+                {
+                    return new ApiResponse<T>
+                    {
+                        Error = ApiErrorResponseConstants.InternalServerError
+                    };
+                }
+
                 if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
                 {
                     // await _dialogService.ShowDialog("Serwis niedostępny", "Alert", "OK");
@@ -127,7 +143,7 @@ namespace BeerCup.Mobile.Repository
                 var responseMessage = await Policy
                     .Handle<WebException>(ex =>
                     {
-                        Debug.WriteLine($"############################## {ex.GetType().Name} : {ex.Message}");
+                        Debug.WriteLine($"## {ex.GetType().Name} : {ex.Message}");
                         return true;
                     })
                     .WaitAndRetryAsync(
@@ -135,6 +151,14 @@ namespace BeerCup.Mobile.Repository
                         retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
                     )
                     .ExecuteAsync(async () => await httpClient.PostAsync(uri, content));
+
+                if (!responseMessage.IsSuccessStatusCode)
+                {
+                    return new ApiResponse<TResponse>
+                    {
+                        Error = ApiErrorResponseConstants.InternalServerError
+                    };
+                }
 
                 if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
                 {
@@ -176,6 +200,14 @@ namespace BeerCup.Mobile.Repository
                     )
                     .ExecuteAsync(() => httpClient.DeleteAsync(uri))
                     .GetAwaiter().GetResult();
+
+                if (!responseMessage.IsSuccessStatusCode)
+                {
+                    return new ApiResponse<T>
+                    {
+                        Error = ApiErrorResponseConstants.InternalServerError
+                    };
+                }
 
                 if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
                 {
@@ -221,6 +253,14 @@ namespace BeerCup.Mobile.Repository
                     )
                     .ExecuteAsync(async () => await httpClient.PutAsync(uri, content));
 
+                if (!responseMessage.IsSuccessStatusCode)
+                {
+                    return new ApiResponse<T>
+                    {
+                        Error = ApiErrorResponseConstants.InternalServerError
+                    };
+                }
+
                 if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
                 {
                     await _dialogService.ShowDialog("Serwis niedostępny", "Alert", "OK");
@@ -259,6 +299,14 @@ namespace BeerCup.Mobile.Repository
                         retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
                     )
                     .ExecuteAsync(async () => await httpClient.PutAsync(uri, content));
+
+                if (!responseMessage.IsSuccessStatusCode)
+                {
+                    return new ApiResponse<TResponse>
+                    {
+                        Error = ApiErrorResponseConstants.InternalServerError
+                    };
+                }
 
                 if (responseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
                 {

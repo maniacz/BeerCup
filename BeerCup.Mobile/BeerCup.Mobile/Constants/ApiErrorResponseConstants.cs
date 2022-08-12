@@ -7,5 +7,6 @@
         public const string AccessCodeAlreadyUsed = "ACCESS_CODE_ALREADY_USED";
         public const string NotValidAccessCode = "NOT_VALID_ACCESS_CODE";
         public const string UserAlreadyExists = "USER_ALREADY_EXISTS";
+        public const string InternalServerError = "INTERNAL_SERVER_ERROR";
     }
 }
