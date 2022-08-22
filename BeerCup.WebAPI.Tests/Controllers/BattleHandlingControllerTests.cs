@@ -50,5 +50,25 @@ namespace BeerCup.WebAPI.Tests.Controllers
             Assert.NotNull(result);
             var okRequestResult = Assert.IsType<OkObjectResult>(result);
         }
+
+        [Fact]
+        public async Task EndBattle_WhenProvidingIdOfRunningBattle_ShouldReturnOk()
+        {
+            // Arrange
+            var request = new EndBattleRequest
+            {
+                Id = 1
+            };
+
+            _mediatorMock.Setup(x => x.Send(request, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() => new EndBattleResponse { Data = Mock.Of<Battle>() });
+
+            // Act
+            var result = await _controller.EndBattle(request);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<OkObjectResult>(result);
+        }
     }
 }
