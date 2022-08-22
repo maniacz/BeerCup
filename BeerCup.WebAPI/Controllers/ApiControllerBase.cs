@@ -46,7 +46,11 @@ namespace BeerCup.WebAPI.Controllers
             }
 
             var response = await this.mediator.Send(request);
-            if (response.Error != null)
+            if (response is null)
+            {
+                return this.ErrorResponse(new ErrorModel(ErrorType.InternalServerError));
+            }
+            if (response?.Error != null)
             {
                 return this.ErrorResponse(response.Error);
             }
